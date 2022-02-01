@@ -12,8 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.geo.Point;
@@ -36,20 +36,20 @@ public class Work implements Serializable {
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chief")
 	private Worker chief;
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Worker> workers;
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<WorkerWork> workerWork;
 
-	public Work(String name, String description, Point location, Worker chief, Set<Worker> workers) {
+	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {
 		this.id = -1L;
 		this.name = name;
 		this.description = description;
 		this.location = location;
 		this.chief = chief;
-		this.workers = workers;
+		this.workerWork = workerWork;
 	}
 
 	public Work() {
-		this("", "", new Point(Double.MIN_VALUE, Double.MIN_VALUE), new Worker(), new HashSet<Worker>());
+		this("", "", new Point(Double.MIN_VALUE, Double.MIN_VALUE), new Worker(), new HashSet<WorkerWork>());
 	}
 
 	public Long getId() {
@@ -87,11 +87,16 @@ public class Work implements Serializable {
 		this.chief = chief;
 	}
 
-	public Set<Worker> getWorkers() {
-		return workers;
+	public Set<WorkerWork> getWorkerWork() {
+		return workerWork;
 	}
-	public void setWorkers(Set<Worker> workers) {
-		this.workers = workers;
+	public void setWorkerWork(Set<WorkerWork> workerWork) {
+		this.workerWork = workerWork;
+	}
+
+	@Override
+	public String toString() {
+		return "Work [id=" + id + ", name=" + name + ", description=" + description + ", location=" + location + ", chief=" + chief + "]";
 	}
 
 }

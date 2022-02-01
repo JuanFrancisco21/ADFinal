@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,23 +31,23 @@ public class Worker implements Serializable {
 	private Short active;
 	@Column(name = "picture")
 	private Byte[] picture;
-	@OneToMany(mappedBy = "work", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "work", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Work> chiefWorkList;
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Work works;
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<WorkerWork> workerWork;
 
-	public Worker(String name, String surname, Short active, Byte[] picture, Set<Work> chiefWorkList, Work works) {
+	public Worker(String name, String surname, Short active, Byte[] picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
 		this.id = -1L;
 		this.name = name;
 		this.surname = surname;
 		this.active = active;
 		this.picture = picture;
 		this.chiefWorkList = chiefWorkList;
-		this.works = works;
+		this.workerWork = workerWork;
 	}
 
 	public Worker() {
-		this("", "", Short.MIN_VALUE, new Byte[Byte.MIN_VALUE], new HashSet<Work>(), new Work());
+		this("", "", Short.MIN_VALUE, new Byte[Byte.MIN_VALUE], new HashSet<Work>(), new HashSet<WorkerWork>());
 	}
 
 	public Long getId() {
@@ -93,11 +92,11 @@ public class Worker implements Serializable {
 		this.chiefWorkList = chiefWorkList;
 	}
 
-	public Work getWorks() {
-		return works;
+	public Set<WorkerWork> getWorkerWork() {
+		return workerWork;
 	}
-	public void setWorks(Work works) {
-		this.works = works;
+	public void setWorkerWork(Set<WorkerWork> workerWork) {
+		this.workerWork = workerWork;
 	}
 
 }
