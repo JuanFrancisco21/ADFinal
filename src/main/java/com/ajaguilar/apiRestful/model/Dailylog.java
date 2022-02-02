@@ -1,7 +1,8 @@
 package com.ajaguilar.apiRestful.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,16 +33,18 @@ private static final long serialVersionUID = 1L;
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name="idWorkerwork")
     private WorkerWork worker_work;
+    
+    
 
-    public Dailylog(Date date,float hours, WorkerWork worker_work) {
+    public Dailylog(LocalDate date,float hours, WorkerWork worker_work) {
     	this.id = -1L;
-        this.date = date;
+        this.date = Date.valueOf(date);
         this.hours = hours;
         this.worker_work = worker_work;
     }
     
     public Dailylog() {
-        this(null, 0f, new WorkerWork());
+        this(LocalDate.now(), 0f, new WorkerWork());
     }
 
 
