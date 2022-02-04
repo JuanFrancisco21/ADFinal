@@ -2,6 +2,7 @@ package com.ajaguilar.apiRestful.services;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Dailylog;
+import com.ajaguilar.apiRestful.model.WorkerWork;
 import com.ajaguilar.apiRestful.repository.DailylogRepository;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -75,10 +76,16 @@ public class DailylogService {
     }
     
     //Returns all dailylogs from a day
-    public List<Dailylog> getDailylogsByDay(LocalDate day){
+    public List<Dailylog> getDailylogsByDay(Date day){
         List<Dailylog> result;
-        Date date = Date.valueOf(day);
-        result = repository.findByDate(date);
+        result = repository.findByDate(day);
+        return result;
+    }
+    
+    //Returns all dailylogs from a concrete WorkerWork
+    public List<Dailylog> getDailylogsByWorkerwork(WorkerWork ww){
+        List<Dailylog> result;
+        result = repository.findByWorkerwork(ww);
         return result;
     }
     
