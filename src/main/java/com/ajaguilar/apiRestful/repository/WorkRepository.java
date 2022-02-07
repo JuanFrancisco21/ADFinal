@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ajaguilar.apiRestful.model.Work;
-import com.ajaguilar.apiRestful.model.Worker;
 
 @Repository
 public interface WorkRepository extends JpaRepository<Work, Long>{
