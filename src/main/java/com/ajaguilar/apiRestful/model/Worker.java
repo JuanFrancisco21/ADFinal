@@ -29,14 +29,14 @@ public class Worker implements Serializable {
 	private String surname;
 	@Column(name = "active")
 	private Short active;
-	@Column(name = "picture")
-	private Byte[] picture;
-	@OneToMany(mappedBy = "work", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+	@Column(name = "picture", columnDefinition = "LONGTEXT")
+	private String picture;
+	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Work> chiefWorkList;
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<WorkerWork> workerWork;
 
-	public Worker(String name, String surname, Short active, Byte[] picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
+	public Worker(String name, String surname, Short active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
 		this.id = -1L;
 		this.name = name;
 		this.surname = surname;
@@ -47,7 +47,7 @@ public class Worker implements Serializable {
 	}
 
 	public Worker() {
-		this("", "", Short.MIN_VALUE, new Byte[Byte.MIN_VALUE], new HashSet<Work>(), new HashSet<WorkerWork>());
+		this("", "", Short.MIN_VALUE, "", new HashSet<Work>(), new HashSet<WorkerWork>());
 	}
 
 	public Long getId() {
@@ -78,10 +78,11 @@ public class Worker implements Serializable {
 		this.active = active;
 	}
 
-	public Byte[] getPicture() {
+	public String getPicture() {
 		return picture;
 	}
-	public void setPicture(Byte[] picture) {
+
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 

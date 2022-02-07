@@ -50,6 +50,7 @@ public class Work implements Serializable {
 
 	public Work() {
 		this("", "", new Point(Double.MIN_VALUE, Double.MIN_VALUE), new Worker(), new HashSet<WorkerWork>());
+		this.id=-1L;
 	}
 
 	public Long getId() {
