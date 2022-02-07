@@ -33,7 +33,7 @@ public class Worker implements Serializable {
 	private String picture;
 	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Work> chiefWorkList;
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "worker", fetch = FetchType.LAZY)
 	private Set<WorkerWork> workerWork;
 
 	public Worker(String name, String surname, Short active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
