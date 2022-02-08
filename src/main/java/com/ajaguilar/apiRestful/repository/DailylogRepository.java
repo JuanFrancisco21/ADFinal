@@ -21,6 +21,6 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
     List<Dailylog> findByDate(Date date);
     
     
-    @Query(value="SELECT d FROM dailylog d JOIN dailylog.workerwork ON workerwork WHERE workerwork.id= ?1", nativeQuery = true)
-    List<Dailylog> findByWorkerwork(Long workerWorkId);
+    //@Query(value="SELECT d FROM dailylog d JOIN dailylog.workerwork ON workerwork WHERE workerwork.id= ?1", nativeQuery = true)
+    //List<Dailylog> findByWorkerwork(Long workerWorkId);
 }
