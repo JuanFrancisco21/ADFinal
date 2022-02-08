@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
 
     /**
-     * Método que devuelve una lista de dailylogs por una fecha.
+     * Mï¿½todo que devuelve una lista de dailylogs por una fecha.
      *
      * @param fecha del dailylog.
      * @return dailylogs con esa fecha.
@@ -21,6 +21,11 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
     List<Dailylog> findByDate(Date date);
     
     
-    //@Query(value="SELECT d FROM dailylog d JOIN dailylog.workerwork ON workerwork WHERE workerwork.id= ?1", nativeQuery = true)
-    //List<Dailylog> findByWorkerwork(Long workerWorkId);
+    /**
+     * MÃ©todo que devuelve la lista de dailylogs asociada a su WorkerWork
+     * @param workerWorkId id del workerwork
+     * @return la lista de dailylogs de ese workerwork
+     */
+    @Query(value="SELECT d FROM dailylog d JOIN dailylog.id_workerwork ON worker_work WHERE worker_work.id= ?1", nativeQuery = true)
+    List<Dailylog> findByWorkerwork(Long workerWorkId);
 }

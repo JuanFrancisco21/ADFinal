@@ -32,7 +32,7 @@ public class DailylogController {
     DailylogService service;
     
     /**
-     * Método que devuelve una lista con todos los dailylogs de la BD
+     * Mï¿½todo que devuelve una lista con todos los dailylogs de la BD
      * @return una List con los dailylogs
     */
     @GetMapping
@@ -46,7 +46,7 @@ public class DailylogController {
     }
     
     /**
-     * Método para obtener un dailylog concreto según su id
+     * Mï¿½todo para obtener un dailylog concreto segï¿½n su id
      * @param id del dailylog a devolver
      * @return el objeto dailylog en caso de que este exista, un dailylog
      * vac?o en caso contrario
@@ -62,9 +62,9 @@ public class DailylogController {
     }
     
     /**
-     * Método que crea un dailylog en la BD
+     * Mï¿½todo que crea un dailylog en la BD
      * @param log Dailylog a crear
-     * @return El dailylog creado si tiene éxito, dailylog vacío si falla
+     * @return El dailylog creado si tiene ï¿½xito, dailylog vacï¿½o si falla
      */
     @PostMapping
     public ResponseEntity<Dailylog> createDailylog(@Valid @RequestBody Dailylog log){
@@ -81,7 +81,7 @@ public class DailylogController {
     }
     
     /**
-     * Método para editar un dailylog que ya exista en la BD
+     * Mï¿½todo para editar un dailylog que ya exista en la BD
      * @param log Dailylog a editar
      * @return El objeto dailylog editado
      */
@@ -98,7 +98,7 @@ public class DailylogController {
     }
     
     /**
-     * Método que elimina un dailylog de la BD según su id
+     * Mï¿½todo que elimina un dailylog de la BD segï¿½n su id
      * @param id ID del dailylog que se busca eliminar
      * @return Status ok si el objeto es eliminado, Bad Request en caso contrario
      */
@@ -117,11 +117,11 @@ public class DailylogController {
     }
     
     /**
-     * Método que devuelve todos los dailylogs creados en una fecha concreta
+     * Mï¿½todo que devuelve todos los dailylogs creados en una fecha concreta
      * @param date Fecha de los dailylogs
      * @return Lista de los dailylogs que coincidan con dicha fecha
      */
-    @GetMapping("/{date}")
+    @GetMapping("/date/{date}")
     public ResponseEntity<List<Dailylog>> getDailylogsByDate(@PathVariable("date") LocalDate date){
         Date day = Date.valueOf(date);
         try{
