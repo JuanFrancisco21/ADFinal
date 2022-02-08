@@ -19,8 +19,7 @@ import javax.persistence.Table;
 @Table(name="dailylog")
 public class Dailylog implements Serializable{
 
-
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +29,7 @@ private static final long serialVersionUID = 1L;
     private Date date;
     @Column(name="hours")
     private float hours;
+    
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name="idWorkerwork")
     private WorkerWork worker_work;

@@ -97,7 +97,7 @@ public class WorkService {
 		if (work != null) {
 			Optional<Work> result = Optional.of(getWorkById(work.getId()));
 			if (result != null) {
-				if (!result.isPresent()) {
+				if (result.isPresent()) {
 					Work newWork = result.get();
 					newWork.setId(work.getId());
 					newWork.setName(work.getName());
@@ -234,9 +234,9 @@ public class WorkService {
 	public Work getWorkByLocation(Point location) throws RecordNotFoundException, NullPointerException, IllegalArgumentException{
 		if(location!=null) {
 			try {
-				Optional<Work> obra = Optional.of(repository.findObraByLocation(location));
-				if(obra.isPresent()) {
-					return obra.get();
+				Optional<Work> result = Optional.of(repository.findWorkByLocation(location));
+				if(result.isPresent()) {
+					return result.get();
 				}else {
 					throw new RecordNotFoundException("No existe obra con dicha localización", location);
 				}
@@ -258,9 +258,9 @@ public class WorkService {
 	 */
 	public void deleteWorkById(Long id) throws RecordNotFoundException, NullPointerException {
 		if (id != null) {
-			Optional<Work> work = repository.findById(id);
-			if (work != null) {
-				if (work.isPresent()) {
+			Optional<Work> result = repository.findById(id);
+			if (result != null) {
+				if (result.isPresent()) {
 					repository.deleteById(id);
 				} else {
 					throw new RecordNotFoundException("No se puedo eliminar la obra con id:", id);
