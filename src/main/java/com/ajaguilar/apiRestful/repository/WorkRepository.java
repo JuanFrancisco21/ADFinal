@@ -17,7 +17,7 @@ public interface WorkRepository extends JpaRepository<Work, Long>{
 		 * @return obras con ese nombre.
 		 * @throws IllegalArgumentException
 		 */
-		@Query(value="SELECT w FROM work w WHERE work.name LIKE ?1", nativeQuery = true)
+		@Query(value="SELECT * FROM work  WHERE work.name LIKE ?1%", nativeQuery = true)
 		Work findByName(String name) throws IllegalArgumentException;
 		
 		/**
@@ -26,7 +26,7 @@ public interface WorkRepository extends JpaRepository<Work, Long>{
 		 * @return lista de obras que tiene ese trabajador.
 		 * @throws IllegalArgumentException.
 		 */
-		@Query(value="SELECT w FROM work w JOIN work.worker ON worker WHERE worker.id= ?1", nativeQuery = true)
+		@Query(value="SELECT * FROM work  JOIN work.worker ON worker WHERE worker.id= ?1%", nativeQuery = true)
 		List<Work> findWorkByWorker(Long idWorker) throws IllegalArgumentException;
 		
 		/**
@@ -35,8 +35,8 @@ public interface WorkRepository extends JpaRepository<Work, Long>{
 		 * @return obra con las coordenadas introducidas.
 		 * @throws IllegalArgumentException.
 		 */
-		@Query(value="SELECT w From work w WHERE work.location LIKE ?1", nativeQuery = true)
-		Work findObraByLocation(Point coordenadas) throws IllegalArgumentException;
+		@Query(value="SELECT * From work  WHERE work.location LIKE ?1", nativeQuery = true)
+		Work findWorkByLocation(Point coordenadas) throws IllegalArgumentException;
 		
 		
 }

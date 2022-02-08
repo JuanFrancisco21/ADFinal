@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Work;
-import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.services.WorkService;
 
 @RestController // Indicacion de que es una clase controller.
@@ -134,7 +133,7 @@ public class WorkController {
 	 * @param Nombre de la obra a buscar.
 	 * @return Obra encontrado por nombre. En caso de error devuelve una obra vacia.
 	 */
-	@GetMapping("/{name}")
+	@GetMapping("/name/{name}")
 	public ResponseEntity<Work> getWorkByName(@PathVariable("name") String name) {
 		if (name != null && name.length()>1) {
 			try {
@@ -154,7 +153,7 @@ public class WorkController {
 	 * @param Id del trabajador de la obra a buscar.
 	 * @return Obras encontradas por id del trabajador. En caso de error devuelve una lista de obras vacia.
 	 */
-	@GetMapping("/{idworker}")
+	@GetMapping("/idworker/{idworker}")
 	public ResponseEntity<List<Work>> getWorkByWorker(@PathVariable("idWorker") Long idWorker) {
 		List<Work> result = new ArrayList<Work>();
 		if (idWorker != null && idWorker != -1) {
@@ -174,7 +173,7 @@ public class WorkController {
 	 * @param Localización de la obra a buscar.
 	 * @return Obra encontradas por la localización. En caso de error devuelve una obra vacia.
 	 */
-	@GetMapping("/{location}")
+	@GetMapping("/location/{location}")
 	public ResponseEntity<Work> getWorkByLocation(@PathVariable("location") Point location) {
 		Work result = new Work();
 		if (location != null) {

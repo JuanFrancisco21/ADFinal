@@ -1,6 +1,8 @@
 package com.ajaguilar.apiRestful.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,24 +25,30 @@ public class WorkerWork implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
+	@Column(name = "current")
+	Boolean current;
+	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idWorker")
 	private Worker worker;
+	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idWork")
 	private Work work;
-	@Column(name = "current")
-	Boolean current;
+	
+	@OneToMany(mappedBy = "worker_work", fetch = FetchType.LAZY, orphanRemoval = true)
+	private Set<Dailylog> dailyLogList;
 
-	public WorkerWork(Worker worker, Work work, Boolean current) {
+	public WorkerWork(Worker worker, Work work, Boolean current, Set<Dailylog> dailylog) {
 		this.id = -1L;
 		this.worker = worker;
 		this.work = work;
 		this.current = current;
+		this.dailyLogList = dailylog;
 	}
 
 	public WorkerWork() {
-		this(new Worker(), new Work(), Boolean.FALSE);
+		this(new Worker(), new Work(), Boolean.FALSE, new  HashSet<Dailylog>());
 	}
 
 	public Long getId() {
@@ -69,5 +78,14 @@ public class WorkerWork implements Serializable {
 	public void setCurrent(Boolean current) {
 		this.current = current;
 	}
+
+	public Set<Dailylog> getDailyLogList() {
+		return dailyLogList;
+	}
+
+	public void setDailyLogList(Set<Dailylog> dailyLogList) {
+		this.dailyLogList = dailyLogList;
+	}
+	
 
 }

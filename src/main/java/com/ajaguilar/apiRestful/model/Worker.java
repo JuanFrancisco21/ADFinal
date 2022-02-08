@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "worker")
 public class Worker implements Serializable {
@@ -28,15 +30,20 @@ public class Worker implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 	@Column(name = "active")
-	private Short active;
-	@Column(name = "picture", columnDefinition = "LONGTEXT")
+	private Boolean active;
+	@Column(name = "picture")
 	private String picture;
-	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+	
+	//Modelo work
+	@JsonIgnoreProperties(value = "chief",allowSetters = true)
+	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<Work> chiefWorkList;
-	@OneToMany(fetch = FetchType.LAZY)
+	
+	//Modelo worker_work
+	@OneToMany(mappedBy = "worker",fetch = FetchType.LAZY)
 	private Set<WorkerWork> workerWork;
 
-	public Worker(String name, String surname, Short active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
+	public Worker(String name, String surname, Boolean active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
 		this.id = -1L;
 		this.name = name;
 		this.surname = surname;
@@ -47,7 +54,7 @@ public class Worker implements Serializable {
 	}
 
 	public Worker() {
-		this("", "", Short.MIN_VALUE, "", new HashSet<Work>(), new HashSet<WorkerWork>());
+		this("", "", true, "", new HashSet<Work>(), new HashSet<WorkerWork>());
 	}
 
 	public Long getId() {
@@ -71,10 +78,11 @@ public class Worker implements Serializable {
 		this.surname = surname;
 	}
 
-	public Short getActive() {
+	public Boolean getActive() {
 		return active;
 	}
-	public void setActive(Short active) {
+
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 
@@ -99,5 +107,6 @@ public class Worker implements Serializable {
 	public void setWorkerWork(Set<WorkerWork> workerWork) {
 		this.workerWork = workerWork;
 	}
+
 
 }
