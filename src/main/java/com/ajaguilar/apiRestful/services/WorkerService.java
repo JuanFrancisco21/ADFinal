@@ -23,7 +23,7 @@ public class WorkerService {
 	 * 
 	 * @return Lista con todos los trabajadores de la BBDD.
 	 */
-	public List<Worker> getAllWork() {
+	public List<Worker> getAllWorker() {
 		List<Worker> result = repository.findAll();
 		if (!result.isEmpty()) {
 			return result;
@@ -67,7 +67,7 @@ public class WorkerService {
 	 * @throws NullPointerException     Lanzado al ser nulo el trabajador recibida.
 	 * @throws IllegalArgumentException Lanzado en caso de error.
 	 */
-	public Worker createWork(Worker worker) throws NullPointerException, IllegalArgumentException {
+	public Worker createWorker(Worker worker) throws NullPointerException, IllegalArgumentException {
 		if (worker != null) {
 			if (worker.getId() < 0) {
 				try {
