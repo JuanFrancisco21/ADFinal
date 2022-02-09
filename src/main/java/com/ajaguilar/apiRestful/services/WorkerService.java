@@ -1,6 +1,5 @@
 package com.ajaguilar.apiRestful.services;
 
-import java.awt.Point;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
-import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.repository.WorkerRepository;
 
@@ -97,7 +95,6 @@ public class WorkerService {
 			throws RecordNotFoundException, NullPointerException, IllegalArgumentException {
 		if (worker != null) {
 			Optional<Worker> result = Optional.of(getWorkerById(worker.getId()));
-System.out.println(worker);
 			if (result != null) {
 				if (result.isPresent()) {
 					Worker newWorker = result.get();
@@ -109,7 +106,6 @@ System.out.println(worker);
 					newWorker.setChiefWorkList(worker.getChiefWorkList());
 					newWorker.setWorkerWork(worker.getWorkerWork());
 					try {
-System.out.println(newWorker);
 						return repository.save(newWorker);
 					} catch (IllegalArgumentException e) {
 						throw new IllegalArgumentException(e);
