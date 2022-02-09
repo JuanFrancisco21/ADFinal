@@ -83,11 +83,11 @@ public class DailylogService {
     }
     
     //Returns all dailylogs from a concrete WorkerWork
-//    public List<Dailylog> getDailylogsByWorkerwork(Long workerWorkId){
-//        List<Dailylog> result;
-//        result = repository.findByWorkerwork(workerWorkId);
-//        return result;
-//    }
+    public List<Dailylog> getDailylogsByWorkerwork(Long workerWorkId){
+        List<Dailylog> result;
+        result = repository.findByWorkerwork(workerWorkId);
+        return result;
+   }
     
     
     

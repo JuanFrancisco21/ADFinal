@@ -17,7 +17,7 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
      * @param fecha del dailylog.
      * @return dailylogs con esa fecha.
      */
-    @Query(value="SELECT d FROM dailylog d WHERE dailylog.date LIKE %?1", nativeQuery = true)
+    @Query(value="SELECT d.* FROM dailylog d WHERE d.date LIKE ?1", nativeQuery = true)
     List<Dailylog> findByDate(Date date);
     
     
@@ -26,6 +26,6 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
      * @param workerWorkId id del workerwork
      * @return la lista de dailylogs de ese workerwork
      */
-    @Query(value="SELECT d FROM dailylog d JOIN dailylog.id_workerwork ON worker_work WHERE worker_work.id= ?1", nativeQuery = true)
+    @Query(value="SELECT d.* FROM dailylog d WHERE d.id_workerwork= ?1", nativeQuery = true)
     List<Dailylog> findByWorkerwork(Long workerWorkId);
 }
