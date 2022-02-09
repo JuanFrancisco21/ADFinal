@@ -4,6 +4,7 @@ import com.ajaguilar.apiRestful.model.Dailylog;
 import com.ajaguilar.apiRestful.services.DailylogService;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -122,10 +123,29 @@ public class DailylogController {
      * @return Lista de los dailylogs que coincidan con dicha fecha
      */
     @GetMapping("/date/{date}")
-    public ResponseEntity<List<Dailylog>> getDailylogsByDate(@PathVariable("date") LocalDate date){
-        Date day = Date.valueOf(date);
+    public ResponseEntity<List<Dailylog>> getDailylogsByDate(@PathVariable("date") String date){
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+  	   //convert String to LocalDate
+       LocalDate localDate = LocalDate.parse(date, formatter);
+  	   Date day = Date.valueOf(localDate);
         try{
             List<Dailylog> result = service.getDailylogsByDay(day);
+            return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+        
+    }
+    
+    /**
+     * Devuelve todos los dailylogs de un workerWork concreto
+     * @param idworkerWork ID del workerWork del que queremos obtener los dailylogs
+     * @return Lista de los dailylogs que coincidan con dicho workerWork
+     */
+    @GetMapping("/workerWork/{idworkerWork}")
+    public ResponseEntity<List<Dailylog>> getDailylogsByWorkerWork(@PathVariable("idworkerWork") Long idworkerWork){
+        try{
+            List<Dailylog> result = service.getDailylogsByWorkerwork(idworkerWork);
             return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(), HttpStatus.NOT_FOUND);
