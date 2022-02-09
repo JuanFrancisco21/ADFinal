@@ -108,5 +108,11 @@ public class Worker implements Serializable {
 		this.workerWork = workerWork;
 	}
 
+	@Override
+	public String toString() {
+		return "Worker [id=" + id + ", name=" + name + ", surname=" + surname + ", active=" + active + ", picture="
+				+ picture + "]";
+	}
+
 
 }

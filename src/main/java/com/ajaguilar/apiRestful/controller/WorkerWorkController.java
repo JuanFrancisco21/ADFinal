@@ -131,7 +131,7 @@ public class WorkerWorkController {
 	 * @param idWorker La id del worker
 	 * @return Una lista con los workerworks que cumplan los requisitos
 	 */
-	@GetMapping("/{idWorker}")
+	@GetMapping("/WorkerWorkByWorker/{idWorker}")
 	public ResponseEntity<List<WorkerWork>> getWorkerWorkByWorker(@PathVariable("idWorker") Long idWorker) {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
 		if (idWorker != null && idWorker != -1) {

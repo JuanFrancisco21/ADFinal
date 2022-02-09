@@ -23,7 +23,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Long>{
 	 * @return obrero con ese apellido.
 	 * @throws IllegalArgumentException
 	 */
-	@Query(value="SELECT * FROM worker  WHERE worker.surname LIKE %?1%", nativeQuery = true)
+	@Query(value="SELECT * FROM worker WHERE worker.surname LIKE %?1%", nativeQuery = true)
 	Worker findBySurname(String surname) throws IllegalArgumentException;
 
 	/**
@@ -32,6 +32,6 @@ public interface WorkerRepository extends JpaRepository<Worker, Long>{
 	 * @return obreros activos/no activos.
 	 * @throws IllegalArgumentException
 	 */
-	@Query(value="SELECT * FROM worker WHERE worker.active LIKE %?1%", nativeQuery = true)
+	@Query(value="SELECT * FROM worker WHERE worker.active = ?1", nativeQuery = true)
 	List<Worker> findByActive(Boolean active) throws IllegalArgumentException;
 }
