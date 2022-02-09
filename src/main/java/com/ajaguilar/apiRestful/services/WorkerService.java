@@ -97,6 +97,7 @@ public class WorkerService {
 			throws RecordNotFoundException, NullPointerException, IllegalArgumentException {
 		if (worker != null) {
 			Optional<Worker> result = Optional.of(getWorkerById(worker.getId()));
+System.out.println(worker);
 			if (result != null) {
 				if (result.isPresent()) {
 					Worker newWorker = result.get();
@@ -108,6 +109,7 @@ public class WorkerService {
 					newWorker.setChiefWorkList(worker.getChiefWorkList());
 					newWorker.setWorkerWork(worker.getWorkerWork());
 					try {
+System.out.println(newWorker);
 						return repository.save(newWorker);
 					} catch (IllegalArgumentException e) {
 						throw new IllegalArgumentException(e);
@@ -163,7 +165,8 @@ public class WorkerService {
 	public Worker getWorkerBySurname(String apellido) throws RecordNotFoundException, NullPointerException, IllegalArgumentException {
 		if(apellido != null) {
 			try {
-				Optional<Worker> result = Optional.of(repository.findByName(apellido));
+				System.out.println(apellido);
+				Optional<Worker> result = Optional.of(repository.findBySurname(apellido));
 				if(result.isPresent()) {
 					return result.get();
 				}else {

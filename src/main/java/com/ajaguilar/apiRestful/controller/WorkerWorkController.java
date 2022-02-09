@@ -126,11 +126,12 @@ public class WorkerWorkController {
 	}
 
 	/**
-	 * Obtiene los workerwork que tengan un worker específico
+	 * Obtiene los workerwork que tengan un worker especÃ­fico
 	 * 
 	 * @param idWorker La id del worker
 	 * @return Una lista con los workerworks que cumplan los requisitos
 	 */
+
 	@GetMapping("idWorker/{idWorker}")
 	public ResponseEntity<List<WorkerWork>> getWorkerWorkByWorker(@PathVariable("idWorker") Long idWorker) {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
