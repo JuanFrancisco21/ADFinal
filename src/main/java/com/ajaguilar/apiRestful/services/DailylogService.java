@@ -2,10 +2,8 @@ package com.ajaguilar.apiRestful.services;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Dailylog;
-import com.ajaguilar.apiRestful.model.WorkerWork;
 import com.ajaguilar.apiRestful.repository.DailylogRepository;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package com.ajaguilar.apiRestful.controller;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
-import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.services.WorkerService;
 
