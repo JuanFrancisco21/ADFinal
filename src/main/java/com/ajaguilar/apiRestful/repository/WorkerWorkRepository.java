@@ -16,7 +16,7 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	 * @return Una lista de los WorkerWork que contiene el trabajador especificado
 	 * @throws IllegalArgumentException
 	 */
-	@Query(value = "SELECT w FROM workerWork w WHERE workerWork.idWorker = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM worker_work WHERE worker_work.id_worker = ?1", nativeQuery = true)
 	public List<WorkerWork> findByWorker(Long idWorker) throws IllegalArgumentException;
 
 	/**
@@ -26,7 +26,7 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	 * @return El WorkerWork que contiene el trabajador y current es verdadero
 	 * @throws IllegalArgumentException
 	 */
-	@Query(value = "SELECT w FROM workerWork w WHERE workerWork.idWorker = ?1 AND workerWork.current = TRUE", nativeQuery = true)
+	@Query(value = "SELECT * FROM worker_work WHERE worker_work.id_worker = ?1 AND workerWork.current = TRUE", nativeQuery = true)
 	public WorkerWork findByCurrentWorker(Long idWorker) throws IllegalArgumentException;
 
 	/**
@@ -36,7 +36,7 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	 * @return Una lista de los WorkerWOrk que contiene el trabajo especificado
 	 * @throws IllegalArgumentException
 	 */
-	@Query(value = "SELECT w FROM workerWork w WHERE workerWork.idWork = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM worker_work WHERE worker_work.id_work = ?1", nativeQuery = true)
 	public List<WorkerWork> findByWork(Long idWork) throws IllegalArgumentException;
 
 }

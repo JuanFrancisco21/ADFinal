@@ -126,12 +126,13 @@ public class WorkerWorkController {
 	}
 
 	/**
-	 * Obtiene los workerwork que tengan un worker específico
+	 * Obtiene los workerwork que tengan un worker especÃ­fico
 	 * 
 	 * @param idWorker La id del worker
 	 * @return Una lista con los workerworks que cumplan los requisitos
 	 */
-	@GetMapping("/WorkerWorkByWorker/{idWorker}")
+
+	@GetMapping("idWorker/{idWorker}")
 	public ResponseEntity<List<WorkerWork>> getWorkerWorkByWorker(@PathVariable("idWorker") Long idWorker) {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
 		if (idWorker != null && idWorker != -1) {
@@ -152,7 +153,7 @@ public class WorkerWorkController {
 	 * @param idWorker La id del worker
 	 * @return El workerwork que cumple los requisitos
 	 */
-	@GetMapping("/{idWorker}")
+	@GetMapping("/current/{idWorker}")
 	public ResponseEntity<WorkerWork> getWorkerWorkByCurrentWorker(@PathVariable("idWorker") Long idWorker) {
 		WorkerWork result = new WorkerWork();
 		if (idWorker != null && idWorker != -1) {
@@ -173,7 +174,7 @@ public class WorkerWorkController {
 	 * @param idWork La id del work
 	 * @return La lista de workerworks que cumple las condiciones
 	 */
-	@GetMapping("/{idWork}")
+	@GetMapping("idWork/{idWork}")
 	public ResponseEntity<List<WorkerWork>> getWorkerWorkByWork(@PathVariable("idWork") Long idWork) {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
 		if (idWork != null && idWork != -1) {
