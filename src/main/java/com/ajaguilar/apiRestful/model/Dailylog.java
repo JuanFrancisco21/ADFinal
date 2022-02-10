@@ -7,7 +7,6 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +16,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="dailylog")
-public class Dailylog implements Serializable{
+@Table(name = "dailylog")
+public class Dailylog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
     
@@ -36,55 +35,58 @@ public class Dailylog implements Serializable{
     @JoinColumn(name="idWorkerwork")
     private WorkerWork worker_work;
     
-    
-
-    public Dailylog(LocalDate date,float hours, WorkerWork worker_work) {
-    	this.id = -1L;
-        this.date = Date.valueOf(date);
-        this.hours = hours;
-        this.worker_work = worker_work;
-    }
-    
-    public Dailylog() {
-        this(LocalDate.now(), 0f, new WorkerWork());
-    }
 
 
-    public Long getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "date")
+	private Date date;
+	@Column(name = "hours")
+	private float hours;
 
+	@JsonIgnoreProperties(value = { "dailyLogList" })
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "idWorkerwork")
+	private WorkerWork worker_work;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Dailylog(LocalDate date, float hours, WorkerWork worker_work) {
+		this.id = -1L;
+		this.date = Date.valueOf(date);
+		this.hours = hours;
+		this.worker_work = worker_work;
+	}
 
-    
-    public Date getDate() {
-        return date;
-    }
+	public Dailylog() {
+		this(LocalDate.now(), 0f, new WorkerWork());
+	}
 
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
+	public float getHours() {
+		return hours;
+	}
+	public void setHours(float hours) {
+		this.hours = hours;
+	}
 
-    public float getHours() {
-        return hours;
-    }
-
-
-    public void setHours(float hours) {
-        this.hours = hours;
-    }
-
-    public WorkerWork getWorkerWork(){
-        return worker_work;
-    }
-    
-    public void setWorkerWork(WorkerWork ww){
-        this.worker_work = ww;
-    }
+	public WorkerWork getWorkerWork() {
+		return worker_work;
+	}
+	public void setWorkerWork(WorkerWork ww) {
+		this.worker_work = ww;
+	}
 }
-

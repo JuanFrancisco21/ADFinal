@@ -15,6 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
 @Entity
 @Table(name = "worker")
 public class Worker implements Serializable {
@@ -32,13 +37,16 @@ public class Worker implements Serializable {
 	private Boolean active;
 	@Column(name = "picture")
 	private String picture;
-	
-	//Modelo work
+
+
+	// Modelo work
+	@JsonIgnoreProperties(value = { "chief" })
 	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = false)
 	private Set<Work> chiefWorkList;
-  
-	//Modelo worker_work
-	@OneToMany(mappedBy = "worker",fetch = FetchType.LAZY)
+
+	// Modelo worker_work
+	@JsonIgnoreProperties(value = { "worker" })
+	@OneToMany(mappedBy = "worker")
 	private Set<WorkerWork> workerWork;
 
 	public Worker(String name, String surname, Boolean active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
