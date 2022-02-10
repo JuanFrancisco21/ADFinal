@@ -16,13 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "workerWork")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class WorkerWork implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,12 +29,10 @@ public class WorkerWork implements Serializable {
 	@Column(name = "current")
 	Boolean current;
 	
-	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idWorker")
 	private Worker worker;
 	
-	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idWork")
 	private Work work;

@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 @Entity
 @Table(name="dailylog")
@@ -32,7 +31,7 @@ public class Dailylog implements Serializable{
     @Column(name="hours")
     private float hours;
     
-    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="idWorkerwork")
     private WorkerWork worker_work;

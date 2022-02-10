@@ -23,6 +23,10 @@ import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.services.WorkService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController // Indicacion de que es una clase controller.
 @RequestMapping("/work") // Cuando se introduzca esta URL se ejecutara este controller.
 public class WorkController {
@@ -35,16 +39,20 @@ public class WorkController {
 	 * 
 	 * @return Lista con todas las obras de la BBDD. En caso de error devuelve una lista vacia.
 	 */
+	 @ApiOperation(value = "Método para obtener una lista de todas las obras de la BBDD."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping
 	public ResponseEntity<List<Work>> getAllWork() {
 		List<Work> result = new ArrayList<Work>();
-
 		try {
 			result = service.getAllWork();
 			return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -54,6 +62,12 @@ public class WorkController {
 	 * @param id de la obra a buscar.
 	 * @return Obra encontrado por id. En caso de error devuelve una obra vacia.
 	 */
+	 @ApiOperation(value = "Método obtener una obra mediante su id."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/{id}")
 	public ResponseEntity<Work> getWorkById(@PathVariable("id") Long id) {
 		if (id != null && id > -1) {
@@ -61,7 +75,7 @@ public class WorkController {
 				Work result = service.getWorkById(id);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -74,6 +88,12 @@ public class WorkController {
 	 * @param Obra que se va a crear.
 	 * @return Obra creada en la BBDD. En caso de error devuelve una obra vacia.
 	 */
+	 @ApiOperation(value = "Método para la creación de una nueva obra."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PostMapping
 	public ResponseEntity<Work> createWork(@Valid @RequestBody Work work) {
 		if (work != null && work.getId() == -1) {
@@ -81,7 +101,7 @@ public class WorkController {
 				Work result = service.createWork(work);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -94,6 +114,12 @@ public class WorkController {
 	 * @param Obra que se va a actualizar.
 	 * @return Obra actualizada en la BBDD. En caso de error devuelve una obra vacia.
 	 */
+	 @ApiOperation(value = "Método para la actulización de una obra."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PutMapping
 	public ResponseEntity<Work> updateWork(@Valid @RequestBody Work work) {
 		if (work != null && work.getId() != -1) {
@@ -101,7 +127,7 @@ public class WorkController {
 				Work result = service.updateWork(work);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -120,7 +146,7 @@ public class WorkController {
 				Work result = service.createOrUpdateWork(work);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -133,6 +159,12 @@ public class WorkController {
 	 * @param Nombre de la obra a buscar.
 	 * @return Obra encontrado por nombre. En caso de error devuelve una obra vacia.
 	 */
+	 @ApiOperation(value = "Método obtener una obra mediante su nombre."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/name/{name}")
 	public ResponseEntity<Work> getWorkByName(@PathVariable("name") String name) {
 		if (name != null && name.length()>1) {
@@ -140,7 +172,7 @@ public class WorkController {
 				Work result = service.getWorkByName(name);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -153,6 +185,12 @@ public class WorkController {
 	 * @param Id del trabajador de la obra a buscar.
 	 * @return Obras encontradas por id del trabajador. En caso de error devuelve una lista de obras vacia.
 	 */
+	 @ApiOperation(value = "Método obtener una obra mediante su trabajador."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/idworker/{idworker}")
 	public ResponseEntity<List<Work>> getWorkByWorker(@PathVariable("idWorker") Long idWorker) {
 		List<Work> result = new ArrayList<Work>();
@@ -161,7 +199,7 @@ public class WorkController {
 				result = service.getWorkByWorker(idWorker);
 				return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);		}
@@ -173,6 +211,12 @@ public class WorkController {
 	 * @param Localización de la obra a buscar.
 	 * @return Obra encontradas por la localización. En caso de error devuelve una obra vacia.
 	 */
+	 @ApiOperation(value = "Método obtener una obra mediante su localización."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/location/{location}")
 	public ResponseEntity<Work> getWorkByLocation(@PathVariable("location") Point location) {
 		Work result = new Work();
@@ -181,7 +225,7 @@ public class WorkController {
 				result = service.getWorkByLocation(location);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);		}
@@ -194,15 +238,21 @@ public class WorkController {
 	 * @return Status ok si lo borra, Bad_request en caso de no borrarla.
 	 * @throws RecordNotFoundException Lanzado al no encontrar el valor.
 	 */
+	 @ApiOperation(value = "Método para borra una obra de la BBDD."
+	            ,notes = "")
+	    @ApiResponses(value = {
+	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
+	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@DeleteMapping("/{id}")
 	public HttpStatus deleteWorkById(@PathVariable("id") Long id) throws RecordNotFoundException {
 		if (id != null && id > -1) {
 			try {
 				service.deleteWorkById(id);
+				return HttpStatus.OK;
 			} catch (Exception e) {
-				return HttpStatus.BAD_REQUEST;
+				return HttpStatus.INTERNAL_SERVER_ERROR;
 			}
-			return HttpStatus.OK;
 		} else {
 			return HttpStatus.BAD_REQUEST;
 		}
