@@ -7,7 +7,6 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,77 +14,64 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="dailylog")
-public class Dailylog implements Serializable{
+@Table(name = "dailylog")
+public class Dailylog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
-    @Column(name="date")
-    private Date date;
-    @Column(name="hours")
-    private float hours;
-    
-    @JsonIdentityReference(alwaysAsId = true)
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name="idWorkerwork")
-    private WorkerWork worker_work;
-    
-    
 
-    public Dailylog(LocalDate date,float hours, WorkerWork worker_work) {
-    	this.id = -1L;
-        this.date = Date.valueOf(date);
-        this.hours = hours;
-        this.worker_work = worker_work;
-    }
-    
-    public Dailylog() {
-        this(LocalDate.now(), 0f, new WorkerWork());
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "date")
+	private Date date;
+	@Column(name = "hours")
+	private float hours;
 
+	@JsonIgnoreProperties(value = { "dailyLogList" })
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "idWorkerwork")
+	private WorkerWork worker_work;
 
-    public Long getId() {
-        return id;
-    }
+	public Dailylog(LocalDate date, float hours, WorkerWork worker_work) {
+		this.id = -1L;
+		this.date = Date.valueOf(date);
+		this.hours = hours;
+		this.worker_work = worker_work;
+	}
 
+	public Dailylog() {
+		this(LocalDate.now(), 0f, new WorkerWork());
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
+	public float getHours() {
+		return hours;
+	}
+	public void setHours(float hours) {
+		this.hours = hours;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-
-    public float getHours() {
-        return hours;
-    }
-
-
-    public void setHours(float hours) {
-        this.hours = hours;
-    }
-
-    public WorkerWork getWorkerWork(){
-        return worker_work;
-    }
-    
-    public void setWorkerWork(WorkerWork ww){
-        this.worker_work = ww;
-    }
+	public WorkerWork getWorkerWork() {
+		return worker_work;
+	}
+	public void setWorkerWork(WorkerWork ww) {
+		this.worker_work = ww;
+	}
 }
-
