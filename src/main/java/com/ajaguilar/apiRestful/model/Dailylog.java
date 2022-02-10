@@ -14,13 +14,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "dailylog")
 public class Dailylog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
+    @Column(name="date")
+    private Date date;
+    @Column(name="hours")
+    private float hours;
+    
+    //@JsonIdentityReference(alwaysAsId = true)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name="idWorkerwork")
+    private WorkerWork worker_work;
+    
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
