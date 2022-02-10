@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -32,17 +32,18 @@ public class WorkerWork implements Serializable {
 	private Long id;
 	@Column(name = "current")
 	Boolean current;
-	
-	@JsonIdentityReference(alwaysAsId = true)
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+	@JsonIgnoreProperties(value = { "workerWork" })
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWorker")
 	private Worker worker;
-	
-	@JsonIdentityReference(alwaysAsId = true)
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+	@JsonIgnoreProperties(value = { "workerWork" })
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWork")
 	private Work work;
-	
+
+	@JsonIgnoreProperties(value = { "worker_work" })
 	@OneToMany(mappedBy = "worker_work", fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<Dailylog> dailyLogList;
 

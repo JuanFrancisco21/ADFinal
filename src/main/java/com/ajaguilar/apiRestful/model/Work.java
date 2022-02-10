@@ -38,14 +38,16 @@ public class Work implements Serializable {
 	private String description;
 	@Column(name = "location")
 	private Point location;
-	//Modelo worker
+
+	// Modelo worker
+	@JsonIgnoreProperties(value = { "chiefWorkList" })
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "chief")
 	private Worker chief;
-	
-	//Modelo worker_work
-	//@JsonIgnoreProperties(value = "work",allowSetters = true)
-	@OneToMany(mappedBy = "work",fetch = FetchType.LAZY)
+
+	// Modelo worker_work
+	@JsonIgnoreProperties(value = { "work" })
+	@OneToMany(mappedBy = "work", fetch = FetchType.LAZY)
 	private Set<WorkerWork> workerWork;
 
 	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {
