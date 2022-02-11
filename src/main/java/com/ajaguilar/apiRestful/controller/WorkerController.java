@@ -19,13 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
+import com.ajaguilar.apiRestful.model.Dailylog;
 import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.model.Worker;
+import com.ajaguilar.apiRestful.model.WorkerWork;
+import com.ajaguilar.apiRestful.services.WorkService;
 import com.ajaguilar.apiRestful.services.WorkerService;
+import com.ajaguilar.apiRestful.services.WorkerWorkService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController // Indicacion de que es una clase controller.
 @RequestMapping("/worker") // Cuando se introduzca esta URL se ejecutara este controller.
@@ -33,7 +39,10 @@ public class WorkerController {
 
 	@Autowired // Instancia service que ejecuta este controller.
 	WorkerService service;
-	
+	@Autowired
+        WorkerWorkService wwservice;
+        @Autowired
+        WorkService wservice;
 	/**
 	 * Método para obtener una lista de todas los trabajadores de la BBDD.
 	 * 
@@ -241,5 +250,59 @@ public class WorkerController {
 		}
 	}
 	
+	 
+	 /**
+		 * Método para introducir un trabajador en una obra.
+		 * 
+		 * @params workerId: id del trabajador; workId: id del trabajo.
+		 * @return Modelo WorkerWork creado en la BD. En caso de error devuelve un WorkerWork vacio.
+		 */
+		 @ApiOperation(value = "Método para introducir un trabajador en una obra."
+		            ,notes = "")
+		    @ApiResponses(value = {
+		            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+		            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+		            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
+        @PostMapping("add/{id}/{workId}")
+        public ResponseEntity<WorkerWork> addWorkerToWork(@PathVariable("id") Long workerId, @PathVariable("workId") Long workId){
+            Worker worker = service.getWorkerById(workerId);
+            Work work = wservice.getWorkById(workId);
+            if(worker != null && work != null){
+                try{
+                    WorkerWork result = wwservice.createWorkerWork(new WorkerWork(worker, work, true, new HashSet<Dailylog>()));
+                    return new ResponseEntity<WorkerWork>(result, new HttpHeaders(), HttpStatus.OK);
+                }catch(Exception ex){
+                    return new ResponseEntity<WorkerWork>(new WorkerWork(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }else{
+                return new ResponseEntity<WorkerWork>(new WorkerWork(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            }
+        }
+		 
+		 /**
+			 * Método para eliminar un trabajador de una obra.
+			 * 
+			 * @params workerId: id del trabajador; workId: id del trabajo.
+			 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
+			 */
+			 @ApiOperation(value = "Método para introducir un trabajador en una obra."
+			            ,notes = "")
+			    @ApiResponses(value = {
+			            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	        @DeleteMapping("deleteWorkerWork/{id}")
+	        public HttpStatus deleteWorkerFromWork(@PathVariable("id") Long id){
+	            if(id > 0){
+	                try{
+	                    wwservice.deleteWorkerWorkById(id);
+	                    return HttpStatus.OK;
+	                }catch(Exception ex){
+	                    return HttpStatus.INTERNAL_SERVER_ERROR;
+	                }
+	            }else{
+	                return HttpStatus.BAD_REQUEST;
+	            }
+	        }
 	
 }
