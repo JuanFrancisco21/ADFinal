@@ -41,7 +41,7 @@ public class Worker implements Serializable {
 
 	// Modelo work
 	@JsonIgnoreProperties(value = { "chief" })
-	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = false)
+	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = false)
 	private Set<Work> chiefWorkList;
 
 	// Modelo worker_work

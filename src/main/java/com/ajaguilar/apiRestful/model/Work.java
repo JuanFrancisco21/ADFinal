@@ -38,13 +38,13 @@ public class Work implements Serializable {
 
 	// Modelo worker
 	@JsonIgnoreProperties(value = { "chiefWorkList" })
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chief")
 	private Worker chief;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "work" })
-	@OneToMany(mappedBy = "work", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "work", fetch = FetchType.EAGER)
 	private Set<WorkerWork> workerWork;
 
 	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {
