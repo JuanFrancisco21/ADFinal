@@ -1,5 +1,6 @@
 package com.ajaguilar.apiRestful.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.sql.Date;
@@ -7,6 +8,7 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,27 +31,11 @@ public class Dailylog implements Serializable {
     private Date date;
     @Column(name="hours")
     private float hours;
-    
-    //@JsonIdentityReference(alwaysAsId = true)
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name="idWorkerwork")
+
+    @JsonIgnoreProperties(value = { "dailyLogList" })
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "idWorkerwork")
     private WorkerWork worker_work;
-    
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
-	@Column(name = "date")
-	private Date date;
-	@Column(name = "hours")
-	private float hours;
-
-	@JsonIgnoreProperties(value = { "dailyLogList" })
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "idWorkerwork")
-	private WorkerWork worker_work;
 
 	public Dailylog(LocalDate date, float hours, WorkerWork worker_work) {
 		this.id = -1L;

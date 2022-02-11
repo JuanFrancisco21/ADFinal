@@ -1,5 +1,6 @@
 package com.ajaguilar.apiRestful.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
