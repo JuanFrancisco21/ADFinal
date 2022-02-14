@@ -1,6 +1,9 @@
 package com.ajaguilar.apiRestful.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,23 +31,32 @@ public class Work implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@ApiModelProperty(position = 0)
 	private Long id;
+	
 	@Column(name = "name")
+	@ApiModelProperty(position = 1)
 	private String name;
+	
 	@Column(name = "description")
+	@ApiModelProperty(position = 2)
 	private String description;
+	
 	@Column(name = "location")
+	@ApiModelProperty(position = 3)
 	private Point location;
 
 	// Modelo worker
 	@JsonIgnoreProperties(value = { "chiefWorkList" })
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chief")
+	@ApiModelProperty(position = 4)
 	private Worker chief;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "work" })
 	@OneToMany(mappedBy = "work", fetch = FetchType.EAGER)
+  @ApiModelProperty(position = 5)
 	private Set<WorkerWork> workerWork;
 
 	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {

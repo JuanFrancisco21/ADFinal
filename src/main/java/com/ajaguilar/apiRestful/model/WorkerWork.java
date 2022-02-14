@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name = "workerWork")
@@ -30,22 +32,28 @@ public class WorkerWork implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@ApiModelProperty(position = 0)
 	private Long id;
+	
 	@Column(name = "current")
-	Boolean current;
-
+	@ApiModelProperty(position = 1)
+	private Boolean current;
+	
 	@JsonIgnoreProperties(value = { "workerWork" })
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWorker")
+	@ApiModelProperty(position = 2)
 	private Worker worker;
 
 	@JsonIgnoreProperties(value = { "workerWork" })
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWork")
+	@ApiModelProperty(position = 3)
 	private Work work;
 
 	@JsonIgnoreProperties(value = { "worker_work" })
 	@OneToMany(mappedBy = "worker_work", fetch = FetchType.LAZY, orphanRemoval = true)
+	@ApiModelProperty(position = 4)
 	private Set<Dailylog> dailyLogList;
 
 	public WorkerWork(Worker worker, Work work, Boolean current, Set<Dailylog> dailylog) {

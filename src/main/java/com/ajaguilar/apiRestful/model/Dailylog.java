@@ -1,6 +1,9 @@
 package com.ajaguilar.apiRestful.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.sql.Date;
@@ -26,15 +29,21 @@ public class Dailylog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
+    @ApiModelProperty(position = 0)
     private Long id;
+    
+    @ApiModelProperty(position = 1)
     @Column(name="date")
     private Date date;
+    
+    @ApiModelProperty(position = 2)
     @Column(name="hours")
     private float hours;
 
     @JsonIgnoreProperties(value = { "dailyLogList" })
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idWorkerwork")
+    @ApiModelProperty(position = 3)
     private WorkerWork worker_work;
 
 	public Dailylog(LocalDate date, float hours, WorkerWork worker_work) {
