@@ -1,7 +1,6 @@
 package com.ajaguilar.apiRestful.controller;
 
 import com.ajaguilar.apiRestful.model.Dailylog;
-import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.services.DailylogService;
 import com.ajaguilar.apiRestful.services.WorkerWorkService;
 
@@ -44,7 +43,7 @@ public class DailylogController {
      * @return una List con los dailylogs
      */
     @ApiOperation(value = "Método que devuelve una lista con todos los dailylogs de la BD.",
-             notes = "")
+    		notes = "", tags = "getAllDailylogs")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
         @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -67,7 +66,7 @@ public class DailylogController {
      * en caso contrario
      */
     @ApiOperation(value = "Método para obtener un dailylog concreto según su id.",
-             notes = "")
+             notes = "", tags = "getDailylogById")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
         @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -89,7 +88,7 @@ public class DailylogController {
      * @return El dailylog creado si tiene ï¿½xito, dailylog vacï¿½o si falla
      */
     @ApiOperation(value = "Método que crea un dailylog en la BD.",
-             notes = "")
+             notes = "", tags = "createDailylog")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
         @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -124,7 +123,7 @@ public class DailylogController {
      * @return El objeto dailylog editado
      */
     @ApiOperation(value = "Método para editar un dailylog que ya exista en la BD.",
-             notes = "")
+             notes = "", tags = "updateDailylog")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
         @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -157,7 +156,7 @@ public class DailylogController {
      * @return Status ok si el objeto es eliminado, Bad Request en caso contrario
      */
 	 @ApiOperation(value = "Método que elimina un dailylog de la BD según su id"
-	            ,notes = "")
+	            ,notes = "", tags = "deleteDailylogById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -191,7 +190,7 @@ public class DailylogController {
      * @return Lista de los dailylogs que coincidan con dicha fecha
      */
 	 @ApiOperation(value = "Método que devuelve todos los dailylogs creados en una fecha concreta."
-	            ,notes = "")
+	            ,notes = "", tags = "getDailylogsByDate")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -217,7 +216,7 @@ public class DailylogController {
      * @return Lista de los dailylogs que coincidan con dicho workerWork
      */
 	 @ApiOperation(value = "Devuelve todos los dailylogs de un workerWork concreto."
-	            ,notes = "")
+	            ,notes = "", tags = "getDailylogsByWorkerWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),

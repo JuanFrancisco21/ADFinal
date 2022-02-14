@@ -29,21 +29,21 @@ public class Dailylog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    @ApiModelProperty(position = 0)
+    @ApiModelProperty(position = 0, name = "id", notes = "Identificador del dailylog", required = true, value = "1")
     private Long id;
     
-    @ApiModelProperty(position = 1)
+    @ApiModelProperty(position = 1, name = "Fecha", notes = "Fecha de la creación de dailylog", required = true, value = "DD/MM/YYY")
     @Column(name="date")
     private Date date;
     
-    @ApiModelProperty(position = 2)
+    @ApiModelProperty(position = 2, name = "Horas", notes = "Horas trabajadas del dailylog", required = true, value = "8")
     @Column(name="hours")
     private float hours;
 
     @JsonIgnoreProperties(value = { "dailyLogList" })
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idWorkerwork")
-    @ApiModelProperty(position = 3)
+    @ApiModelProperty(position = 3, name = "Relacion con Obra y Trabajador", notes = "Relacion con Trabajador y la obra", required = true, value = "Objeto worker_work")
     private WorkerWork worker_work;
 
 	public Dailylog(LocalDate date, float hours, WorkerWork worker_work) {
@@ -54,7 +54,7 @@ public class Dailylog implements Serializable {
 	}
 
 	public Dailylog() {
-		this(LocalDate.now(), 0f, new WorkerWork());
+		this(LocalDate.now(), 8f, new WorkerWork());
 	}
 
 	public Long getId() {

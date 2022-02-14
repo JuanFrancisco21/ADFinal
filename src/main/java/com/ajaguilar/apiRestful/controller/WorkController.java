@@ -40,7 +40,7 @@ public class WorkController {
 	 * @return Lista con todas las obras de la BBDD. En caso de error devuelve una lista vacia.
 	 */
 	 @ApiOperation(value = "Método para obtener una lista de todas las obras de la BBDD."
-	            ,notes = "")
+	            ,notes = "", tags = "getAllWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
@@ -63,7 +63,7 @@ public class WorkController {
 	 * @return Obra encontrado por id. En caso de error devuelve una obra vacia.
 	 */
 	 @ApiOperation(value = "Método obtener una obra mediante su id."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -89,7 +89,7 @@ public class WorkController {
 	 * @return Obra creada en la BBDD. En caso de error devuelve una obra vacia.
 	 */
 	 @ApiOperation(value = "Método para la creación de una nueva obra."
-	            ,notes = "")
+	            ,notes = "", tags = "createWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -115,7 +115,7 @@ public class WorkController {
 	 * @return Obra actualizada en la BBDD. En caso de error devuelve una obra vacia.
 	 */
 	 @ApiOperation(value = "Método para la actulización de una obra."
-	            ,notes = "")
+	            ,notes = "", tags = "updateWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -134,24 +134,6 @@ public class WorkController {
 		}
 	}
 	
-	/**
-	 * Método para la actulización de una obra o en caso de no existir la crea.
-	 * 
-	 * @param Obra que se va a actualizar/crear.
-	 * @return Obra actualizada/creada en la BBDD. En caso de error devuelve una obra vacia.
-	 */
-	public ResponseEntity<Work> createOrUpdateWork(@Valid @RequestBody Work work) {
-		if (work != null && work.getId() != -1) {
-			try {
-				Work result = service.createOrUpdateWork(work);
-				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		} else {
-			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		}
-	}
 	
 	/**
 	 * Método obtener una obra mediante su nombre.
@@ -160,7 +142,7 @@ public class WorkController {
 	 * @return Obra encontrado por nombre. En caso de error devuelve una obra vacia.
 	 */
 	 @ApiOperation(value = "Método obtener una obra mediante su nombre."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkByName")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -186,7 +168,7 @@ public class WorkController {
 	 * @return Obras encontradas por id del trabajador. En caso de error devuelve una lista de obras vacia.
 	 */
 	 @ApiOperation(value = "Método obtener una obra mediante su trabajador."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkByWorker")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -212,7 +194,7 @@ public class WorkController {
 	 * @return Obra encontradas por la localización. En caso de error devuelve una obra vacia.
 	 */
 	 @ApiOperation(value = "Método obtener una obra mediante su localización."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkByLocation")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -239,7 +221,7 @@ public class WorkController {
 	 * @throws RecordNotFoundException Lanzado al no encontrar el valor.
 	 */
 	 @ApiOperation(value = "Método para borra una obra de la BBDD."
-	            ,notes = "")
+	            ,notes = "", tags = "deleteWorkById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),

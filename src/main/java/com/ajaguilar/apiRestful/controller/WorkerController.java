@@ -31,7 +31,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.HashSet;
-import java.util.Set;
 
 @RestController // Indicacion de que es una clase controller.
 @RequestMapping("/worker") // Cuando se introduzca esta URL se ejecutara este controller.
@@ -50,7 +49,7 @@ public class WorkerController {
 	 * @return Lista con todos los trabajadores de la BBDD. En caso de error devuelve una lista vacia.
 	 */
 	 @ApiOperation(value = "Método para obtener una lista de todas los trabajadores de la BBDD."
-	            ,notes = "")
+	            ,notes = "", tags = "getAllWorker")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -75,7 +74,7 @@ public class WorkerController {
 	 * @return Trabajador encontrado por id. En caso de error devuelve un trabajador vacio.
 	 */
 	 @ApiOperation(value = "Método obtener un trabajador mediante su id."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkerById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -101,7 +100,7 @@ public class WorkerController {
 	 * @return Trabajador creado en la BBDD. En caso de error devuelve un trabajador vacio.
 	 */
 	 @ApiOperation(value = "Método para la creación de un nuevo trabajador."
-	            ,notes = "")
+	            ,notes = "", tags = "createWorker")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -127,7 +126,7 @@ public class WorkerController {
 	 * @return Trabajador actualizado en la BBDD. En caso de error devuelve un trabajador vacio.
 	 */
 	 @ApiOperation(value = "Método para la actulización de un trabajador."
-	            ,notes = "")
+	            ,notes = "", tags = "updateWorker")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -153,7 +152,7 @@ public class WorkerController {
 	 * @return Trabajador encontrado por nombre. En caso de error devuelve un trabajador vacio.
 	 */
 	 @ApiOperation(value = "Método obtener un trabajador mediante su nombre."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkerByName")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -179,7 +178,7 @@ public class WorkerController {
 	 * @return Trabajador encontrado por apellido. En caso de error devuelve un trabajador vacio.
 	 */
 	 @ApiOperation(value = "Método obtener un trabajador mediante su apellido."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkerBySurname")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -205,7 +204,7 @@ public class WorkerController {
 	 * @return Lista de trabajadores activos/inactivos. En caso de error devuelve un lista vacia.
 	 */
 	 @ApiOperation(value = "Método obtener un trabajador por si esta activo/inactivo."
-	            ,notes = "")
+	            ,notes = "", tags = "getWorkerByActive")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -232,7 +231,7 @@ public class WorkerController {
 	 * @throws RecordNotFoundException Lanzado al no encontrar el valor.
 	 */
 	 @ApiOperation(value = "Método para borra un trabajador de la BBDD."
-	            ,notes = "")
+	            ,notes = "", tags = "deleteWorkerById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -259,7 +258,7 @@ public class WorkerController {
 		 * @return Modelo WorkerWork creado en la BD. En caso de error devuelve un WorkerWork vacio.
 		 */
 		 @ApiOperation(value = "Método para introducir un trabajador en una obra."
-		            ,notes = "")
+		            ,notes = "", tags = "addWorkerToWork")
 		    @ApiResponses(value = {
 		            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
 		            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
@@ -287,7 +286,7 @@ public class WorkerController {
 			 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
 			 */
 			 @ApiOperation(value = "Método para introducir un trabajador en una obra."
-			            ,notes = "")
+			            ,notes = "", tags = "deleteWorkerFromWork")
 			    @ApiResponses(value = {
 			            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 			            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
