@@ -32,28 +32,28 @@ public class WorkerWork implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	@ApiModelProperty(position = 0)
+	@ApiModelProperty(position = 0, name = "Id", notes = "Identificador del Worker_Work", required = true, value = "1")
 	private Long id;
 	
 	@Column(name = "current")
-	@ApiModelProperty(position = 1)
+	@ApiModelProperty(position = 1, name = "Current", notes = "Estar asignada como activo un trabajador en la obra", required = true, value = "true")
 	private Boolean current;
 	
 	@JsonIgnoreProperties(value = { "workerWork" })
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWorker")
-	@ApiModelProperty(position = 2)
+	@ApiModelProperty(position = 2, name = "Worker", notes = "Worker el cual se va a relacionar", required = true, value = "Objeto worker")
 	private Worker worker;
 
 	@JsonIgnoreProperties(value = { "workerWork" })
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWork")
-	@ApiModelProperty(position = 3)
+	@ApiModelProperty(position = 3, name = "Work", notes = "Work el cual se va a relacionar", required = true, value = "Objeto work")
 	private Work work;
 
 	@JsonIgnoreProperties(value = { "worker_work" })
 	@OneToMany(mappedBy = "worker_work", fetch = FetchType.LAZY, orphanRemoval = true)
-	@ApiModelProperty(position = 4)
+	@ApiModelProperty(position = 4, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<Dailylog> dailyLogList;
 
 	public WorkerWork(Worker worker, Work work, Boolean current, Set<Dailylog> dailylog) {
