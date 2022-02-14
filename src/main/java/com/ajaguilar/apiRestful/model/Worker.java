@@ -30,36 +30,36 @@ public class Worker implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	@ApiModelProperty(position = 0)
+	@ApiModelProperty(position = 0, name = "Id", notes = "Identificador del Work", required = true, value = "1")
 	private Long id;
 	
 	@Column(name = "name")
-	@ApiModelProperty(position = 1)
+	@ApiModelProperty(position = 1, name = "Nombre", notes = "Nombre del Worker", required = true, value = "Juan")
 	private String name;
 	
 	@Column(name = "surname")
-	@ApiModelProperty(position = 2)
+	@ApiModelProperty(position = 2, name = "Apellido", notes = "Apellido del Worker", required = true, value = "Aguilar")
 	private String surname;
 	
 	@Column(name = "active")
-	@ApiModelProperty(position = 3)
+	@ApiModelProperty(position = 3, name = "Active", notes = "Worker activo de la empresa", required = true, value = "true")
 	private Boolean active;
 	
 	@Column(name = "picture")
-	@ApiModelProperty(position = 4)
+	@ApiModelProperty(position = 4, name = "Foto", notes = "Fotografia del Worker", required = true, value = "URL")
 	private String picture;
 
 
 	// Modelo work
 	@JsonIgnoreProperties(value = { "chief" })
 	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = false)
-	@ApiModelProperty(position = 5)
+	@ApiModelProperty(position = 5, name = "ListaObras", notes = "Relacion con Trabajos en los que es Jefe", required = true, value = "Objeto work")
 	private Set<Work> chiefWorkList;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "worker" })
 	@OneToMany(mappedBy = "worker")
-	@ApiModelProperty(position = 6)
+	@ApiModelProperty(position = 6, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<WorkerWork> workerWork;
 
 	public Worker(String name, String surname, Boolean active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {

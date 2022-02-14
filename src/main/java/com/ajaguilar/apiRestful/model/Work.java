@@ -31,32 +31,32 @@ public class Work implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	@ApiModelProperty(position = 0)
+	@ApiModelProperty(position = 0, name = "Id", notes = "Identificador del Work", required = true, value = "1")
 	private Long id;
 	
 	@Column(name = "name")
-	@ApiModelProperty(position = 1)
+	@ApiModelProperty(position = 1, name = "Nombre", notes = "Nombre del Work", required = true, value = "Nueva obra")
 	private String name;
 	
 	@Column(name = "description")
-	@ApiModelProperty(position = 2)
+	@ApiModelProperty(position = 2, name = "Descripción", notes = "Descripción del Work", required = true, value = "Reforma del piso completo")
 	private String description;
 	
 	@Column(name = "location")
-	@ApiModelProperty(position = 3)
+	@ApiModelProperty(position = 3, name = "Localización", notes = "Localizacion del Work", required = true, value = "Point de java")
 	private Point location;
 
 	// Modelo worker
 	@JsonIgnoreProperties(value = { "chiefWorkList" })
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chief")
-	@ApiModelProperty(position = 4)
+	@ApiModelProperty(position = 4, name = "Worker", notes = "Relacion con Trabajador", required = true, value = "Objeto worker")
 	private Worker chief;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "work" })
 	@OneToMany(mappedBy = "work", fetch = FetchType.EAGER)
-  @ApiModelProperty(position = 5)
+  @ApiModelProperty(position = 5, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<WorkerWork> workerWork;
 
 	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {
