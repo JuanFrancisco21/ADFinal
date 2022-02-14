@@ -1,9 +1,10 @@
-
 *target*
 *.jar
 *.war
 *.ear
 *.class
+src/main/resources/application.properties
+logs/
 
 # eclipse specific git ignore
 *.pydevproject
@@ -20,8 +21,6 @@ local.properties
 .classpath
 .settings/
 .loadpath
-src/main/resources/application.properties
-
 
 # External tool builders
 .externalToolBuilders/
