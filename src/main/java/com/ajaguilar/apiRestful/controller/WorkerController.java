@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiResponses;
 public class WorkerController {
 
 	@Autowired // Instancia service que ejecuta este controller.
-	WorkerService service;
+	WorkerService service; 
 	
 	/**
 	 * Método para obtener una lista de todas los trabajadores de la BBDD.

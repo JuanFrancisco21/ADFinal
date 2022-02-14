@@ -19,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name = "worker")
@@ -28,25 +30,36 @@ public class Worker implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@ApiModelProperty(position = 0)
 	private Long id;
+	
 	@Column(name = "name")
+	@ApiModelProperty(position = 1)
 	private String name;
+	
 	@Column(name = "surname")
+	@ApiModelProperty(position = 2)
 	private String surname;
+	
 	@Column(name = "active")
+	@ApiModelProperty(position = 3)
 	private Boolean active;
+	
 	@Column(name = "picture")
+	@ApiModelProperty(position = 4)
 	private String picture;
 
 
 	// Modelo work
 	@JsonIgnoreProperties(value = { "chief" })
-	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = false)
+	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = false)
+	@ApiModelProperty(position = 5)
 	private Set<Work> chiefWorkList;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "worker" })
 	@OneToMany(mappedBy = "worker")
+	@ApiModelProperty(position = 6)
 	private Set<WorkerWork> workerWork;
 
 	public Worker(String name, String surname, Boolean active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {

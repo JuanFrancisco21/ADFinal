@@ -43,7 +43,7 @@ public class WorkService {
 	public Work getWorkById(Long id) throws NullPointerException, RecordNotFoundException, IllegalArgumentException {
 		if (id != null) {
 			try {
-				Optional<Work> result = repository.findById(id);
+				Optional<Work> result = Optional.of(repository.findById(id).get());
 				if (result.isPresent()) {
 					return result.get();
 

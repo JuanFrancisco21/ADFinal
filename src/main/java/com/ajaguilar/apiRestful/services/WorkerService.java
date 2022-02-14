@@ -42,7 +42,7 @@ public class WorkerService {
 	public Worker getWorkerById(Long id) throws NullPointerException, RecordNotFoundException, IllegalArgumentException {
 		if (id != null) {
 			try {
-				Optional<Worker> result = repository.findById(id);
+				Optional<Worker> result = Optional.of(repository.findById(id).get());
 				if (result.isPresent()) {
 					return result.get();
 
@@ -69,6 +69,7 @@ public class WorkerService {
 		if (worker != null) {
 			if (worker.getId() < 0) {
 				try {
+					
 					return worker = repository.save(worker);
 				} catch (IllegalArgumentException e) {
 					throw new IllegalArgumentException(e);
