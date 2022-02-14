@@ -1,10 +1,13 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+*target*
+*.jar
+*.war
+*.ear
+*.class
+src/main/resources/application.properties
+logs/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
+# eclipse specific git ignore
+*.pydevproject
 .project
 .settings
 .springBeans
@@ -25,9 +28,6 @@ tmp/
 local.properties
 .settings/
 .loadpath
-.recommenders
-src/main/resources/application.properties
-.idea
 
 # External tool builders
 .externalToolBuilders/
