@@ -55,8 +55,8 @@ public class Work implements Serializable {
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "work" })
-	@OneToMany(mappedBy = "work", fetch = FetchType.LAZY)
-	@ApiModelProperty(position = 5)
+	@OneToMany(mappedBy = "work", fetch = FetchType.EAGER)
+  @ApiModelProperty(position = 5)
 	private Set<WorkerWork> workerWork;
 
 	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {

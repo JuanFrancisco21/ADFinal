@@ -19,27 +19,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
+import com.ajaguilar.apiRestful.model.Dailylog;
 import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.model.Worker;
+import com.ajaguilar.apiRestful.model.WorkerWork;
+import com.ajaguilar.apiRestful.services.WorkService;
 import com.ajaguilar.apiRestful.services.WorkerService;
+import com.ajaguilar.apiRestful.services.WorkerWorkService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController // Indicacion de que es una clase controller.
 @RequestMapping("/worker") // Cuando se introduzca esta URL se ejecutara este controller.
 public class WorkerController {
 
 	@Autowired // Instancia service que ejecuta este controller.
-	WorkerService service; 
-	
+
+	WorkerService service;
+	@Autowired
+        WorkerWorkService wwservice;
+        @Autowired
+        WorkService wservice;
 	/**
-	 * Método para obtener una lista de todas los trabajadores de la BBDD.
+	 * MÃ©todo para obtener una lista de todas los trabajadores de la BBDD.
 	 * 
 	 * @return Lista con todos los trabajadores de la BBDD. En caso de error devuelve una lista vacia.
 	 */
-	 @ApiOperation(value = "Método para obtener una lista de todas los trabajadores de la BBDD."
+	 @ApiOperation(value = "MÃ©todo para obtener una lista de todas los trabajadores de la BBDD."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -59,12 +69,12 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método obtener un trabajador mediante su id.
+	 * MÃ©todo obtener un trabajador mediante su id.
 	 * 
 	 * @param id del trabajador a a buscar.
 	 * @return Trabajador encontrado por id. En caso de error devuelve un trabajador vacio.
 	 */
-	 @ApiOperation(value = "Método obtener un trabajador mediante su id."
+	 @ApiOperation(value = "MÃ©todo obtener un trabajador mediante su id."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -85,12 +95,12 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método para la creación de un nuevo trabajador.
+	 * MÃ©todo para la creaciÃ³n de un nuevo trabajador.
 	 * 
 	 * @param Trabajador que se va a crear.
 	 * @return Trabajador creado en la BBDD. En caso de error devuelve un trabajador vacio.
 	 */
-	 @ApiOperation(value = "Método para la creación de un nuevo trabajador."
+	 @ApiOperation(value = "MÃ©todo para la creaciÃ³n de un nuevo trabajador."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -111,12 +121,12 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método para la actulización de un trabajador.
+	 * MÃ©todo para la actulizaciÃ³n de un trabajador.
 	 * 
 	 * @param Trabajador que se va a actualizar.
 	 * @return Trabajador actualizado en la BBDD. En caso de error devuelve un trabajador vacio.
 	 */
-	 @ApiOperation(value = "Método para la actulización de un trabajador."
+	 @ApiOperation(value = "MÃ©todo para la actulizaciÃ³n de un trabajador."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -137,12 +147,12 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método obtener un trabajador mediante su nombre.
+	 * MÃ©todo obtener un trabajador mediante su nombre.
 	 * 
 	 * @param Nombre del trabajador a buscar.
 	 * @return Trabajador encontrado por nombre. En caso de error devuelve un trabajador vacio.
 	 */
-	 @ApiOperation(value = "Método obtener un trabajador mediante su nombre."
+	 @ApiOperation(value = "MÃ©todo obtener un trabajador mediante su nombre."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -163,12 +173,12 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método obtener un trabajador mediante su apellido.
+	 * MÃ©todo obtener un trabajador mediante su apellido.
 	 * 
 	 * @param Apellido del trabajador a buscar.
 	 * @return Trabajador encontrado por apellido. En caso de error devuelve un trabajador vacio.
 	 */
-	 @ApiOperation(value = "Método obtener un trabajador mediante su apellido."
+	 @ApiOperation(value = "MÃ©todo obtener un trabajador mediante su apellido."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -189,12 +199,12 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método obtener un trabajador por si esta activo/inactivo.
+	 * MÃ©todo obtener un trabajador por si esta activo/inactivo.
 	 * 
 	 * @param Activo/No activo atributo del trabajador.
 	 * @return Lista de trabajadores activos/inactivos. En caso de error devuelve un lista vacia.
 	 */
-	 @ApiOperation(value = "Método obtener un trabajador por si esta activo/inactivo."
+	 @ApiOperation(value = "MÃ©todo obtener un trabajador por si esta activo/inactivo."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -215,13 +225,13 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método para borra un trabajador de la BBDD.
+	 * MÃ©todo para borra un trabajador de la BBDD.
 	 * 
 	 * @param id del trabajador a borrar.
 	 * @return Status ok si lo borra, Bad_request en caso de no borrarlo.
 	 * @throws RecordNotFoundException Lanzado al no encontrar el valor.
 	 */
-	 @ApiOperation(value = "Método para borra un trabajador de la BBDD."
+	 @ApiOperation(value = "MÃ©todo para borra un trabajador de la BBDD."
 	            ,notes = "")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
@@ -241,5 +251,59 @@ public class WorkerController {
 		}
 	}
 	
+	 
+	 /**
+		 * MÃ©todo para introducir un trabajador en una obra.
+		 * 
+		 * @params workerId: id del trabajador; workId: id del trabajo.
+		 * @return Modelo WorkerWork creado en la BD. En caso de error devuelve un WorkerWork vacio.
+		 */
+		 @ApiOperation(value = "MÃ©todo para introducir un trabajador en una obra."
+		            ,notes = "")
+		    @ApiResponses(value = {
+		            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+		            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+		            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
+        @PostMapping("add/{id}/{workId}")
+        public ResponseEntity<WorkerWork> addWorkerToWork(@PathVariable("id") Long workerId, @PathVariable("workId") Long workId){
+            Worker worker = service.getWorkerById(workerId);
+            Work work = wservice.getWorkById(workId);
+            if(worker != null && work != null){
+                try{
+                    WorkerWork result = wwservice.createWorkerWork(new WorkerWork(worker, work, true, new HashSet<Dailylog>()));
+                    return new ResponseEntity<WorkerWork>(result, new HttpHeaders(), HttpStatus.OK);
+                }catch(Exception ex){
+                    return new ResponseEntity<WorkerWork>(new WorkerWork(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }else{
+                return new ResponseEntity<WorkerWork>(new WorkerWork(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            }
+        }
+		 
+		 /**
+			 * MÃ©todo para eliminar un trabajador de una obra.
+			 * 
+			 * @params workerId: id del trabajador; workId: id del trabajo.
+			 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
+			 */
+			 @ApiOperation(value = "MÃ©todo para introducir un trabajador en una obra."
+			            ,notes = "")
+			    @ApiResponses(value = {
+			            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	        @DeleteMapping("deleteWorkerWork/{id}")
+	        public HttpStatus deleteWorkerFromWork(@PathVariable("id") Long id){
+	            if(id > 0){
+	                try{
+	                    wwservice.deleteWorkerWorkById(id);
+	                    return HttpStatus.OK;
+	                }catch(Exception ex){
+	                    return HttpStatus.INTERNAL_SERVER_ERROR;
+	                }
+	            }else{
+	                return HttpStatus.BAD_REQUEST;
+	            }
+	        }
 	
 }
