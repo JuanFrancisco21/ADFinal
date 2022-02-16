@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController // Indicacion de que es una clase controller.
 @RequestMapping("/work") // Cuando se introduzca esta URL se ejecutara este controller.
 public class WorkController {
+	
 
 	@Autowired // Instancia service que ejecuta este controller.
 	WorkService service;
