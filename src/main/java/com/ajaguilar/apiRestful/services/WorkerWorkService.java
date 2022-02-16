@@ -3,6 +3,8 @@ package com.ajaguilar.apiRestful.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ import com.ajaguilar.apiRestful.repository.WorkerWorkRepository;
 
 @Service
 public class WorkerWorkService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(WorkerWorkService.class);
+
 
 	@Autowired
 	WorkerWorkRepository repository;
@@ -24,8 +29,10 @@ public class WorkerWorkService {
 	public List<WorkerWork> getAllWorkerWork() {
 		List<WorkerWork> result = repository.findAll();
 		if (!result.isEmpty()) {
+			logger.info("Consulta exitosa en getAllWorkerWork");
 			return result;
 		} else {
+			logger.error("Error--> NullPointerException al traer todas la relaciones, getAllWorkerWork");
 			throw new NullPointerException("WorkerWork is empty");
 		}
 
@@ -42,14 +49,18 @@ public class WorkerWorkService {
 			try {
 				Optional<WorkerWork> result = repository.findById(id);
 				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerWorkById");
 					return result.get();
 				} else {
+					logger.error("Error ---> La relación no existe", id + ", getWorkerWorkById");
 					throw new RecordNotFoundException("WorkerWork with the following id has not been defined ", id);
 				}
 			} catch (Exception e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerWorkById :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al traer relacion mediante id, getWorkerWorkById");
 			throw new NullPointerException("Null IDs are prohibited");
 		}
 	}
@@ -64,14 +75,17 @@ public class WorkerWorkService {
 		if (workerWork != null) {
 			if (workerWork.getId() < 0) {
 				try {
+					logger.info("Consulta exitosa en createWorkerWork");
 					return workerWork = repository.save(workerWork);
 				} catch (IllegalArgumentException e) {
+					logger.error("Error ---> IllegarArgumentException en createWorkerWork :" + e);
 					throw new IllegalArgumentException(e);
 				}
 			} else {
 				return updateWorkerWork(workerWork);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al crear relacion, createWorkerWork");
 			throw new NullPointerException("The workerwork is null");
 		}
 	}
@@ -93,17 +107,22 @@ public class WorkerWorkService {
 					newWorkerWork.setWork(workerWork.getWork());
 					newWorkerWork.setCurrent(workerWork.getCurrent());
 					try {
+						logger.info("Consulta exitosa en updateWorkerWork");
 						return repository.save(newWorkerWork);
 					} catch (IllegalArgumentException e) {
+						logger.error("Error ---> IllegarArgumentException en updateWorkerWork :" + e);
 						throw new IllegalArgumentException(e);
 					}
 				} else {
+					logger.error("Error ---> La relación no existe", workerWork + ", updateWorkerWork");
 					throw new RecordNotFoundException("This workerwork doesn't exist", workerWork);
 				}
 			} else {
+				logger.error("Error--> NullPointerException al actualizar relacion, updateWorkerWork");
 				throw new NullPointerException("This workerwork doesn't exist");
 			}
 		} else {
+			logger.error("Error--> NullPointerException al actualizar relacion, updateWorkerWork");
 			throw new NullPointerException("Null workerworks are prohibited");
 		}
 
@@ -115,7 +134,7 @@ public class WorkerWorkService {
 	 * @param workerWork El workerwork que se va a utilizar
 	 * @return El workerwork que se ha creado o actualizado
 	 */
-	public WorkerWork createOrUpdateWork(WorkerWork workerWork) {
+	public WorkerWork createOrUpdateWorkerwork(WorkerWork workerWork) {
 		if (workerWork != null) {
 			if (workerWork.getId() > 0) {
 				Optional<WorkerWork> result = repository.findById(workerWork.getId());
@@ -126,8 +145,10 @@ public class WorkerWorkService {
 					newWorkerWork.setWork(workerWork.getWork());
 					newWorkerWork.setCurrent(workerWork.getCurrent());
 					try {
+						logger.info("Consulta exitosa en createOrUpdateWorkerwork");
 						return repository.save(newWorkerWork);
 					} catch (IllegalArgumentException e) {
+						logger.error("Error ---> IllegarArgumentException en createOrUpdateWorkerwork :" + e);
 						throw new IllegalArgumentException(e);
 					}
 				} else {// INSERT
@@ -135,6 +156,7 @@ public class WorkerWorkService {
 					try {
 						return repository.save(workerWork);
 					} catch (IllegalArgumentException e) {
+						logger.error("Error ---> IllegarArgumentException en createOrUpdateWorkerwork :" + e);
 						throw new IllegalArgumentException(e);
 					}
 				}
@@ -142,10 +164,12 @@ public class WorkerWorkService {
 				try {
 					return repository.save(workerWork);
 				} catch (IllegalArgumentException e) {
+					logger.error("Error ---> IllegarArgumentException en createOrUpdateWorkerwork :" + e);
 					throw new IllegalArgumentException(e);
 				}
 			}
 		} else {
+			logger.error("Error--> NullPointerException al crear/actualizar relacion, createOrUpdateWorkerwork");
 			throw new NullPointerException("Null workerworks are prohibited");
 		}
 	}
@@ -161,14 +185,18 @@ public class WorkerWorkService {
 			try {
 				Optional<List<WorkerWork>> result = Optional.of(repository.findByWorker(idWorker));
 				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerWorkByWorker");
 					return result.get();
 				} else {
+					logger.error("Error ---> La relación no existe", idWorker + ", getWorkerWorkByWorker");
 					throw new RecordNotFoundException("This workerwork doesn't exist, idWorker= ", idWorker);
 				}
 			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerWorkByWorker :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al buscar relacion, getWorkerWorkByWorker");
 			throw new NullPointerException("idWorker is null");
 		}
 
@@ -185,14 +213,18 @@ public class WorkerWorkService {
 			try {
 				Optional<WorkerWork> result = Optional.of(repository.findByCurrentWorker(idWorker));
 				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerWorkByCurrentWorker");
 					return result.get();
 				} else {
+					logger.error("Error ---> La relación no existe", idWorker + ", getWorkerWorkByCurrentWorker");
 					throw new RecordNotFoundException("This workerwork doesn't exist, idWorker= ", idWorker);
 				}
 			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerWorkByCurrentWorker :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al buscar relacion, getWorkerWorkByCurrentWorker");
 			throw new NullPointerException("idWorker is null");
 		}
 
@@ -209,14 +241,18 @@ public class WorkerWorkService {
 			try {
 				Optional<List<WorkerWork>> result = Optional.of(repository.findByWork(idWork));
 				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerWorkByWork");
 					return result.get();
 				} else {
+					logger.error("Error ---> La relación no existe", idWork + ", getWorkerWorkByWork");
 					throw new RecordNotFoundException("This workerwork doesn't exist, idWork= ", idWork);
 				}
 			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerWorkByWork :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al buscar relacion, getWorkerWorkByWork");
 			throw new NullPointerException("idWork is null");
 		}
 
@@ -232,14 +268,18 @@ public class WorkerWorkService {
 			Optional<WorkerWork> workwerWork = repository.findById(id);
 			if (workwerWork != null) {
 				if (workwerWork.isPresent()) {
+					logger.info("Consulta exitosa en deleteWorkerWorkById");
 					repository.deleteById(id);
 				} else {
+					logger.error("Error ---> La relacion no existe,"+id+" deleteWorkerWorkById");
 					throw new RecordNotFoundException("Couldn't find workerwork with this id= ", id);
 				}
 			} else {
+				logger.error("Error--> NullPointerException al borrar relacion, deleteWorkerWorkById");
 				throw new NullPointerException("This workerwork doesn't exist");
 			}
 		} else {
+			logger.error("Error--> NullPointerException al borrar relacion, deleteWorkerWorkById");
 			throw new NullPointerException("Null workerworks are prohibited");
 		}
 

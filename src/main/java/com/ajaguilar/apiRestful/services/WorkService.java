@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ import com.ajaguilar.apiRestful.repository.WorkRepository;
 
 @Service
 public class WorkService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(WorkService.class);
+
 
 	@Autowired
 	WorkRepository repository;
@@ -25,8 +30,10 @@ public class WorkService {
 	public List<Work> getAllWork() {
 		List<Work> result = repository.findAll();
 		if (!result.isEmpty()) {
+			logger.info("Consulta exitosa en getAllWork");
 			return result;
 		} else {
+			logger.error("Error--> NullPointerException al traer todas la obras, getAllWork");
 			throw new NullPointerException("Error: Lista de obras vacia");
 		}
 	}
@@ -45,15 +52,19 @@ public class WorkService {
 			try {
 				Optional<Work> result = Optional.of(repository.findById(id).get());
 				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkById");
 					return result.get();
 
 				} else {
+					logger.error("Error ---> La obra no existe", id + ", getWorkById");
 					throw new RecordNotFoundException("La obra no existe con id:", id);
 				}
 			} catch (Exception e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkById :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al traer obra mediante id, getWorkById");
 			throw new NullPointerException("Error: Id introducido con valor nulo");
 		}
 
@@ -71,14 +82,17 @@ public class WorkService {
 		if (work != null) {
 			if (work.getId() < 0) {
 				try {
+					logger.info("Consulta exitosa en createWork");
 					return work = repository.save(work);
 				} catch (IllegalArgumentException e) {
+					logger.error("Error ---> IllegarArgumentException en createWork :" + e);
 					throw new IllegalArgumentException(e);
 				}
 			} else {
 				return updateWork(work);
 			}
 		} else {
+			logger.error("Error--> NullPointerException al crear obra, createWork");
 			throw new NullPointerException("Error: La obra introducida tiene valor nulo");
 		}
 	}
@@ -106,17 +120,23 @@ public class WorkService {
 					newWork.setChief(work.getChief());
 					newWork.setWorkerWork(work.getWorkerWork());
 					try {
+						logger.info("Consulta exitosa en updateWork");
+
 						return repository.save(newWork);
 					} catch (IllegalArgumentException e) {
+						logger.error("Error ---> IllegarArgumentException en updateWork :" + e);
 						throw new IllegalArgumentException(e);
 					}
 				} else {
+					logger.error("Error ---> La obra no existe", work.getId() + ", updateWork");
 					throw new RecordNotFoundException("No existe la obra:", work);
 				}
 			} else {
+				logger.error("Error--> NullPointerException al actualizar obra, updateWork");
 				throw new NullPointerException("Error: La obra introducida tiene un valor nulo");
 			}
 		} else {
+			logger.error("Error--> NullPointerException al actualizar obra, updateWork");
 			throw new NullPointerException("Error: La obra introducida tiene un valor nulo");
 		}
 
@@ -145,8 +165,11 @@ public class WorkService {
 					newWork.setChief(work.getChief());
 					newWork.setWorkerWork(work.getWorkerWork());
 					try {
+						logger.info("Consulta exitosa en createOrUpdateWork");
+
 						return repository.save(newWork);
 					} catch (IllegalArgumentException e) {
+						logger.error("Error ---> IllegarArgumentException en createOrUpdateWork :" + e);
 						throw new IllegalArgumentException(e);
 					}
 				} else {// INSERT
@@ -154,6 +177,7 @@ public class WorkService {
 					try {
 						return repository.save(work);
 					} catch (IllegalArgumentException e) {
+						logger.error("Error ---> IllegarArgumentException en createOrUpdateWork :" + e);
 						throw new IllegalArgumentException(e);
 					}
 				}
@@ -161,10 +185,12 @@ public class WorkService {
 				try {
 					return repository.save(work);
 				} catch (IllegalArgumentException e) {
+					logger.error("Error ---> IllegarArgumentException en createOrUpdateWork :" + e);
 					throw new IllegalArgumentException(e);
 				}
 			}
 		} else {
+			logger.error("Error--> NullPointerException al crear/updatear obra, createOrUpdateWork");
 			throw new NullPointerException("Error: La obra introducida tiene un valor nulo");
 		}
 	}
@@ -183,15 +209,20 @@ public class WorkService {
 			try {
 				Optional<Work> result = Optional.of(repository.findByName(nombre));
 				if(result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkByName");
+
 					return result.get();
 				}else {
+					logger.error("Error ---> La obra no existe, getWorkByName");
 					throw new RecordNotFoundException("No existe la obra con Nombre:", nombre);
 				}
 			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkByName :" + e);
 				throw new IllegalArgumentException(e);
 			}
 			
 		}else {
+			logger.error("Error--> NullPointerException al traer obra mediante nombre, getWorkByName");
 			throw new NullPointerException("Error: El nombre introducido tiene un valor nulo");
 		}
 	}
@@ -210,14 +241,19 @@ public class WorkService {
 			try {
 				Optional<List<Work>> lista = Optional.of(repository.findWorkByWorker(idWorker));
 				if(lista.isPresent()) {
+					logger.info("Consulta exitosa en getWorkByWorker");
+
 					return lista.get();
 				}else {
+					logger.error("Error ---> La obra no existe, getWorkByWorker");
 					throw new RecordNotFoundException("No existe obra con id_Worker:", idWorker);
 				}
 			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkByWorker :" + e);
 				throw new IllegalArgumentException(e);
 			}						
 		}else {
+			logger.error("Error--> NullPointerException al traer obra mediante trabajador, getWorkByWorker");
 			throw new NullPointerException ("Error: El usuario introducido tiene un valor nulo");
 		}
 			
@@ -236,14 +272,19 @@ public class WorkService {
 			try {
 				Optional<Work> result = Optional.of(repository.findWorkByLocation(location));
 				if(result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkByLocation");
+
 					return result.get();
 				}else {
+					logger.error("Error ---> La obra no existe, getWorkByLocation");
 					throw new RecordNotFoundException("No existe obra con dicha localización", location);
 				}
 			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkByLocation :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		}else {
+			logger.error("Error--> NullPointerException al traer obra por localización, getWorkByLocation");
 			throw new NullPointerException ("Error: Las coordenadas introducidas tienen un valor nulo");
 		}	
 	}
@@ -261,14 +302,19 @@ public class WorkService {
 			Optional<Work> result = repository.findById(id);
 			if (result != null) {
 				if (result.isPresent()) {
+					logger.info("Eliminación exitosa en getDeleteWorkById");
+
 					repository.deleteById(id);
 				} else {
+					logger.error("Error ---> La obra no existe,"+id+" deleteWorkById");
 					throw new RecordNotFoundException("No se puedo eliminar la obra con id:", id);
 				}
 			} else {
+				logger.error("Error--> NullPointerException al borrar obra, deleteWorkById");
 				throw new NullPointerException("Error: La obra introducida tiene un valor nulo");
 			}
 		} else {
+			logger.error("Error--> NullPointerException al borrar obra, deleteWorkById");
 			throw new NullPointerException("Error: La obra introducida tiene un valor nulo");
 		}
 
