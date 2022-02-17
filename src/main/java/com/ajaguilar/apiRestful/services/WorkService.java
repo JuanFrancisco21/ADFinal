@@ -117,8 +117,6 @@ public class WorkService {
 					newWork.setName(work.getName());
 					newWork.setDescription(work.getDescription());
 					newWork.setLocation(work.getLocation());
-					newWork.setChief(work.getChief());
-					newWork.setWorkerWork(work.getWorkerWork());
 					try {
 						logger.info("Consulta exitosa en updateWork");
 
@@ -304,7 +302,9 @@ public class WorkService {
 				if (result.isPresent()) {
 					logger.info("Eliminación exitosa en getDeleteWorkById");
 
-					repository.deleteById(id);
+					Work found=result.get();
+					found.setChief(null);
+					repository.delete(found);
 				} else {
 					logger.error("Error ---> La obra no existe,"+id+" deleteWorkById");
 					throw new RecordNotFoundException("No se puedo eliminar la obra con id:", id);

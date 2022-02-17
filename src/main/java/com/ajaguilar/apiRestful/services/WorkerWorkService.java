@@ -103,8 +103,6 @@ public class WorkerWorkService {
 				if (result.isPresent()) {
 					WorkerWork newWorkerWork = result.get();
 					newWorkerWork.setId(workerWork.getId());
-					newWorkerWork.setWorker(workerWork.getWorker());
-					newWorkerWork.setWork(workerWork.getWork());
 					newWorkerWork.setCurrent(workerWork.getCurrent());
 					try {
 						logger.info("Consulta exitosa en updateWorkerWork");

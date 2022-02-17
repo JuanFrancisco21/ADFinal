@@ -116,8 +116,6 @@ public class WorkerService {
 					newWorker.setSurname(worker.getSurname());
 					newWorker.setActive(worker.getActive());
 					newWorker.setPicture(worker.getPicture());
-					newWorker.setChiefWorkList(worker.getChiefWorkList());
-					newWorker.setWorkerWork(worker.getWorkerWork());
 					try {
 						logger.info("Consulta exitosa en updateWorker");
 						return repository.save(newWorker);

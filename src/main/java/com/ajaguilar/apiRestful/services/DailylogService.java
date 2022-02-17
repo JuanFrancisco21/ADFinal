@@ -101,7 +101,6 @@ public class DailylogService {
 				newLog.setId(log.getId());
 				newLog.setDate(log.getDate());
 				newLog.setHours(log.getHours());
-				newLog.setWorkerWork(log.getWorkerWork());
 				newLog = repository.save(newLog);
 				result = newLog;
 			} else {
