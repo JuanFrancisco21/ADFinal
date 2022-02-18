@@ -26,7 +26,9 @@ public class DailylogService {
 	 * @return Lista con todos los dailylog.
 	 */
 	public List<Dailylog> getAllDailylogs() {
-		List<Dailylog> result = repository.findAll();
+                List<Dailylog> result = repository.findAll();
+            
+		
 		if (!result.isEmpty()) {
 			logger.info("Consulta exitosa en getAllDailylogs");
 			return result;
@@ -101,39 +103,74 @@ public class DailylogService {
 				newLog.setId(log.getId());
 				newLog.setDate(log.getDate());
 				newLog.setHours(log.getHours());
-				newLog = repository.save(newLog);
+                                try{
+                                    logger.info("Consulta exitosa en updateDailylog");
+                                   newLog = repository.save(newLog); 
+                                }catch(Exception e){
+                                    logger.error("Error--> IlegalArgumentException en updateDailylog :" + e);
+                                    throw new IllegalArgumentException(e);
+                                }
+				
 				result = newLog;
 			} else {
-				throw new Exception("Log not found");
+                            logger.error("Error--> Log no encontrado en updateDailylog");
+                            throw new Exception("Log not found");
 			}
 		} else {
-			throw new Exception("Log not found");
+			logger.error("Error--> NullPointerException al actualizar dailyLog, updateDailylog");
+			throw new NullPointerException("Error: El dailylog introducido tiene valor nulo");
 		}
 		return result;
 	}
 
 	// Deletes an existing dailylog by his id
-	public void deleteDailylog(Long id) {
-		Optional<Dailylog> log = repository.findById(id);
+	public void deleteDailylog(Long id) throws Exception {
+		if(id != null && id > 0){
+                    Optional<Dailylog> log = repository.findById(id);
 		if (log.isPresent()) {
-			repository.deleteById(id);
+                    try{
+                        logger.info("Consulta exitosa en deleteDailylog");
+                        repository.deleteById(id);
+                    }catch(Exception e){
+                        logger.error("Error--> IllegalArgumentException en deleteDailylog :" + e);
+                        throw new IllegalArgumentException(e);
+                    }
+			
 		} else {
-			throw new RecordNotFoundException("La nota no existe", id);
+			logger.error("Error--> No se encontró el dailylog en deleteDailylog");
+                        throw new Exception("Log not found");
 		}
+                }else{
+                    logger.error("Error--> NullPointerException al eliminar dailyLog, deleteDailylog");
+                    throw new NullPointerException("Error: El dailylog introducido tiene valor nulo");
+                }
 	}
 
 	// Returns all dailylogs from a day
 	public List<Dailylog> getDailylogsByDay(Date day) {
 		List<Dailylog> result;
-		result = repository.findByDate(day);
-		return result;
+                try{
+                    logger.info("Consulta exitosa en getDailylogsByDay");
+                   return repository.findByDate(day);
+                }catch(Exception e){
+                    logger.error("Error--> NullPointerException al traer los dailylog por fecha, getDailylogsByDate");
+                    throw new NullPointerException("Error: Lista de dailylog vacia");
+                }
+		
+		
 	}
 
 	// Returns all dailylogs from a concrete WorkerWork
 	public List<Dailylog> getDailylogsByWorkerwork(Long workerWorkId) {
-		List<Dailylog> result;
-		result = repository.findByWorkerwork(workerWorkId);
-		return result;
+		try{
+                    logger.info("Consulta exitosa en getDailylogsByWorkerwork");
+                    return repository.findByWorkerwork(workerWorkId);
+                }catch(Exception e){
+                    logger.error("Error--> NullPointerException al traer los dailylog por workerWork, getDailylogsByWorkerwork");
+                    throw new NullPointerException("Error: Lista de dailylog vacia");
+                }
+		
+		
 	}
 
 }
