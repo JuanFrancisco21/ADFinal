@@ -38,5 +38,7 @@ public interface WorkRepository extends JpaRepository<Work, Long>{
 		@Query(value="SELECT * From work  WHERE work.location LIKE ?1", nativeQuery = true)
 		Work findWorkByLocation(Point coordenadas) throws IllegalArgumentException;
 		
+		@Query(value="UPDATE work SET chief= ?1 WHERE work.id= ?2", nativeQuery = true)
+		void updateChief(Long idworker, Long idwork) throws IllegalArgumentException;
 		
 }
