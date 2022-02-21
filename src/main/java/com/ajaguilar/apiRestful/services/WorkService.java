@@ -1,8 +1,10 @@
 package com.ajaguilar.apiRestful.services;
 
 import java.awt.Point;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Work;
+import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.repository.WorkRepository;
+import com.ajaguilar.apiRestful.repository.WorkerRepository;
 
 @Service
 public class WorkService {
@@ -21,6 +25,8 @@ public class WorkService {
 
 	@Autowired
 	WorkRepository repository;
+	@Autowired
+	WorkerRepository wrepository;
 
 	/**
 	 * Método para obtener todas las obras.
@@ -117,10 +123,18 @@ public class WorkService {
 					newWork.setName(work.getName());
 					newWork.setDescription(work.getDescription());
 					newWork.setLocation(work.getLocation());
+					
 					try {
 						logger.info("Consulta exitosa en updateWork");
 
-						return repository.save(newWork);
+						if(work.getChief().getId() > 0) {
+							newWork.setChief(work.getChief());
+							repository.updateChief(work.getChief().getId(), work.getId());
+							return repository.save(newWork);
+						}else {
+							return repository.save(newWork);
+						}
+						
 					} catch (IllegalArgumentException e) {
 						logger.error("Error ---> IllegarArgumentException en updateWork :" + e);
 						throw new IllegalArgumentException(e);
@@ -319,5 +333,7 @@ public class WorkService {
 		}
 
 	}
+	
+	
 
 }
