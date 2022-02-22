@@ -62,7 +62,8 @@ public class DriveService {
 	}
 	
 	
-	public static void uploadfile() {
+	public static String uploadfile() {
+		String result = "";
 		File fileMetadata = new File();
 		fileMetadata.setName("bro.jpg");
 		java.io.File filePath = new java.io.File("bro.jpg");
@@ -70,12 +71,14 @@ public class DriveService {
 		File file;
 		try {
 			file = getService().files().create(fileMetadata, mediaContent).setFields("id").execute();
-			System.out.println("File ID: " + file.getId());
+			//System.out.println("File ID: " + file.getId());
+			result = file.getId();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		return result;
 	}
+	
 
 	/**
 	 * Creates an authorized Credential object.
