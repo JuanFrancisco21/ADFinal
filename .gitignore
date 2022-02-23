@@ -27,9 +27,9 @@ tmp/
 local.properties
 .settings/
 .loadpath
+src/main/resources/application.properties
 credentials.json
 tokens/
-src/main/resources/application.properties
 bro.png
 
 # External tool builders
