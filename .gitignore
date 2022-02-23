@@ -3,7 +3,6 @@
 *.war
 *.ear
 *.class
-src/main/resources/application.properties
 logs/
 
 # eclipse specific git ignore
@@ -28,6 +27,10 @@ tmp/
 local.properties
 .settings/
 .loadpath
+src/main/resources/application.properties
+credentials.json
+tokens/
+bro.png
 
 # External tool builders
 .externalToolBuilders/

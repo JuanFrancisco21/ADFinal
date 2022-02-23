@@ -1,5 +1,6 @@
 package com.ajaguilar.apiRestful.services;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +18,12 @@ public class WorkerService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WorkerService.class);
 
-
+	
 	@Autowired
 	WorkerRepository repository;
 	
 	/**
-	 * Método para obtener todos los trabajadores.
+	 * Mï¿½todo para obtener todos los trabajadores.
 	 * 
 	 * @return Lista con todos los trabajadores de la BBDD.
 	 */
@@ -38,7 +39,7 @@ public class WorkerService {
 	}
 	
 	/**
-	 * Método para devolver un trabajador por su id.
+	 * Mï¿½todo para devolver un trabajador por su id.
 	 * 
 	 * @param id del trabajador.
 	 * @return Trabajador con el id introducido.
@@ -68,7 +69,7 @@ public class WorkerService {
 
 	}
 	/**
-	 * Método para crear nuevo trabajador, en caso de existir lo actuliza.
+	 * Mï¿½todo para crear nuevo trabajador, en caso de existir lo actuliza.
 	 * 
 	 * @param Trabajador a crear/guardar en la base de datos.
 	 * @return Trabajador un vez se cree/actualize.
@@ -80,6 +81,7 @@ public class WorkerService {
 			if (worker.getId() < 0) {
 				try {
 					logger.info("Consulta exitosa en createWorker");
+					DriveService.uploadfile();
 					return worker = repository.save(worker);
 				} catch (IllegalArgumentException e) {
 					logger.error("Error ---> IllegarArgumentException en createWorker :" + e);
@@ -96,9 +98,9 @@ public class WorkerService {
 	
 	
 	/**
-	 * Método para la acualización de trabajadores existentes en la BBDD.
+	 * Mï¿½todo para la acualizaciï¿½n de trabajadores existentes en la BBDD.
 	 * 
-	 * @param Trabajador que se actulizará en la BBDD.
+	 * @param Trabajador que se actulizarï¿½ en la BBDD.
 	 * @return Trabajador actualizado.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar el trabajador.
 	 * @throws NullPointerException     Lanzado al ser nulo el trabajador recibida.
@@ -115,6 +117,7 @@ public class WorkerService {
 					newWorker.setName(worker.getName());
 					newWorker.setSurname(worker.getSurname());
 					newWorker.setActive(worker.getActive());
+					
 					newWorker.setPicture(worker.getPicture());
 					try {
 						logger.info("Consulta exitosa en updateWorker");
@@ -139,7 +142,7 @@ public class WorkerService {
 	}
 	
 	/**
-	 * Método para obtener un trabajador por su nombre.
+	 * Mï¿½todo para obtener un trabajador por su nombre.
 	 * 
 	 * @param Nombre del trabajador a buscar en la BBDD.
 	 * @return Trabajador con el nombre introducido. 
@@ -170,7 +173,7 @@ public class WorkerService {
 	}
 	
 	/**
-	 * Método para obtener un trabajador por su apellido.
+	 * Mï¿½todo para obtener un trabajador por su apellido.
 	 * 
 	 * @param Apellido del trabajador a buscar en la BBDD.
 	 * @return Trabajador con el apellido introducido. 
@@ -202,7 +205,7 @@ public class WorkerService {
 	}
 	
 	/**
-	 * Método para devolver una lista trabajadores segun si esta activo.
+	 * Mï¿½todo para devolver una lista trabajadores segun si esta activo.
 	 * @param Booleano para indiar que trabajadores buscar.
 	 * @return Trabajador con booleano introducido.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar el trabajador.
@@ -231,7 +234,7 @@ public class WorkerService {
 	}
 	
 	/**
-	 * Método para el borrado de un trabajador, introduciendo su id.
+	 * Mï¿½todo para el borrado de un trabajador, introduciendo su id.
 	 * 
 	 * @param id del trabajador que queremos borrar.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar el trabajador.

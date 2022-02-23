@@ -109,7 +109,7 @@
 				 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>project.AppMain</mainClass>
+                            <mainClass>com.ajaguilar.apiRestful.AppMain</mainClass>
                         </manifest>                      
                     </archive>
                 </configuration>
