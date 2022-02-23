@@ -119,7 +119,7 @@ public class WorkerController {
 					if (worker.getPicture() == null) {
 						return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 					}
-					DriveService.uploadFile(new File(worker.getPicture()));
+					worker.setPicture(DriveService.uploadFile(new File(worker.getPicture()))); 
 				} catch (Exception e) {}
 				
 				Worker result = service.createWorker(worker);
