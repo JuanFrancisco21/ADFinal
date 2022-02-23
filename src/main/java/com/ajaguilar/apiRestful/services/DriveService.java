@@ -1,12 +1,16 @@
 package com.ajaguilar.apiRestful.services;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ajaguilar.apiRestful.AppMain;
 import com.google.api.client.auth.oauth2.Credential;
@@ -61,6 +65,32 @@ public class DriveService {
 		return service;
 	}
 	
+	   /**
+     * Sube un archivo al directorio raiz del usuario de Google Drive.
+     * 
+     * @param file: El archivo a subir
+     * @throws IOException: Interrupcion de la comunicacion durante la operacion
+     * @throws GeneralSecurityException: Errores relacionados con los permisos del usuario
+     */
+    public static String uploadFile(java.io.File file){
+    	String result = "";
+    	File fileMetadata = new File();
+    	fileMetadata.setName(file.toPath().getFileName().toString());
+    	
+    	String mimeType;
+		try {
+			mimeType = Files.probeContentType(file.toPath());
+			FileContent mediaContent = new FileContent(mimeType, file);
+			File gfile = service.files().create(fileMetadata, mediaContent)
+					.setFields("id, name, webViewLink")
+					.execute();
+			result = gfile.getId();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+    	return result;
+    }
 	
 	public static String uploadfile() {
 		String result = "";
@@ -79,7 +109,7 @@ public class DriveService {
 		return result;
 	}
 	
-
+	
 	/**
 	 * Creates an authorized Credential object.
 	 * 

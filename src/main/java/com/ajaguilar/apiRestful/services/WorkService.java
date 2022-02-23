@@ -1,10 +1,8 @@
 package com.ajaguilar.apiRestful.services;
 
 import java.awt.Point;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Work;
-import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.repository.WorkRepository;
 import com.ajaguilar.apiRestful.repository.WorkerRepository;
 
@@ -29,7 +26,7 @@ public class WorkService {
 	WorkerRepository wrepository;
 
 	/**
-	 * Método para obtener todas las obras.
+	 * Mï¿½todo para obtener todas las obras.
 	 * 
 	 * @return Lista con todas las obras de la BBDD.
 	 */
@@ -45,7 +42,7 @@ public class WorkService {
 	}
 
 	/**
-	 * Método para devolver una obra por su id.
+	 * Mï¿½todo para devolver una obra por su id.
 	 * 
 	 * @param id de la obra.
 	 * @return Obra con el id introducido.
@@ -77,7 +74,7 @@ public class WorkService {
 	}
 
 	/**
-	 * Método para crear nueva obra, en caso de existir la actuliza.
+	 * Mï¿½todo para crear nueva obra, en caso de existir la actuliza.
 	 * 
 	 * @param Obra a crear/guardar en la base de datos.
 	 * @return Obra un vez se cree/actualize.
@@ -104,9 +101,9 @@ public class WorkService {
 	}
 
 	/**
-	 * Método para la acualización de obras existentes en la BBDD.
+	 * Mï¿½todo para la acualizaciï¿½n de obras existentes en la BBDD.
 	 * 
-	 * @param Obra que se actulizará en la BBDD.
+	 * @param Obra que se actulizarï¿½ en la BBDD.
 	 * @return Obra actualizada.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar la obra.
 	 * @throws NullPointerException     Lanzado al ser nula la obra recibida.
@@ -155,7 +152,7 @@ public class WorkService {
 	}
 
 	/**
-	 * Método automatico para actualizar/crear una obra según si esta ya creada.
+	 * Mï¿½todo automatico para actualizar/crear una obra segï¿½n si esta ya creada.
 	 * 
 	 * @param Obra que se quiere acutalizar/crear.
 	 * @return Obra la cual se a actualizado o en su defecto creada.
@@ -208,7 +205,7 @@ public class WorkService {
 	}
 	
 	/**
-	 * Método para obtener una obra por su nombre.
+	 * Mï¿½todo para obtener una obra por su nombre.
 	 * 
 	 * @param Nombre de la obra a buscar.
 	 * @return Obra con el nombre introducido.
@@ -240,7 +237,7 @@ public class WorkService {
 	}
 	
 	/**
-	 * Método para devolver la obras asignadas a un trabajador.
+	 * Mï¿½todo para devolver la obras asignadas a un trabajador.
 	 * 
 	 * @param Trabajador al que esta asignada la obra.
 	 * @return Lista de obras de un trabajador.
@@ -272,9 +269,9 @@ public class WorkService {
 	}
 	
 	/**
-	 * Método para devolver una obra por sus coordenadas.
+	 * Mï¿½todo para devolver una obra por sus coordenadas.
 	 * @param Localizacion de la obra.
-	 * @return Obra con la ubicación introducida.
+	 * @return Obra con la ubicaciï¿½n introducida.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar la obra.
 	 * @throws NullPointerException     Lanzado al ser nula la obra recibida.
 	 * @throws IllegalArgumentException Lanzado en caso de error.
@@ -289,20 +286,20 @@ public class WorkService {
 					return result.get();
 				}else {
 					logger.error("Error ---> La obra no existe, getWorkByLocation");
-					throw new RecordNotFoundException("No existe obra con dicha localización", location);
+					throw new RecordNotFoundException("No existe obra con dicha localizaciï¿½n", location);
 				}
 			} catch (IllegalArgumentException e) {
 				logger.error("Error ---> IllegarArgumentException en getWorkByLocation :" + e);
 				throw new IllegalArgumentException(e);
 			}
 		}else {
-			logger.error("Error--> NullPointerException al traer obra por localización, getWorkByLocation");
+			logger.error("Error--> NullPointerException al traer obra por localizaciï¿½n, getWorkByLocation");
 			throw new NullPointerException ("Error: Las coordenadas introducidas tienen un valor nulo");
 		}	
 	}
 
 	/**
-	 * Método para el borrado de una obra, introduciendo su id.
+	 * Mï¿½todo para el borrado de una obra, introduciendo su id.
 	 * 
 	 * @param id de la obra que queremos borrar.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar la obra.
@@ -314,7 +311,7 @@ public class WorkService {
 			Optional<Work> result = repository.findById(id);
 			if (result != null) {
 				if (result.isPresent()) {
-					logger.info("Eliminación exitosa en getDeleteWorkById");
+					logger.info("Eliminaciï¿½n exitosa en getDeleteWorkById");
 
 					Work found=result.get();
 					found.setChief(null);

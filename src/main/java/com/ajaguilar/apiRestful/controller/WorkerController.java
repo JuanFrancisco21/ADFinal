@@ -1,8 +1,12 @@
 package com.ajaguilar.apiRestful.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Dailylog;
 import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.model.WorkerWork;
+import com.ajaguilar.apiRestful.services.DriveService;
 import com.ajaguilar.apiRestful.services.WorkService;
 import com.ajaguilar.apiRestful.services.WorkerService;
 import com.ajaguilar.apiRestful.services.WorkerWorkService;
@@ -30,7 +37,6 @@ import com.ajaguilar.apiRestful.services.WorkerWorkService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.HashSet;
 
 @RestController // Indicacion de que es una clase controller.
 @RequestMapping("/worker") // Cuando se introduzca esta URL se ejecutara este controller.
@@ -109,6 +115,13 @@ public class WorkerController {
 	public ResponseEntity<Worker> createWorker(@Valid @RequestBody Worker worker) {
 		if (worker != null && worker.getId() == -1) {
 			try {
+				try {
+					if (worker.getPicture() == null) {
+						return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+					}
+					DriveService.uploadFile(new File(worker.getPicture()));
+				} catch (Exception e) {}
+				
 				Worker result = service.createWorker(worker);
 				return new ResponseEntity<Worker>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
