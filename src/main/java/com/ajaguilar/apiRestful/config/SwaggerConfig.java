@@ -29,7 +29,7 @@ public class SwaggerConfig {
  
     
     private ApiInfo getApiInfo() {
-        return new ApiInfo("Notes Api Juan", 
+        return new ApiInfo("DailyLog Api", 
         		"RestFul api developed in SpringBoot", 
         		"1.0",
                 "Terms of Service", 

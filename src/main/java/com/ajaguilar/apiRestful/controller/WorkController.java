@@ -36,11 +36,11 @@ public class WorkController {
 	WorkService service;
 
 	/**
-	 * Método para obtener una lista de todas las obras de la BBDD.
+	 * Mï¿½todo para obtener una lista de todas las obras de la BBDD.
 	 * 
 	 * @return Lista con todas las obras de la BBDD. En caso de error devuelve una lista vacia.
 	 */
-	 @ApiOperation(value = "Método para obtener una lista de todas las obras de la BBDD."
+	 @ApiOperation(value = "MÃ©todo para obtener una lista de todas las obras de la BBDD."
 	            ,notes = "", tags = "getAllWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -58,12 +58,12 @@ public class WorkController {
 	}
 
 	/**
-	 * Método obtener una obra mediante su id.
+	 * Mï¿½todo obtener una obra mediante su id.
 	 * 
 	 * @param id de la obra a buscar.
 	 * @return Obra encontrado por id. En caso de error devuelve una obra vacia.
 	 */
-	 @ApiOperation(value = "Método obtener una obra mediante su id."
+	 @ApiOperation(value = "MÃ©todo obtener una obra mediante su id."
 	            ,notes = "", tags = "getWorkById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -84,12 +84,12 @@ public class WorkController {
 	}
 	
 	/**
-	 * Método para la creación de una nueva obra.
+	 * Mï¿½todo para la creaciï¿½n de una nueva obra.
 	 * 
 	 * @param Obra que se va a crear.
 	 * @return Obra creada en la BBDD. En caso de error devuelve una obra vacia.
 	 */
-	 @ApiOperation(value = "Método para la creación de una nueva obra."
+	 @ApiOperation(value = "MÃ©todo para la creaciÃ³n de una nueva obra."
 	            ,notes = "", tags = "createWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -110,12 +110,12 @@ public class WorkController {
 	}
 	
 	/**
-	 * Método para la actulización de una obra.
+	 * Mï¿½todo para la actulizaciï¿½n de una obra.
 	 * 
 	 * @param Obra que se va a actualizar.
 	 * @return Obra actualizada en la BBDD. En caso de error devuelve una obra vacia.
 	 */
-	 @ApiOperation(value = "Método para la actulización de una obra."
+	 @ApiOperation(value = "MÃ©todo para la actulizaciÃ³n de una obra."
 	            ,notes = "", tags = "updateWork")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -137,12 +137,12 @@ public class WorkController {
 	
 	
 	/**
-	 * Método obtener una obra mediante su nombre.
+	 * Mï¿½todo obtener una obra mediante su nombre.
 	 * 
 	 * @param Nombre de la obra a buscar.
 	 * @return Obra encontrado por nombre. En caso de error devuelve una obra vacia.
 	 */
-	 @ApiOperation(value = "Método obtener una obra mediante su nombre."
+	 @ApiOperation(value = "MÃ©todo obtener una obra mediante su nombre."
 	            ,notes = "", tags = "getWorkByName")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -163,12 +163,12 @@ public class WorkController {
 	}
 	
 	/**
-	 * Método obtener una obra mediante su trabajador.
+	 * Mï¿½todo obtener una obra mediante su trabajador.
 	 * 
 	 * @param Id del trabajador de la obra a buscar.
 	 * @return Obras encontradas por id del trabajador. En caso de error devuelve una lista de obras vacia.
 	 */
-	 @ApiOperation(value = "Método obtener una obra mediante su trabajador."
+	 @ApiOperation(value = "MÃ©todo obtener una obra mediante su trabajador."
 	            ,notes = "", tags = "getWorkByWorker")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -189,12 +189,12 @@ public class WorkController {
 	}
 	
 	/**
-	 * Método obtener una obra mediante su localización.
+	 * Mï¿½todo obtener una obra mediante su localizaciï¿½n.
 	 * 
-	 * @param Localización de la obra a buscar.
-	 * @return Obra encontradas por la localización. En caso de error devuelve una obra vacia.
+	 * @param Localizaciï¿½n de la obra a buscar.
+	 * @return Obra encontradas por la localizaciï¿½n. En caso de error devuelve una obra vacia.
 	 */
-	 @ApiOperation(value = "Método obtener una obra mediante su localización."
+	 @ApiOperation(value = "MÃ©todo obtener una obra mediante su localizaciÃ³n."
 	            ,notes = "", tags = "getWorkByLocation")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
@@ -215,13 +215,13 @@ public class WorkController {
 	}
 
 	/**
-	 * Método para borra una obra de la BBDD.
+	 * Mï¿½todo para borra una obra de la BBDD.
 	 * 
 	 * @param id de la obra a borrar.
 	 * @return Status ok si lo borra, Bad_request en caso de no borrarla.
 	 * @throws RecordNotFoundException Lanzado al no encontrar el valor.
 	 */
-	 @ApiOperation(value = "Método para borra una obra de la BBDD."
+	 @ApiOperation(value = "MÃ©todo para borrar una obra de la BBDD."
 	            ,notes = "", tags = "deleteWorkById")
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Work.class),
