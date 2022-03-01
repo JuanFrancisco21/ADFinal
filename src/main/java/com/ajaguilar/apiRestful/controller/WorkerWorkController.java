@@ -19,8 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
+import com.ajaguilar.apiRestful.model.Dailylog;
 import com.ajaguilar.apiRestful.model.WorkerWork;
 import com.ajaguilar.apiRestful.services.WorkerWorkService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/workerWork")
@@ -34,6 +39,10 @@ public class WorkerWorkController {
 	 * 
 	 * @return Una lista con todos los workerwork
 	 */
+	@ApiOperation(value = "Método que devuelve todas las relaciones existentes.", notes = "", tags = "getAllWorkerWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada.") })
 	@GetMapping
 	public ResponseEntity<List<WorkerWork>> getAllWorkerWork() {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
@@ -52,6 +61,11 @@ public class WorkerWorkController {
 	 * @param id La id del workerwork
 	 * @return El workerwork cuya id coincida
 	 */
+	@ApiOperation(value = "Método que devuelve worker_work por el id", notes = "", tags = "getWorkerWorkById")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@GetMapping("/{id}")
 	public ResponseEntity<WorkerWork> getWorkerWorkById(@PathVariable("id") Long id) {
 		if (id != null && id > -1) {
@@ -72,6 +86,11 @@ public class WorkerWorkController {
 	 * @param workerWork El workerwork a ser introducido en la base de datos
 	 * @return El workerwork introducido
 	 */
+	@ApiOperation(value = "Método de creacion de worker_work ", notes = "", tags = "createWorkerWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@PostMapping
 	public ResponseEntity<WorkerWork> createWorkerWork(@Valid @RequestBody WorkerWork workerWork) {
 		if (workerWork != null && workerWork.getId() == -1) {
@@ -92,6 +111,11 @@ public class WorkerWorkController {
 	 * @param workerWork El workerwork a ser actualizado
 	 * @return El workerwork actualizado
 	 */
+	@ApiOperation(value = "Método para actualizar worker_work", notes = "", tags = "updateWorkerWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@PutMapping
 	public ResponseEntity<WorkerWork> updateWorkerWork(@Valid @RequestBody WorkerWork workerWork) {
 		if (workerWork != null && workerWork.getId() != -1) {
@@ -131,7 +155,11 @@ public class WorkerWorkController {
 	 * @param idWorker La id del worker
 	 * @return Una lista con los workerworks que cumplan los requisitos
 	 */
-
+	@ApiOperation(value = "Método para buscar worker_work mediante el trabajador", notes = "", tags = "getWorkerWorkByWorker")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@GetMapping("idWorker/{idWorker}")
 	public ResponseEntity<List<WorkerWork>> getWorkerWorkByWorker(@PathVariable("idWorker") Long idWorker) {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
@@ -153,6 +181,11 @@ public class WorkerWorkController {
 	 * @param idWorker La id del worker
 	 * @return El workerwork que cumple los requisitos
 	 */
+	@ApiOperation(value = "Método para buscar worker_work mediante el id del trabajador", notes = "", tags = "getWorkerWorkByWorker")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@GetMapping("/current/{idWorker}")
 	public ResponseEntity<WorkerWork> getWorkerWorkByCurrentWorker(@PathVariable("idWorker") Long idWorker) {
 		WorkerWork result = new WorkerWork();
@@ -174,6 +207,11 @@ public class WorkerWorkController {
 	 * @param idWork La id del work
 	 * @return La lista de workerworks que cumple las condiciones
 	 */
+	@ApiOperation(value = "Método para buscar worker_work mediante el id del trabajo", notes = "", tags = "getWorkerWorkByWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@GetMapping("idWork/{idWork}")
 	public ResponseEntity<List<WorkerWork>> getWorkerWorkByWork(@PathVariable("idWork") Long idWork) {
 		List<WorkerWork> result = new ArrayList<WorkerWork>();
@@ -196,13 +234,18 @@ public class WorkerWorkController {
 	 * @return OK en caso de borrarlo, BAD_REQUEST en caso de que no
 	 * @throws RecordNotFoundException Si no encuentra el workerwork
 	 */
+	@ApiOperation(value = "Método para borrar worker_work por id", notes = "", tags = "deleteWorkerWorkById")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
 	@DeleteMapping("/{id}")
 	public HttpStatus deleteWorkerWorkById(@PathVariable("id") Long id) throws RecordNotFoundException {
 		if (id != null && id > -1) {
 			try {
 				service.deleteWorkerWorkById(id);
 			} catch (Exception e) {
-				return HttpStatus.BAD_REQUEST;
+				return HttpStatus.NOT_FOUND;
 			}
 			return HttpStatus.OK;
 		} else {
