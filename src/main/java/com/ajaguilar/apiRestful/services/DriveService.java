@@ -84,7 +84,7 @@ public class DriveService {
 			File gfile = service.files().create(fileMetadata, mediaContent)
 					.setFields("id, name, webViewLink")
 					.execute();
-			result = gfile.getId();
+			result = gfile.getWebViewLink();//gfile.getId();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
