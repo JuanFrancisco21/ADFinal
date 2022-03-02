@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +34,7 @@ import com.ajaguilar.apiRestful.model.Work;
 import com.ajaguilar.apiRestful.model.Worker;
 import com.ajaguilar.apiRestful.model.WorkerWork;
 import com.ajaguilar.apiRestful.services.DriveService;
+import com.ajaguilar.apiRestful.services.FileService;
 import com.ajaguilar.apiRestful.services.WorkService;
 import com.ajaguilar.apiRestful.services.WorkerService;
 import com.ajaguilar.apiRestful.services.WorkerWorkService;
@@ -49,6 +54,8 @@ public class WorkerController {
 	WorkerWorkService wwservice;
 	@Autowired
 	WorkService wservice;
+	@Autowired
+    FileService fileUploadService;
 
 	/**
 	 * Método para obtener una lista de todas los trabajadores de la BBDD.
@@ -112,21 +119,26 @@ public class WorkerController {
 			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@PostMapping
-	public ResponseEntity<Worker> createWorker(@Valid @RequestBody Worker worker) {
-		if (worker != null && worker.getId() == -1) {
+	@RequestMapping(path = "", method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<Worker> createWorker(@Valid @RequestPart Worker worker, @Valid @RequestParam MultipartFile multipartFile) {
+		if (worker != null && multipartFile != null && worker.getId() == -1) {
 			try {
-				try {
-					if (worker.getPicture() == null) {
-						return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
-					}
-					worker.setPicture(DriveService.uploadFile(new File(worker.getPicture())));
-				} catch (Exception e) {
+				BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+				if (bi == null) {
+					return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 				}
+				//Subo la foto a drive y obtengo su url para guardarla en la base de datos.
+				File file=fileUploadService.uploadToLocal(multipartFile);
+				DriveService.getService();
+				String direccion = DriveService.uploadFile(file);
+				worker.setPicture(direccion);
+				
+				fileUploadService.flushTmp();
 
 				Worker result = service.createWorker(worker);
 				return new ResponseEntity<Worker>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
+				e.printStackTrace();
 				return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
