@@ -10,7 +10,7 @@ import com.ajaguilar.apiRestful.model.WorkerWork;
 public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 
 	/**
-	 * Método que devuelve los WorkerWork que contienen el trabajador especificado
+	 * Metodo que devuelve los WorkerWork que contienen el trabajador especificado
 	 * 
 	 * @param idWorker La id del trabajador
 	 * @return Una lista de los WorkerWork que contiene el trabajador especificado
@@ -20,7 +20,7 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	public List<WorkerWork> findByWorker(Long idWorker) throws IllegalArgumentException;
 
 	/**
-	 * Método que devuelve el WorkerWork que contiene el trabajador especificado y este es el actual
+	 * Metodo que devuelve el WorkerWork que contiene el trabajador especificado y este es el actual
 	 * 
 	 * @param idWorker La id del trabajador
 	 * @return El WorkerWork que contiene el trabajador y current es verdadero
@@ -30,7 +30,7 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	public WorkerWork findByCurrentWorker(Long idWorker) throws IllegalArgumentException;
 
 	/**
-	 * Método que devuelve los WorkerWork que contienen el trabajo especificado
+	 * Metodo que devuelve los WorkerWork que contienen el trabajo especificado
 	 * 
 	 * @param idWork La id del trabajo
 	 * @return Una lista de los WorkerWOrk que contiene el trabajo especificado
