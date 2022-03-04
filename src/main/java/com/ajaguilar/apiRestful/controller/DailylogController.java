@@ -38,7 +38,7 @@ public class DailylogController {
 	WorkerWorkService wwservice;
 
 	/**
-	 * M�todo que devuelve una lista con todos los dailylogs de la BD
+	 * Metodo que devuelve una lista con todos los dailylogs de la BD
 	 *
 	 * @return una List con los dailylogs
 	 */
@@ -59,7 +59,7 @@ public class DailylogController {
 	}
 
 	/**
-	 * M�todo para obtener un dailylog concreto seg�n su id
+	 * Metodo para obtener un dailylog concreto seg�n su id
 	 *
 	 * @param id del dailylog a devolver
 	 * @return el objeto dailylog en caso de que este exista, un dailylog vac?o en
@@ -81,10 +81,10 @@ public class DailylogController {
 	}
 
 	/**
-	 * M�todo que crea un dailylog en la BD
+	 * Metodo que crea un dailylog en la BD
 	 *
 	 * @param log Dailylog a crear
-	 * @return El dailylog creado si tiene �xito, dailylog vac�o si falla
+	 * @return El dailylog creado si tiene �xito, dailylog vacio si falla
 	 */
 	@ApiOperation(value = "Método que crea un dailylog en la BD.", notes = "", tags = "createDailylog")
 	@ApiResponses(value = {
@@ -116,7 +116,7 @@ public class DailylogController {
 	}
 
 	/**
-	 * M�todo para editar un dailylog que ya exista en la BD
+	 * Metodo para editar un dailylog que ya exista en la BD
 	 *
 	 * @param log Dailylog a editar
 	 * @return El objeto dailylog editado
