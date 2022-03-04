@@ -255,6 +255,34 @@ public class WorkerWorkService {
 		}
 
 	}
+	
+	/**
+	 * Devuelve los workerwork que tengan al work introducido y esten activos
+	 * 
+	 * @param idWork La id del work activo
+	 * @return Una lista con todos los workerwork que cumplan los requisitos
+	 */
+	public List<WorkerWork> getWorkerWorkByCurrentWork(Long idWork) {
+		if (idWork != null) {
+			try {
+				Optional<List<WorkerWork>> result = Optional.of(repository.findByCurrentWork(idWork));
+				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerWorkByWork");
+					return result.get();
+				} else {
+					logger.error("Error ---> La relaci�n no existe", idWork + ", getWorkerWorkByWork");
+					throw new RecordNotFoundException("This workerwork doesn't exist, idWork= ", idWork);
+				}
+			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerWorkByWork :" + e);
+				throw new IllegalArgumentException(e);
+			}
+		} else {
+			logger.error("Error--> NullPointerException al buscar relacion, getWorkerWorkByWork");
+			throw new NullPointerException("idWork is null");
+		}
+
+	}
 
 	/**
 	 * Elimina el workerwork con la id introducida

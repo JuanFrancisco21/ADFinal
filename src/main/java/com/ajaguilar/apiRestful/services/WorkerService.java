@@ -184,7 +184,6 @@ public class WorkerService {
 	public Worker getWorkerBySurname(String apellido) throws RecordNotFoundException, NullPointerException, IllegalArgumentException {
 		if(apellido != null) {
 			try {
-				System.out.println(apellido);
 				Optional<Worker> result = Optional.of(repository.findBySurname(apellido));
 				if(result.isPresent()) {
 					logger.info("Consulta exitosa en getWorkerBySurname");
@@ -200,6 +199,37 @@ public class WorkerService {
 			
 		}else {
 			logger.error("Error--> NullPointerException al buscar trabajador, getWorkerBySurname");
+			throw new NullPointerException("Error: Trabajador introducido tiene un valor nulo");
+		}
+	}
+	
+	/**
+	 * Metodo para obtener un trabajador por su apellido.
+	 * 
+	 * @param Apellido del trabajador a buscar en la BBDD.
+	 * @return Trabajador con el apellido introducido. 
+	 * @throws RecordNotFoundException  Lanzado al no encontrar el trabajador.
+	 * @throws NullPointerException     Lanzado al ser nulo el trabajador recibida.
+	 * @throws IllegalArgumentException Lanzado en caso de error.
+	 */
+	public Worker getWorkerByEmail(String email) throws RecordNotFoundException, NullPointerException, IllegalArgumentException {
+		if(email != null) {
+			try {
+				Optional<Worker> result = Optional.of(repository.findByEmail(email));
+				if(result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerBySurname");
+					return result.get();
+				}else {
+					logger.error("Error ---> El trabajador no existe", email + ", getWorkerByEmail");
+					throw new RecordNotFoundException("No existe el trabajador con email:", email);
+				}
+			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerByEmail :" + e);
+				throw new IllegalArgumentException(e);
+			}
+			
+		}else {
+			logger.error("Error--> NullPointerException al buscar trabajador, getWorkerByEmail");
 			throw new NullPointerException("Error: Trabajador introducido tiene un valor nulo");
 		}
 	}
