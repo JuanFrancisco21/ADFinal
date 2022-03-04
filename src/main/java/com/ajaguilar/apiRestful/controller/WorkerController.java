@@ -321,6 +321,7 @@ public class WorkerController {
 		Worker worker = service.getWorkerById(workerId);
 		Work work = wservice.getWorkById(workId);
 		if (worker != null && work != null) {
+			
 			try {
 				WorkerWork result = wwservice
 						.createWorkerWork(new WorkerWork(worker, work, true, new HashSet<Dailylog>()));

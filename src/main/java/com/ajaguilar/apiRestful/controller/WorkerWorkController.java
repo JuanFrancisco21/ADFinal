@@ -95,7 +95,7 @@ public class WorkerWorkController {
 	public ResponseEntity<WorkerWork> createWorkerWork(@Valid @RequestBody WorkerWork workerWork) {
 		if (workerWork != null && workerWork.getId() == -1) {
 			try {
-				WorkerWork result = service.createWorkerWork(workerWork);
+				WorkerWork result = service.createOrUpdateWorkerwork(workerWork);
 				return new ResponseEntity<WorkerWork>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<WorkerWork>(new WorkerWork(), new HttpHeaders(), HttpStatus.NOT_FOUND);
@@ -120,7 +120,7 @@ public class WorkerWorkController {
 	public ResponseEntity<WorkerWork> updateWorkerWork(@Valid @RequestBody WorkerWork workerWork) {
 		if (workerWork != null && workerWork.getId() != -1) {
 			try {
-				WorkerWork result = service.updateWorkerWork(workerWork);
+				WorkerWork result = service.createOrUpdateWorkerwork(workerWork);
 				return new ResponseEntity<WorkerWork>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<WorkerWork>(new WorkerWork(), new HttpHeaders(), HttpStatus.NOT_FOUND);
