@@ -49,7 +49,7 @@ public class WorkerWork implements Serializable {
 	@ApiModelProperty(position = 3, name = "Work", notes = "Work el cual se va a relacionar", required = true, value = "Objeto work")
 	private Work work;
 
-	@JsonIgnoreProperties(value = { "worker_work" })
+	@JsonIgnoreProperties(value = { "workerWork" })
 	@OneToMany(mappedBy = "worker_work", fetch = FetchType.LAZY, orphanRemoval = true)
 	@ApiModelProperty(position = 4, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<Dailylog> dailyLogList;

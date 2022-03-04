@@ -32,7 +32,7 @@ public class Dailylog implements Serializable {
     @ApiModelProperty(position = 0, name = "id", notes = "Identificador del dailylog", required = true, value = "1")
     private Long id;
     
-    @ApiModelProperty(position = 1, name = "Fecha", notes = "Fecha de la creación de dailylog", required = true, value = "DD/MM/YYY")
+    @ApiModelProperty(position = 1, name = "Fecha", notes = "Fecha de la creaciï¿½n de dailylog", required = true, value = "DD/MM/YYY")
     @Column(name="date")
     private Date date;
     
