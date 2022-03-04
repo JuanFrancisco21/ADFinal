@@ -1,6 +1,7 @@
 package com.ajaguilar.apiRestful.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -48,5 +49,6 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	 */
 	@Query(value = "SELECT * FROM worker_work WHERE worker_work.id_work = ?1 AND workerWork.current = TRUE", nativeQuery = true)
 	public List<WorkerWork> findByCurrentWork(Long idWork) throws IllegalArgumentException;
+	
 	
 }

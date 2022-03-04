@@ -37,13 +37,13 @@ public class WorkerWork implements Serializable {
 	@ApiModelProperty(position = 1, name = "Current", notes = "Estar asignada como activo un trabajador en la obra", required = true, value = "true")
 	private Boolean current;
 	
-	@JsonIgnoreProperties(value = { "workerWork" })
+	@JsonIgnoreProperties(value = {"chiefWorkList", "workerWork" })
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWorker")
 	@ApiModelProperty(position = 2, name = "Worker", notes = "Worker el cual se va a relacionar", required = true, value = "Objeto worker")
 	private Worker worker;
 
-	@JsonIgnoreProperties(value = { "workerWork" })
+	@JsonIgnoreProperties(value = {"chief", "workerWork" })
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idWork")
 	@ApiModelProperty(position = 3, name = "Work", notes = "Work el cual se va a relacionar", required = true, value = "Objeto work")
