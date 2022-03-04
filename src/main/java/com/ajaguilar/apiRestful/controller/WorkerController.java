@@ -123,17 +123,21 @@ public class WorkerController {
 	public ResponseEntity<Worker> createWorker(@Valid @RequestPart Worker worker, @Valid @RequestParam MultipartFile multipartFile) {
 		if (worker != null && multipartFile != null && worker.getId() == -1) {
 			try {
-				BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
-				if (bi == null) {
-					return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+				try {
+					BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+					if (bi == null) {
+						return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+					}
+					//Subo la foto a drive y obtengo su url para guardarla en la base de datos.
+					File file=fileUploadService.uploadToLocal(multipartFile);
+					DriveService.getService();
+					String direccion = DriveService.uploadFile(file);
+					worker.setPicture(direccion);
+					
+					fileUploadService.flushTmp();
+				} catch (Exception e) {
+					worker.setPicture("none");
 				}
-				//Subo la foto a drive y obtengo su url para guardarla en la base de datos.
-				File file=fileUploadService.uploadToLocal(multipartFile);
-				DriveService.getService();
-				String direccion = DriveService.uploadFile(file);
-				worker.setPicture(direccion);
-				
-				fileUploadService.flushTmp();
 
 				Worker result = service.createWorker(worker);
 				return new ResponseEntity<Worker>(result, new HttpHeaders(), HttpStatus.OK);
