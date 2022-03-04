@@ -124,6 +124,7 @@ public class WorkerController {
 		if (worker != null && multipartFile != null && worker.getId() == -1) {
 			try {
 				try {
+					if (multipartFile !=null) {
 					BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
 					if (bi == null) {
 						return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -135,6 +136,9 @@ public class WorkerController {
 					worker.setPicture(direccion);
 					
 					fileUploadService.flushTmp();
+					}else {
+						worker.setPicture("none");
+					}
 				} catch (Exception e) {
 					worker.setPicture("none");
 				}
