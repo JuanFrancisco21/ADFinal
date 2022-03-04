@@ -114,14 +114,14 @@ public class WorkerController {
 	 * @return Trabajador creado en la BBDD. En caso de error devuelve un trabajador
 	 *         vacio.
 	 */
-	@ApiOperation(value = "Método para la creación de un nuevo trabajador.", notes = "", tags = "createWorker")
+	@ApiOperation(value = "Método para la creación de un nuevo trabajador con foto.", notes = "", tags = "createWorkerFull")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@RequestMapping(path = "", method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<Worker> createWorker(@Valid @RequestPart Worker worker, @Valid @RequestParam MultipartFile multipartFile) {
-		if (worker != null && multipartFile != null && worker.getId() == -1) {
+	@RequestMapping(path = "/foto", method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<Worker> createWorkerFull(@Valid @RequestPart Worker worker, @Valid  MultipartFile multipartFile) {
+		if (worker != null  && worker.getId() == -1) {
 			try {
 				try {
 					if (multipartFile !=null) {
@@ -143,6 +143,34 @@ public class WorkerController {
 					worker.setPicture("none");
 				}
 
+				Worker result = service.createWorker(worker);
+				return new ResponseEntity<Worker>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	/**
+	 * Método para la creación de un nuevo trabajador.
+	 * 
+	 * @param Trabajador que se va a crear.
+	 * @return Trabajador creado en la BBDD. En caso de error devuelve un trabajador
+	 *         vacio.
+	 */
+	@ApiOperation(value = "Método para la creación de un nuevo trabajador.", notes = "", tags = "createWorker")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	//@PostMapping("/new/{worker}")
+	@RequestMapping(path = "/new", method = RequestMethod.POST)
+	public ResponseEntity<Worker> createWorker(@Valid @RequestBody Worker worker) {
+		if (worker != null  && worker.getId() == -1) {
+			try {
 				Worker result = service.createWorker(worker);
 				return new ResponseEntity<Worker>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
