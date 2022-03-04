@@ -22,7 +22,7 @@ public class WorkerWorkService {
 	WorkerWorkRepository repository;
 
 	/**
-	 * Método que nos proporciona todos los WorkerWork
+	 * Mï¿½todo que nos proporciona todos los WorkerWork
 	 * 
 	 * @return Lista con todo los WorkerWork
 	 */
@@ -39,7 +39,7 @@ public class WorkerWorkService {
 	}
 
 	/**
-	 * Método que proporciona un WorkerWork cuya id coincida con el valor introducido
+	 * Mï¿½todo que proporciona un WorkerWork cuya id coincida con el valor introducido
 	 * 
 	 * @param id La id por la que se va a buscar en la base de datos
 	 * @return El WorkerWork cuya id coincida
@@ -52,7 +52,7 @@ public class WorkerWorkService {
 					logger.info("Consulta exitosa en getWorkerWorkById");
 					return result.get();
 				} else {
-					logger.error("Error ---> La relación no existe", id + ", getWorkerWorkById");
+					logger.error("Error ---> La relaciï¿½n no existe", id + ", getWorkerWorkById");
 					throw new RecordNotFoundException("WorkerWork with the following id has not been defined ", id);
 				}
 			} catch (Exception e) {
@@ -66,7 +66,7 @@ public class WorkerWorkService {
 	}
 
 	/**
-	 * Método que instancia un objeto WorkerWork en la base de datos
+	 * Mï¿½todo que instancia un objeto WorkerWork en la base de datos
 	 * 
 	 * @param workerWork El objeto a almacenar
 	 * @return Devuelve el workerwork creado
@@ -112,7 +112,7 @@ public class WorkerWorkService {
 						throw new IllegalArgumentException(e);
 					}
 				} else {
-					logger.error("Error ---> La relación no existe", workerWork + ", updateWorkerWork");
+					logger.error("Error ---> La relaciï¿½n no existe", workerWork + ", updateWorkerWork");
 					throw new RecordNotFoundException("This workerwork doesn't exist", workerWork);
 				}
 			} else {
@@ -186,7 +186,7 @@ public class WorkerWorkService {
 					logger.info("Consulta exitosa en getWorkerWorkByWorker");
 					return result.get();
 				} else {
-					logger.error("Error ---> La relación no existe", idWorker + ", getWorkerWorkByWorker");
+					logger.error("Error ---> La relaciï¿½n no existe", idWorker + ", getWorkerWorkByWorker");
 					throw new RecordNotFoundException("This workerwork doesn't exist, idWorker= ", idWorker);
 				}
 			} catch (IllegalArgumentException e) {
@@ -214,7 +214,7 @@ public class WorkerWorkService {
 					logger.info("Consulta exitosa en getWorkerWorkByCurrentWorker");
 					return result.get();
 				} else {
-					logger.error("Error ---> La relación no existe", idWorker + ", getWorkerWorkByCurrentWorker");
+					logger.error("Error ---> La relaciï¿½n no existe", idWorker + ", getWorkerWorkByCurrentWorker");
 					throw new RecordNotFoundException("This workerwork doesn't exist, idWorker= ", idWorker);
 				}
 			} catch (IllegalArgumentException e) {
@@ -242,7 +242,35 @@ public class WorkerWorkService {
 					logger.info("Consulta exitosa en getWorkerWorkByWork");
 					return result.get();
 				} else {
-					logger.error("Error ---> La relación no existe", idWork + ", getWorkerWorkByWork");
+					logger.error("Error ---> La relaciï¿½n no existe", idWork + ", getWorkerWorkByWork");
+					throw new RecordNotFoundException("This workerwork doesn't exist, idWork= ", idWork);
+				}
+			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getWorkerWorkByWork :" + e);
+				throw new IllegalArgumentException(e);
+			}
+		} else {
+			logger.error("Error--> NullPointerException al buscar relacion, getWorkerWorkByWork");
+			throw new NullPointerException("idWork is null");
+		}
+
+	}
+	
+	/**
+	 * Devuelve los workerwork que tengan al work introducido y esten activos
+	 * 
+	 * @param idWork La id del work activo
+	 * @return Una lista con todos los workerwork que cumplan los requisitos
+	 */
+	public List<WorkerWork> getWorkerWorkByCurrentWork(Long idWork) {
+		if (idWork != null) {
+			try {
+				Optional<List<WorkerWork>> result = Optional.of(repository.findByCurrentWork(idWork));
+				if (result.isPresent()) {
+					logger.info("Consulta exitosa en getWorkerWorkByWork");
+					return result.get();
+				} else {
+					logger.error("Error ---> La relaciï¿½n no existe", idWork + ", getWorkerWorkByWork");
 					throw new RecordNotFoundException("This workerwork doesn't exist, idWork= ", idWork);
 				}
 			} catch (IllegalArgumentException e) {

@@ -39,37 +39,42 @@ public class Work implements Serializable {
 	private String name;
 	
 	@Column(name = "description")
-	@ApiModelProperty(position = 2, name = "Descripción", notes = "Descripción del Work", required = true, value = "Reforma del piso completo")
+	@ApiModelProperty(position = 2, name = "Descripcion", notes = "Descripcion del Work", required = true, value = "Reforma del salon principal")
 	private String description;
 	
+	@Column(name = "active")
+	@ApiModelProperty(position = 3, name = "Active", notes = "Work activo de la empresa", required = true, value = "true")
+	private Boolean active;
+	
 	@Column(name = "location")
-	@ApiModelProperty(position = 3, name = "Localización", notes = "Localizacion del Work", required = true, value = "Point de java")
+	@ApiModelProperty(position = 4, name = "Localizaciï¿½n", notes = "Localizacion del Work", required = true, value = "Point de java")
 	private Point location;
 
 	// Modelo worker
 	@JsonIgnoreProperties(value = { "chiefWorkList" })
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chief")
-	@ApiModelProperty(position = 4, name = "Worker", notes = "Relacion con Trabajador", required = true, value = "Objeto worker")
+	@ApiModelProperty(position = 5, name = "Worker", notes = "Relacion con Trabajador", required = true, value = "Objeto worker")
 	private Worker chief;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "work" })
 	@OneToMany(mappedBy = "work", fetch = FetchType.EAGER)
-  @ApiModelProperty(position = 5, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
+  @ApiModelProperty(position = 6, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<WorkerWork> workerWork;
 
-	public Work(String name, String description, Point location, Worker chief, Set<WorkerWork> workerWork) {
+	public Work(String name, String description, Boolean active, Point location, Worker chief, Set<WorkerWork> workerWork) {
 		this.id = -1L;
 		this.name = name;
 		this.description = description;
+		this.active = active;
 		this.location = location;
 		this.chief = chief;
 		this.workerWork = workerWork;
 	}
 
 	public Work() {
-		this("", "", new Point(Double.MIN_VALUE, Double.MIN_VALUE), new Worker(), new HashSet<WorkerWork>());
+		this("", "", true, new Point(Double.MIN_VALUE, Double.MIN_VALUE), new Worker(), new HashSet<WorkerWork>());
 	}
 
 	public Long getId() {
@@ -89,8 +94,17 @@ public class Work implements Serializable {
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Point getLocation() {

@@ -31,7 +31,7 @@ public class WorkService {
 	 * @return Lista con todas las obras de la BBDD.
 	 */
 	public List<Work> getAllWork() {
-		List<Work> result = repository.findAll();
+		List<Work> result = repository.findAllActive();
 		if (!result.isEmpty()) {
 			logger.info("Consulta exitosa en getAllWork");
 			return result;

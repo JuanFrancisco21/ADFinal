@@ -226,6 +226,32 @@ public class WorkerWorkController {
 			return new ResponseEntity<List<WorkerWork>>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	/**
+	 * Devuelve una lista de workerwor cuyo work sea el introducido y este activo
+	 * 
+	 * @param idWork La id del work activo
+	 * @return La lista de workerworks que cumple las condiciones
+	 */
+	@ApiOperation(value = "Método para buscar worker_work mediante el id del trabajo", notes = "", tags = "getWorkerWorkByWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
+			@ApiResponse(code = 404, message = "Not found. Informacion no encontrada."),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class) })
+	@GetMapping("idCurrentWork/{idWork}")
+	public ResponseEntity<List<WorkerWork>> getWorkerWorkByCurrentWork(@PathVariable("idWork") Long idWork) {
+		List<WorkerWork> result = new ArrayList<WorkerWork>();
+		if (idWork != null && idWork != -1) {
+			try {
+				result = service.getWorkerWorkByCurrentWork(idWork);
+				return new ResponseEntity<List<WorkerWork>>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<List<WorkerWork>>(result, new HttpHeaders(), HttpStatus.NOT_FOUND);
+			}
+		} else {
+			return new ResponseEntity<List<WorkerWork>>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	/**
 	 * Elimina un workerwork en base a su id

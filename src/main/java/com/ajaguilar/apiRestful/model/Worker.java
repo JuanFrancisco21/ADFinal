@@ -41,39 +41,44 @@ public class Worker implements Serializable {
 	@ApiModelProperty(position = 2, name = "Apellido", notes = "Apellido del Worker", required = true, value = "Aguilar")
 	private String surname;
 	
+	@Column(name = "email")
+	@ApiModelProperty(position = 3, name = "Email", notes = "Email del Worker", required = true, value = "test@gmail.com")
+	private String email;
+	
 	@Column(name = "active")
-	@ApiModelProperty(position = 3, name = "Active", notes = "Worker activo de la empresa", required = true, value = "true")
+	@ApiModelProperty(position = 4, name = "Active", notes = "Worker activo de la empresa", required = true, value = "true")
 	private Boolean active;
 	
 	@Column(name = "picture")
-	@ApiModelProperty(position = 4, name = "Foto", notes = "Fotografia del Worker", required = true, value = "URL")
+	@ApiModelProperty(position = 5, name = "Foto", notes = "Fotografia del Worker", required = true, value = "URL")
 	private String picture;
 
 
 	// Modelo work
 	@JsonIgnoreProperties(value = { "chief" })
 	@OneToMany(mappedBy = "chief", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = false)
-	@ApiModelProperty(position = 5, name = "ListaObras", notes = "Relacion con Trabajos en los que es Jefe", required = true, value = "Objeto work")
+	@ApiModelProperty(position = 6, name = "ListaObras", notes = "Relacion con Trabajos en los que es Jefe", required = true, value = "Objeto work")
 	private Set<Work> chiefWorkList;
 
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "worker" })
 	@OneToMany(mappedBy = "worker")
-	@ApiModelProperty(position = 6, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
+	@ApiModelProperty(position = 7, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<WorkerWork> workerWork;
 
-	public Worker(String name, String surname, Boolean active, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
+	public Worker(String name, String surname, Boolean active, String email, String picture, Set<Work> chiefWorkList, Set<WorkerWork> workerWork) {
 		this.id = -1L;
 		this.name = name;
 		this.surname = surname;
 		this.active = active;
+		this.email = email;
 		this.picture = picture;
 		this.chiefWorkList = chiefWorkList;
 		this.workerWork = workerWork;
 	}
 
 	public Worker() {
-		this("", "", true, "", new HashSet<Work>(), new HashSet<WorkerWork>());
+		this("", "", true, "", "", new HashSet<Work>(), new HashSet<WorkerWork>());
 	}
 
 	public Long getId() {
@@ -105,6 +110,14 @@ public class Worker implements Serializable {
 		this.active = active;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPicture() {
 		return picture;
 	}
@@ -129,9 +142,11 @@ public class Worker implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Worker [id=" + id + ", name=" + name + ", surname=" + surname + ", active=" + active + ", picture="
-				+ picture + "]";
+		return "Worker [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", active="
+				+ active + ", picture=" + picture + "]";
 	}
+	
+	
 
 
 }

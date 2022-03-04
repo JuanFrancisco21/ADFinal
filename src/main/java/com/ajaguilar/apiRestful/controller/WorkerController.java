@@ -223,6 +223,32 @@ public class WorkerController {
 			return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	/**
+	 * Método obtener un trabajador mediante su email.
+	 * 
+	 * @param email del trabajador a buscar.
+	 * @return Trabajador encontrado por email. En caso de error devuelve un
+	 *         trabajador vacio.
+	 */
+	@ApiOperation(value = "Método obtener un trabajador mediante su email.", notes = "", tags = "getWorkerByEmail")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("/email/{email}")
+	public ResponseEntity<Worker> getWorkerByEmail(@PathVariable("email") String email) {
+		if (email != null && email.length() > 1) {
+			try {
+				Worker result = service.getWorkerByEmail(email);
+				return new ResponseEntity<Worker>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			return new ResponseEntity<Worker>(new Worker(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	/**
 	 * Método obtener un trabajador por si esta activo/inactivo.
