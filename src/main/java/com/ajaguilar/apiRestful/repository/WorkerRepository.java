@@ -28,6 +28,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Long>{
 	Worker findBySurname(String surname) throws IllegalArgumentException;
 
 	/**
+
 	 * Metodo que devuelve un trabajador por su email.
 	 * @param email del obrero que buscamos.
 	 * @return obrero con ese email.
@@ -40,7 +41,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Long>{
 	 * Metodo que devuelve una lista de trabajadores activos.
 	 * @param valor de actividad en la empresa(si/no).
 	 * @return obreros activos/no activos.
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentExceptions
 	 */
 	@Query(value="SELECT * FROM worker WHERE worker.active = ?1", nativeQuery = true)
 	List<Worker> findByActive(Boolean active) throws IllegalArgumentException;
