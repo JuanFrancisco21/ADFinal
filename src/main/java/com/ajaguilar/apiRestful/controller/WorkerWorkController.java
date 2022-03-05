@@ -150,7 +150,7 @@ public class WorkerWorkController {
 	}
 
 	/**
-	 * Obtiene los workerwork que tengan un worker específico
+	 * Obtiene los workerwork que tengan un worker especifico
 	 * 
 	 * @param idWorker La id del worker
 	 * @return Una lista con los workerworks que cumplan los requisitos
