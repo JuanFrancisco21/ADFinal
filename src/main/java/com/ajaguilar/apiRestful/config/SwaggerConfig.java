@@ -24,7 +24,7 @@ public class SwaggerConfig {
         		.apis(RequestHandlerSelectors.basePackage("com.ajaguilar.apiRestful.controller"))
         		.paths(PathSelectors.any())
         		.build()
-        		.apiInfo(getApiInfo());
+        		.apiInfo(getApiInfo()); 
     }
  
     
