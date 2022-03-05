@@ -27,7 +27,6 @@ tmp/
 local.properties
 .settings/
 .loadpath
-application.properties
 credentials.json
 tokens/
 bro.png
