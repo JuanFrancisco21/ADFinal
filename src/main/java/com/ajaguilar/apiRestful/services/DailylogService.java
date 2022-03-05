@@ -22,7 +22,7 @@ public class DailylogService {
 	DailylogRepository repository;
 
 	/**
-	 * Método para obtener todos los dailylog.
+	 * Metodo para obtener todos los dailylog.
 	 * @return Lista con todos los dailylog.
 	 */
 	public List<Dailylog> getAllDailylogs() {
@@ -39,7 +39,7 @@ public class DailylogService {
 	}
 
 	/**
-	 * Método para obtener un dailylog por su id.
+	 * Metodo para obtener un dailylog por su id.
 	 * @param id para buscar el dailylog.
 	 * @return Dailylog con el id introducido.
 	 */
@@ -137,7 +137,7 @@ public class DailylogService {
                     }
 			
 		} else {
-			logger.error("Error--> No se encontró el dailylog en deleteDailylog");
+			logger.error("Error--> No se encontra el dailylog en deleteDailylog");
                         throw new Exception("Log not found");
 		}
                 }else{

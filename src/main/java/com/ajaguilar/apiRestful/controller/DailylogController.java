@@ -59,10 +59,10 @@ public class DailylogController {
 	}
 
 	/**
-	 * Metodo para obtener un dailylog concreto seg�n su id
+	 * Metodo para obtener un dailylog concreto segun su id
 	 *
 	 * @param id del dailylog a devolver
-	 * @return el objeto dailylog en caso de que este exista, un dailylog vac?o en
+	 * @return el objeto dailylog en caso de que este exista, un dailylog vacio en
 	 *         caso contrario
 	 */
 	@ApiOperation(value = "Método para obtener un dailylog concreto según su id.", notes = "", tags = "getDailylogById")
@@ -149,7 +149,7 @@ public class DailylogController {
 	}
 
 	/**
-	 * M�todo que elimina un dailylog de la BD seg�n su id
+	 * Metodo que elimina un dailylog de la BD segun su id
 	 * 
 	 * @param id ID del dailylog que se busca eliminar
 	 * @return Status ok si el objeto es eliminado, Bad Request en caso contrario
@@ -183,7 +183,7 @@ public class DailylogController {
 	}
 
 	/**
-	 * M�todo que devuelve todos los dailylogs creados en una fecha concreta
+	 * Metodo que devuelve todos los dailylogs creados en una fecha concreta
 	 * 
 	 * @param date Fecha de los dailylogs
 	 * @return Lista de los dailylogs que coincidan con dicha fecha

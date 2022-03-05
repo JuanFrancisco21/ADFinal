@@ -58,7 +58,7 @@ public class WorkerController {
     FileService fileUploadService;
 
 	/**
-	 * Método para obtener una lista de todas los trabajadores de la BBDD.
+	 * Metodo para obtener una lista de todas los trabajadores de la BBDD.
 	 * 
 	 * @return Lista con todos los trabajadores de la BBDD. En caso de error
 	 *         devuelve una lista vacia.
@@ -82,7 +82,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método obtener un trabajador mediante su id.
+	 * Metodo obtener un trabajador mediante su id.
 	 * 
 	 * @param id del trabajador a a buscar.
 	 * @return Trabajador encontrado por id. En caso de error devuelve un trabajador
@@ -108,7 +108,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método para la creación de un nuevo trabajador.
+	 * Metodo para la creación de un nuevo trabajador.
 	 * 
 	 * @param Trabajador que se va a crear.
 	 * @return Trabajador creado en la BBDD. En caso de error devuelve un trabajador
@@ -155,7 +155,7 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método para la creación de un nuevo trabajador.
+	 * Metodo para la creación de un nuevo trabajador.
 	 * 
 	 * @param Trabajador que se va a crear.
 	 * @return Trabajador creado en la BBDD. En caso de error devuelve un trabajador
@@ -183,7 +183,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método para la actulización de un trabajador.
+	 * Metodo para la actulización de un trabajador.
 	 * 
 	 * @param Trabajador que se va a actualizar.
 	 * @return Trabajador actualizado en la BBDD. En caso de error devuelve un
@@ -209,7 +209,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método obtener un trabajador mediante su nombre.
+	 * Metodo obtener un trabajador mediante su nombre.
 	 * 
 	 * @param Nombre del trabajador a buscar.
 	 * @return Trabajador encontrado por nombre. En caso de error devuelve un
@@ -235,7 +235,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método obtener un trabajador mediante su apellido.
+	 * Metodo obtener un trabajador mediante su apellido.
 	 * 
 	 * @param Apellido del trabajador a buscar.
 	 * @return Trabajador encontrado por apellido. En caso de error devuelve un
@@ -261,7 +261,7 @@ public class WorkerController {
 	}
 	
 	/**
-	 * Método obtener un trabajador mediante su email.
+	 * Metodo obtener un trabajador mediante su email.
 	 * 
 	 * @param email del trabajador a buscar.
 	 * @return Trabajador encontrado por email. En caso de error devuelve un
@@ -287,7 +287,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método obtener un trabajador por si esta activo/inactivo.
+	 * Metodo obtener un trabajador por si esta activo/inactivo.
 	 * 
 	 * @param Activo/No activo atributo del trabajador.
 	 * @return Lista de trabajadores activos/inactivos. En caso de error devuelve un
@@ -314,7 +314,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método para borra un trabajador de la BBDD.
+	 * Metodo para borra un trabajador de la BBDD.
 	 * 
 	 * @param id del trabajador a borrar.
 	 * @return Status ok si lo borra, Bad_request en caso de no borrarlo.
@@ -340,7 +340,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método para introducir un trabajador en una obra.
+	 * Metodo para introducir un trabajador en una obra.
 	 * 
 	 * @params workerId: id del trabajador; workId: id del trabajo.
 	 * @return Modelo WorkerWork creado en la BD. En caso de error devuelve un
@@ -372,7 +372,7 @@ public class WorkerController {
 	}
 
 	/**
-	 * Método para eliminar un trabajador de una obra.
+	 * Metodo para eliminar un trabajador de una obra.
 	 * 
 	 * @params workerId: id del trabajador; workId: id del trabajo.
 	 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.

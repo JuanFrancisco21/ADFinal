@@ -37,7 +37,7 @@ public class WorkController {
 	WorkService service;
 
 	/**
-	 * M�todo para obtener una lista de todas las obras de la BBDD.
+	 * Metodo para obtener una lista de todas las obras de la BBDD.
 	 * 
 	 * @return Lista con todas las obras de la BBDD. En caso de error devuelve una lista vacia.
 	 */
@@ -59,7 +59,7 @@ public class WorkController {
 	}
 
 	/**
-	 * M�todo obtener una obra mediante su id.
+	 * Metodo obtener una obra mediante su id.
 	 * 
 	 * @param id de la obra a buscar.
 	 * @return Obra encontrado por id. En caso de error devuelve una obra vacia.
@@ -85,7 +85,7 @@ public class WorkController {
 	}
 	
 	/**
-	 * M�todo para la creaci�n de una nueva obra.
+	 * Metodo para la creaci�n de una nueva obra.
 	 * 
 	 * @param Obra que se va a crear.
 	 * @return Obra creada en la BBDD. En caso de error devuelve una obra vacia.
@@ -111,7 +111,7 @@ public class WorkController {
 	}
 	
 	/**
-	 * M�todo para la actulizaci�n de una obra.
+	 * Metodo para la actulizacion de una obra.
 	 * 
 	 * @param Obra que se va a actualizar.
 	 * @return Obra actualizada en la BBDD. En caso de error devuelve una obra vacia.
@@ -138,7 +138,7 @@ public class WorkController {
 	
 	
 	/**
-	 * M�todo obtener una obra mediante su nombre.
+	 * Metodo obtener una obra mediante su nombre.
 	 * 
 	 * @param Nombre de la obra a buscar.
 	 * @return Obra encontrado por nombre. En caso de error devuelve una obra vacia.
@@ -164,7 +164,7 @@ public class WorkController {
 	}
 	
 	/**
-	 * M�todo obtener una obra mediante su trabajador.
+	 * Metodo obtener una obra mediante su trabajador.
 	 * 
 	 * @param Id del trabajador de la obra a buscar.
 	 * @return Obras encontradas por id del trabajador. En caso de error devuelve una lista de obras vacia.
@@ -190,10 +190,10 @@ public class WorkController {
 	}
 	
 	/**
-	 * M�todo obtener una obra mediante su localizaci�n.
+	 * Metodo obtener una obra mediante su localizaci�n.
 	 * 
-	 * @param Localizaci�n de la obra a buscar.
-	 * @return Obra encontradas por la localizaci�n. En caso de error devuelve una obra vacia.
+	 * @param Localizacion de la obra a buscar.
+	 * @return Obra encontradas por la localizacion. En caso de error devuelve una obra vacia.
 	 */
 	 @ApiOperation(value = "Método obtener una obra mediante su localización."
 	            ,notes = "", tags = "getWorkByLocation")
@@ -216,7 +216,7 @@ public class WorkController {
 	}
 
 	/**
-	 * M�todo para borra una obra de la BBDD.
+	 * Metodo para borra una obra de la BBDD.
 	 * 
 	 * @param id de la obra a borrar.
 	 * @return Status ok si lo borra, Bad_request en caso de no borrarla.
