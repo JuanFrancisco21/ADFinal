@@ -91,10 +91,15 @@ public class DailylogController {
 			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@PostMapping
-	public ResponseEntity<Dailylog> createDailylog(@Valid @RequestBody Dailylog log) {
+	@PostMapping("/add/{workerWorkid}")
+	public ResponseEntity<Dailylog> createDailylog(@Valid @RequestBody Dailylog log, @PathVariable("workerWorkid") Long wwid) {
 		if (log != null && log.getId() == -1) {
 			try {
+				try {
+					log.setWorkerWork(wwservice.getWorkerWorkById(wwid));
+				}catch(Exception e) {
+					System.err.println("Error al obtener workerWork");
+				}
 				Dailylog result = service.createDailylog(log);
 				if (log.getWorkerWork() != null && log.getWorkerWork().getId() != -1) {
 					try {
