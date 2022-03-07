@@ -26,7 +26,7 @@ public interface WorkRepository extends JpaRepository<Work, Long>{
 		 * @return lista de obras que tiene ese trabajador.
 		 * @throws IllegalArgumentException.
 		 */
-		@Query(value="SELECT * FROM work  WHERE work.chief = ?idWorker AND work.active = true", nativeQuery = true)
+		@Query(value="SELECT * FROM work  WHERE work.chief = ?1 AND work.active = true", nativeQuery = true)
 		List<Work> findWorkByWorker(Long idWorker) throws IllegalArgumentException;
 		
 		/**
