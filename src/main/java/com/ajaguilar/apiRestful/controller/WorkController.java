@@ -176,11 +176,11 @@ public class WorkController {
 	            @ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 	            @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/idworker/{idworker}")
-	public ResponseEntity<List<Work>> getWorkByWorker(@PathVariable("idWorker") Long idWorker) {
+	public ResponseEntity<List<Work>> getWorkByWorker(@PathVariable("idworker") Long idworker) {
 		List<Work> result = new ArrayList<Work>();
-		if (idWorker != null && idWorker != -1) {
+		if (idworker != null && idworker != -1) {
 			try {
-				result = service.getWorkByWorker(idWorker);
+				result = service.getWorkByWorker(idworker);
 				return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
