@@ -81,7 +81,6 @@ public class WorkerService {
 			if (worker.getId() < 0) {
 				try {
 					logger.info("Consulta exitosa en createWorker");
-					DriveService.uploadfile();
 					return worker = repository.save(worker);
 				} catch (IllegalArgumentException e) {
 					logger.error("Error ---> IllegarArgumentException en createWorker :" + e);
