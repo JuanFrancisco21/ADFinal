@@ -27,8 +27,9 @@ tmp/
 local.properties
 .settings/
 .loadpath
-application.properties
 credentials.json
+#git rm  --cached src/main/resources/application.properties
+application.properties
 tokens/
 bro.png
 
