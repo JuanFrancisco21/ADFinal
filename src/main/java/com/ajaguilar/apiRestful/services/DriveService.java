@@ -86,9 +86,10 @@ public class DriveService {
 			File gfile = service.files().create(fileMetadata, mediaContent)
 					.setFields("id, name, webViewLink")
 					.execute();
-			result = gfile.getWebViewLink();
+			result = "http://drive.google.com/uc?export=view&id="+ gfile.getId();
 			setPermission(gfile.getId().toString());//gfile.getId();
 		} catch (IOException | GeneralSecurityException e) {
+			result = "http://drive.google.com/uc?export=view&id=1iNbUIohjg-KoZPD-g6Z0fZo9Q7k8GTUF";
 			e.printStackTrace();
 		}
 		

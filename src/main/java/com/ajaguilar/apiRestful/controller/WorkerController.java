@@ -137,10 +137,10 @@ public class WorkerController {
 					
 					fileUploadService.flushTmp();
 					}else {
-						worker.setPicture("none");
+						worker.setPicture("http://drive.google.com/uc?export=view&id=1iNbUIohjg-KoZPD-g6Z0fZo9Q7k8GTUF");
 					}
 				} catch (Exception e) {
-					worker.setPicture("none");
+					worker.setPicture("http://drive.google.com/uc?export=view&id=1iNbUIohjg-KoZPD-g6Z0fZo9Q7k8GTUF");
 				}
 
 				Worker result = service.createWorker(worker);
