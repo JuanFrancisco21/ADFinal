@@ -118,6 +118,7 @@ public class WorkService {
 					Work newWork = result.get();
 					newWork.setId(work.getId());
 					newWork.setName(work.getName());
+					newWork.setActive(work.getActive());
 					newWork.setDescription(work.getDescription());
 					newWork.setLocation(work.getLocation());
 					
@@ -126,6 +127,7 @@ public class WorkService {
 
 						if(work.getChief().getId() > 0) {
 							newWork.setChief(work.getChief());
+							newWork.setWorkerWork(work.getWorkerWork());
 							repository.updateChief(work.getChief().getId(), work.getId());
 							return repository.save(newWork);
 						}else {
