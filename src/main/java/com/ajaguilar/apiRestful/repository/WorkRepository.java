@@ -30,6 +30,15 @@ public interface WorkRepository extends JpaRepository<Work, Long>{
 		List<Work> findWorkByWorker(Long idWorker) throws IllegalArgumentException;
 		
 		/**
+		 * Metodo que devuelve las obras que tiene un Trabajador(chief).
+		 * @param id del trabajador para devolver sus obras.
+		 * @return lista de obras que tiene ese trabajador.
+		 * @throws IllegalArgumentException.
+		 */
+		@Query(value="SELECT * FROM work  WHERE work.chief = ?1 AND work.active = ?2", nativeQuery = true)
+		List<Work> findAvtiveWorkByWorker(Long idWorker, boolean active) throws IllegalArgumentException;
+		
+		/**
 		 * Metodo que devuelve una obra segun las coordendas.
 		 * @param coordenadas de la obra.
 		 * @return obra con las coordenadas introducidas.

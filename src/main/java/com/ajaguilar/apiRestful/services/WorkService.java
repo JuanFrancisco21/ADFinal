@@ -26,7 +26,7 @@ public class WorkService {
 	WorkerRepository wrepository;
 
 	/**
-	 * M�todo para obtener todas las obras.
+	 * Metodo para obtener todas las obras.
 	 * 
 	 * @return Lista con todas las obras de la BBDD.
 	 */
@@ -42,7 +42,7 @@ public class WorkService {
 	}
 
 	/**
-	 * M�todo para devolver una obra por su id.
+	 * Metodo para devolver una obra por su id.
 	 * 
 	 * @param id de la obra.
 	 * @return Obra con el id introducido.
@@ -74,7 +74,7 @@ public class WorkService {
 	}
 
 	/**
-	 * M�todo para crear nueva obra, en caso de existir la actuliza.
+	 * Metodo para crear nueva obra, en caso de existir la actuliza.
 	 * 
 	 * @param Obra a crear/guardar en la base de datos.
 	 * @return Obra un vez se cree/actualize.
@@ -101,7 +101,7 @@ public class WorkService {
 	}
 
 	/**
-	 * M�todo para la acualizaci�n de obras existentes en la BBDD.
+	 * Metodo para la acualizaci�n de obras existentes en la BBDD.
 	 * 
 	 * @param Obra que se actulizar� en la BBDD.
 	 * @return Obra actualizada.
@@ -154,7 +154,7 @@ public class WorkService {
 	}
 
 	/**
-	 * M�todo automatico para actualizar/crear una obra seg�n si esta ya creada.
+	 * Metodo automatico para actualizar/crear una obra seg�n si esta ya creada.
 	 * 
 	 * @param Obra que se quiere acutalizar/crear.
 	 * @return Obra la cual se a actualizado o en su defecto creada.
@@ -207,7 +207,7 @@ public class WorkService {
 	}
 	
 	/**
-	 * M�todo para obtener una obra por su nombre.
+	 * Metodo para obtener una obra por su nombre.
 	 * 
 	 * @param Nombre de la obra a buscar.
 	 * @return Obra con el nombre introducido.
@@ -239,7 +239,7 @@ public class WorkService {
 	}
 	
 	/**
-	 * M�todo para devolver la obras asignadas a un trabajador.
+	 * Metodo para devolver la obras asignadas a un trabajador.
 	 * 
 	 * @param Trabajador al que esta asignada la obra.
 	 * @return Lista de obras de un trabajador.
@@ -271,7 +271,39 @@ public class WorkService {
 	}
 	
 	/**
-	 * M�todo para devolver una obra por sus coordenadas.
+	 * Metodo para devolver la obras asignadas a un trabajador.
+	 * 
+	 * @param Trabajador al que esta asignada la obra.
+	 * @return Lista de obras de un trabajador.
+	 * @throws RecordNotFoundException  Lanzado al no encontrar la obra.
+	 * @throws NullPointerException     Lanzado al ser nula la obra recibida.
+	 * @throws IllegalArgumentException Lanzado en caso de error.
+	 */
+	public List<Work> getActivesWorkByWorker(Long idWorker, Boolean active ) throws RecordNotFoundException, NullPointerException, IllegalArgumentException{
+		if(idWorker!=null) {
+			try {
+				Optional<List<Work>> lista = Optional.of(repository.findAvtiveWorkByWorker(idWorker, active));
+				if(lista.isPresent()) {
+					logger.info("Consulta exitosa en getActivesWorkByWorker");
+
+					return lista.get();
+				}else {
+					logger.error("Error ---> La obra no existe, getActivesWorkByWorker");
+					throw new RecordNotFoundException("No existe obra con id_Worker:", idWorker);
+				}
+			} catch (IllegalArgumentException e) {
+				logger.error("Error ---> IllegarArgumentException en getActivesWorkByWorker :" + e);
+				throw new IllegalArgumentException(e);
+			}						
+		}else {
+			logger.error("Error--> NullPointerException al traer obra mediante trabajador, getActivesWorkByWorker");
+			throw new NullPointerException ("Error: El usuario introducido tiene un valor nulo");
+		}
+			
+	}
+	
+	/**
+	 * Metodo para devolver una obra por sus coordenadas.
 	 * @param Localizacion de la obra.
 	 * @return Obra con la ubicaci�n introducida.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar la obra.
@@ -301,7 +333,7 @@ public class WorkService {
 	}
 
 	/**
-	 * M�todo para el borrado de una obra, introduciendo su id.
+	 * Metodo para el borrado de una obra, introduciendo su id.
 	 * 
 	 * @param id de la obra que queremos borrar.
 	 * @throws RecordNotFoundException  Lanzado al no encontrar la obra.
