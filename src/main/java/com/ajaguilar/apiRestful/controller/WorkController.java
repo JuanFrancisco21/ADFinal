@@ -50,7 +50,7 @@ public class WorkController {
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping
 	public ResponseEntity<List<Work>> getAllWork() {
-		List<Work> result = new ArrayList<Work>();
+		List<Work> result = null;
 		try {
 			result = service.getAllWork();
 			return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.OK);
@@ -73,15 +73,16 @@ public class WorkController {
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/{id}")
 	public ResponseEntity<Work> getWorkById(@PathVariable("id") Long id) {
+		Work result = null;
 		if (id != null && id > -1) {
 			try {
-				Work result = service.getWorkById(id);
+				result = service.getWorkById(id);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -98,15 +99,16 @@ public class WorkController {
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PostMapping
 	public ResponseEntity<Work> createWork(@Valid @RequestBody Work work) {
+		Work result = null;
 		if (work != null && work.getId() == -1) {
 			try {
-				Work result = service.createWork(work);
+				result = service.createWork(work);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -124,15 +126,17 @@ public class WorkController {
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PutMapping
 	public ResponseEntity<Work> updateWork(@Valid @RequestBody Work work) {
+		Work result = null;
 		if (work != null && work.getId() != -1) {
 			try {
-				Work result = service.updateWork(work);
+				result = service.updateWork(work);
 				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+				return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity<Work>(new Work(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Work>(result, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -205,7 +209,7 @@ public class WorkController {
 	@GetMapping("/activeidworker/{idworker}/{active}")
 	public ResponseEntity<List<Work>> getActiveWorkByWorker(@PathVariable("idworker") Long idworker,@PathVariable("active") boolean active) {
 		List<Work> result = new ArrayList<Work>();
-		if (idworker != null && idworker != -1) {
+		if (idworker != null && idworker != -1) {									
 			try {
 				result = service.getActivesWorkByWorker(idworker, active);
 				return new ResponseEntity<List<Work>>(result, new HttpHeaders(), HttpStatus.OK);

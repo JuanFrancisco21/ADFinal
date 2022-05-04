@@ -128,7 +128,8 @@ public class WorkService {
 						if(work.getChief().getId() > 0) {
 							newWork.setChief(work.getChief());
 							newWork.setWorkerWork(work.getWorkerWork());
-							repository.updateChief(work.getChief().getId(), work.getId());
+							/*repository.updateWork();
+							return newWork;*/
 							return repository.save(newWork);
 						}else {
 							return repository.save(newWork);
@@ -282,7 +283,7 @@ public class WorkService {
 	public List<Work> getActivesWorkByWorker(Long idWorker, Boolean active ) throws RecordNotFoundException, NullPointerException, IllegalArgumentException{
 		if(idWorker!=null) {
 			try {
-				Optional<List<Work>> lista = Optional.of(repository.findAvtiveWorkByWorker(idWorker, active));
+				Optional<List<Work>> lista = Optional.of(repository.findActiveWorkByWorker(idWorker, active));
 				if(lista.isPresent()) {
 					logger.info("Consulta exitosa en getActivesWorkByWorker");
 

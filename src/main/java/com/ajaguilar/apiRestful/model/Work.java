@@ -52,7 +52,7 @@ public class Work implements Serializable {
 
 	// Modelo worker
 	@JsonIgnoreProperties(value = { "chiefWorkList" })
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chief")
 	@ApiModelProperty(position = 5, name = "Worker", notes = "Relacion con Trabajador", required = true, value = "Objeto worker")
 	private Worker chief;
@@ -60,7 +60,7 @@ public class Work implements Serializable {
 	// Modelo worker_work
 	@JsonIgnoreProperties(value = { "work" })
 	@OneToMany(mappedBy = "work", fetch = FetchType.EAGER)
-  @ApiModelProperty(position = 6, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
+	@ApiModelProperty(position = 6, name = "Worker_Work", notes = "Relacion entre trabajador y la obra", required = true, value = "Objeto worker_work")
 	private Set<WorkerWork> workerWork;
 
 	public Work(String name, String description, Boolean active, Point location, Worker chief, Set<WorkerWork> workerWork) {
