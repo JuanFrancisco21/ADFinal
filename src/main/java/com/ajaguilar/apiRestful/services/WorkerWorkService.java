@@ -290,12 +290,15 @@ public class WorkerWorkService {
 	 * @param id La id del workerwork
 	 */
 	public void deleteWorkerWorkById(Long id) {
+		WorkerWork ww = null;
 		if (id != null) {
 			Optional<WorkerWork> workwerWork = repository.findById(id);
 			if (workwerWork != null) {
 				if (workwerWork.isPresent()) {
 					logger.info("Consulta exitosa en deleteWorkerWorkById");
-					repository.deleteById(id);
+					ww = workwerWork.get();
+					ww.setCurrent(false);
+					repository.save(ww);
 				} else {
 					logger.error("Error ---> La relacion no existe,"+id+" deleteWorkerWorkById");
 					throw new RecordNotFoundException("Couldn't find workerwork with this id= ", id);
