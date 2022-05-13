@@ -50,5 +50,14 @@ public interface WorkerWorkRepository extends JpaRepository<WorkerWork, Long> {
 	@Query(value = "SELECT * FROM worker_work WHERE worker_work.id_work = ?1 AND workerWork.current = TRUE", nativeQuery = true)
 	public List<WorkerWork> findByCurrentWork(Long idWork) throws IllegalArgumentException;
 	
+	/**
+	 * Metodo que devuelve los WorkerWork activos o inactivos de una obra
+	 * 
+	 * @param idWork La id del trabajo
+	 * @return Una lista de los WorkerWOrk que contiene el trabajo especificado
+	 * @throws IllegalArgumentException
+	 */
+	@Query(value = "SELECT * FROM worker_work WHERE worker_work.id_work = ?1 AND worker_work.current = ?2", nativeQuery = true)
+	public List<WorkerWork> findByWorkActive(Long idWork, boolean current) throws IllegalArgumentException;
 	
 }

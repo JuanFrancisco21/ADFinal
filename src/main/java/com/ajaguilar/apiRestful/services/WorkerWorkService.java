@@ -1,5 +1,6 @@
 package com.ajaguilar.apiRestful.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,10 +73,17 @@ public class WorkerWorkService {
 	 * @return Devuelve el workerwork creado
 	 */
 	public WorkerWork createWorkerWork(WorkerWork workerWork) {
+		List<WorkerWork> workerWorksFromWorker = this.getWorkerWorkByWorker(workerWork.getWorker().getId());
 		if (workerWork != null) {
 			if (workerWork.getId() < 0) {
 				try {
 					logger.info("Consulta exitosa en createWorkerWork");
+					for(WorkerWork ww : workerWorksFromWorker) {
+						if(ww.getCurrent()) {
+							ww.setCurrent(false);
+							repository.save(ww);
+						}
+					}
 					return workerWork = repository.save(workerWork);
 				} catch (IllegalArgumentException e) {
 					logger.error("Error ---> IllegarArgumentException en createWorkerWork :" + e);
@@ -290,12 +298,15 @@ public class WorkerWorkService {
 	 * @param id La id del workerwork
 	 */
 	public void deleteWorkerWorkById(Long id) {
+		WorkerWork ww = null;
 		if (id != null) {
 			Optional<WorkerWork> workwerWork = repository.findById(id);
 			if (workwerWork != null) {
 				if (workwerWork.isPresent()) {
 					logger.info("Consulta exitosa en deleteWorkerWorkById");
-					repository.deleteById(id);
+					ww = workwerWork.get();
+					ww.setCurrent(false);
+					repository.save(ww);
 				} else {
 					logger.error("Error ---> La relacion no existe,"+id+" deleteWorkerWorkById");
 					throw new RecordNotFoundException("Couldn't find workerwork with this id= ", id);
@@ -311,6 +322,26 @@ public class WorkerWorkService {
 		
 		
 
+	}
+	
+	public List<WorkerWork> findByWorkActive(Long idWork, boolean current) throws IllegalArgumentException{
+		List<WorkerWork> result = new ArrayList<>();
+		if(idWork != null) {
+			Optional<List<WorkerWork>> workerWork = Optional.of(repository.findByWorkActive(idWork, current));
+			if(workerWork != null) {
+				if(workerWork.isPresent()) {
+					logger.info("Consulta exitosa en findByWorkActive");
+					result = workerWork.get();
+				}else {
+					logger.error("Error ---> la relacion no existe, " + idWork + " " + current + " findByWorkActive");
+					throw new RecordNotFoundException("Couldn't find workerwork with this work id=", idWork + ", and current=" + current);
+				}
+			}
+		}else {
+		logger.error("Error--> NullPointerException encontrar workerWorks, findByWorkActive");
+		throw new NullPointerException("Null workerworks are prohibited");
+		}
+		return result;
 	}
 
 	
