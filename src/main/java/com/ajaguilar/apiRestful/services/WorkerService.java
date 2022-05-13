@@ -80,6 +80,12 @@ public class WorkerService {
 		if (worker != null) {
 			if (worker.getId() < 0) {
 				try {
+					List<Worker> workers = repository.findAll();
+					for (Worker bbworker : workers) {
+						if (bbworker.equals(worker)) {
+							return null;
+						}
+					}
 					logger.info("Consulta exitosa en createWorker");
 					return worker = repository.save(worker);
 				} catch (IllegalArgumentException e) {
