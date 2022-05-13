@@ -1,5 +1,6 @@
 package com.ajaguilar.apiRestful.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -314,6 +315,26 @@ public class WorkerWorkService {
 		
 		
 
+	}
+	
+	public List<WorkerWork> findByWorkActive(Long idWork, boolean current) throws IllegalArgumentException{
+		List<WorkerWork> result = new ArrayList<>();
+		if(idWork != null) {
+			Optional<List<WorkerWork>> workerWork = Optional.of(repository.findByWorkActive(idWork, current));
+			if(workerWork != null) {
+				if(workerWork.isPresent()) {
+					logger.info("Consulta exitosa en findByWorkActive");
+					result = workerWork.get();
+				}else {
+					logger.error("Error ---> la relacion no existe, " + idWork + " " + current + " findByWorkActive");
+					throw new RecordNotFoundException("Couldn't find workerwork with this work id=", idWork + ", and current=" + current);
+				}
+			}
+		}else {
+		logger.error("Error--> NullPointerException encontrar workerWorks, findByWorkActive");
+		throw new NullPointerException("Null workerworks are prohibited");
+		}
+		return result;
 	}
 
 	

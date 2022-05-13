@@ -318,7 +318,7 @@ public class WorkerController {
 	 * 
 	 * @param id del trabajador a borrar.
 	 * @return Status ok si lo borra, Bad_request en caso de no borrarlo.
-	 * @throws RecordNotFoundException Lanzado al no encontrar el valor.
+	 * @throws INTERNAL_SERVER_ERRO Lanzado al no poder realizar la petición.
 	 */
 	@ApiOperation(value = "Método para borra un trabajador de la BBDD.", notes = "", tags = "deleteWorkerById")
 	@ApiResponses(value = {
@@ -372,18 +372,46 @@ public class WorkerController {
 	}
 
 	/**
+	 * Metodo para obtener los workerWorks de una obra segun si están activos o no.
+	 * 
+	 * @params idWork: id de la obra; current: boolean con el valor de activos/inactivos
+	 * 
+	 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
+	 */
+	@ApiOperation(value = "Método para obtener workerWorks de un trabajo según si están activos", notes = "", tags = "getWorkerWorksFromWorkByActive")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("workerWork/{idWork}/{current}")
+	public ResponseEntity<List<WorkerWork>> getWorkerWorksFromWorkByActive(@PathVariable("idWork") Long idWork, @PathVariable("current") boolean current) {
+		List<WorkerWork> result = new ArrayList<WorkerWork>();
+		if (idWork > 0) {
+			try {
+				result = wwservice.findByWorkActive(idWork, current);
+				return new ResponseEntity<List<WorkerWork>>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception ex) {
+				return new ResponseEntity<List<WorkerWork>>(new ArrayList<WorkerWork>(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			return new ResponseEntity<List<WorkerWork>>(new ArrayList<WorkerWork>(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
+	/**
 	 * Metodo para eliminar un trabajador de una obra.
 	 * 
 	 * @params workerId: id del trabajador; workId: id del trabajo.
 	 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
 	 */
-	@ApiOperation(value = "Método para introducir un trabajador en una obra.", notes = "", tags = "deleteWorkerFromWork")
+	@ApiOperation(value = "Método para eliminar un trabajador de una obra.", notes = "", tags = "deleteWorkerFromWork")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@DeleteMapping("deleteWorkerWork/{id}")
-	public HttpStatus deleteWorkerFromWork(@PathVariable("id") Long id) {
+	@DeleteMapping("workerWork/{id}")
+	public HttpStatus getWorkerWorksByCurrent(@PathVariable("id") Long id) {
 		if (id > 0) {
 			try {
 				wwservice.deleteWorkerWorkById(id);
