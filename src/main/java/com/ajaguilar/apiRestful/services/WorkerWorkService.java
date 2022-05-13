@@ -73,10 +73,17 @@ public class WorkerWorkService {
 	 * @return Devuelve el workerwork creado
 	 */
 	public WorkerWork createWorkerWork(WorkerWork workerWork) {
+		List<WorkerWork> workerWorksFromWorker = this.getWorkerWorkByWorker(workerWork.getWorker().getId());
 		if (workerWork != null) {
 			if (workerWork.getId() < 0) {
 				try {
 					logger.info("Consulta exitosa en createWorkerWork");
+					for(WorkerWork ww : workerWorksFromWorker) {
+						if(ww.getCurrent()) {
+							ww.setCurrent(false);
+							repository.save(ww);
+						}
+					}
 					return workerWork = repository.save(workerWork);
 				} catch (IllegalArgumentException e) {
 					logger.error("Error ---> IllegarArgumentException en createWorkerWork :" + e);
