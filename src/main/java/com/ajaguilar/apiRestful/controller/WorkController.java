@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ajaguilar.apiRestful.exceptions.RecordNotFoundException;
 import com.ajaguilar.apiRestful.model.Work;
+import com.ajaguilar.apiRestful.model.Worker;
+import com.ajaguilar.apiRestful.model.WorkerWork;
 import com.ajaguilar.apiRestful.services.WorkService;
+import com.ajaguilar.apiRestful.services.WorkerWorkService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -37,6 +40,9 @@ public class WorkController {
 
 	@Autowired // Instancia service que ejecuta este controller.
 	WorkService service;
+	
+	@Autowired
+	WorkerWorkService wwservice;
 
 	/**
 	 * Metodo para obtener una lista de todas las obras de la BBDD.
@@ -267,6 +273,35 @@ public class WorkController {
 				service.deleteWorkById(id);
 				return HttpStatus.OK;
 			} catch (Exception e) {
+				return HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			return HttpStatus.BAD_REQUEST;
+		}
+	}
+	
+	/**
+	 * Metodo para desactivar todas las relaciones de trabajo en una obra
+	 * 
+	 * @params workId: id del trabajo
+	 * @return Status OK si lo edita. BAD_REQUEST si no lo consigue.
+	 */
+	@ApiOperation(value = "Método para desactivar todos los workerWorks de un trabajo", notes = "", tags = "updateWorkerFromWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = HttpStatus.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@DeleteMapping("deleteWorkerWorks/{idWork}")
+	public HttpStatus disableWorkerWorksFromWorker(@PathVariable("idWork") Long idWork) {
+		Work work = this.service.getWorkById(idWork);
+		if (work != null) {
+			try {
+				for(WorkerWork ww : work.getWorkerWork()) {
+					ww.setCurrent(false);
+					wwservice.updateWorkerWork(ww);
+				}
+				return HttpStatus.OK;
+			} catch (Exception ex) {
 				return HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 		} else {

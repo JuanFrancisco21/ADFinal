@@ -376,11 +376,11 @@ public class WorkerController {
 	 * 
 	 * @params idWork: id de la obra; current: boolean con el valor de activos/inactivos
 	 * 
-	 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
+	 * @return Status OK y lista de WorkerWorks si encuentra registros. BAD_REQUEST y lista vacía si no lo consigue.
 	 */
 	@ApiOperation(value = "Método para obtener workerWorks de un trabajo según si están activos", notes = "", tags = "getWorkerWorksFromWorkByActive")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = WorkerWork.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("workerWork/{idWork}/{current}")
@@ -402,19 +402,75 @@ public class WorkerController {
 	/**
 	 * Metodo para eliminar un trabajador de una obra.
 	 * 
-	 * @params workerId: id del trabajador; workId: id del trabajo.
+	 * @params id: ID de la relación a desactivar.
 	 * @return Status OK si lo borra. BAD_REQUEST si no lo consigue.
 	 */
 	@ApiOperation(value = "Método para eliminar un trabajador de una obra.", notes = "", tags = "deleteWorkerFromWork")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Worker.class),
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = HttpStatus.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@DeleteMapping("workerWork/{id}")
-	public HttpStatus getWorkerWorksByCurrent(@PathVariable("id") Long id) {
+	public HttpStatus deleteWorkerWork(@PathVariable("id") Long id) {
 		if (id > 0) {
 			try {
 				wwservice.deleteWorkerWorkById(id);
+				return HttpStatus.OK;
+			} catch (Exception ex) {
+				return HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			return HttpStatus.BAD_REQUEST;
+		}
+	}
+	
+	/**
+	 * Metodo para activar un trabajador en una obra.
+	 * 
+	 * @params workerId: id del trabajador; workId: id del trabajo.
+	 * @return Status OK si lo edita. BAD_REQUEST si no lo consigue.
+	 */
+	@ApiOperation(value = "Método para activar un trabajador en una obra.", notes = "", tags = "updateWorkerFromWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = HttpStatus.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@PutMapping("workerWork/{id}")
+	public HttpStatus updateWorkerWork(@PathVariable("id") Long id) {
+		WorkerWork workerwork = wwservice.getWorkerWorkById(id);
+		if (workerwork.getId() != null) {
+			try {
+				workerwork.setCurrent(true);
+				wwservice.updateWorkerWork(workerwork);
+				return HttpStatus.OK;
+			} catch (Exception ex) {
+				return HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			return HttpStatus.BAD_REQUEST;
+		}
+	}
+	
+	/**
+	 * Metodo para desactivar todas las relaciones en obras de un trabajador
+	 * 
+	 * @params workerId: id del trabajador
+	 * @return Status OK si lo edita. BAD_REQUEST si no lo consigue.
+	 */
+	@ApiOperation(value = "Método para desactivar todos los workerWorks de un trabajador", notes = "", tags = "updateWorkerFromWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = HttpStatus.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@DeleteMapping("deleteWorkerWorks/{idWorker}")
+	public HttpStatus disableWorkerWorksFromWorker(@PathVariable("idWorker") Long idWorker) {
+		Worker worker = this.service.getWorkerById(idWorker);
+		if (worker != null) {
+			try {
+				for(WorkerWork ww : worker.getWorkerWork()) {
+					ww.setCurrent(false);
+					wwservice.updateWorkerWork(ww);
+				}
 				return HttpStatus.OK;
 			} catch (Exception ex) {
 				return HttpStatus.INTERNAL_SERVER_ERROR;
