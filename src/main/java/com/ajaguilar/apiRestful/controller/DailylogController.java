@@ -239,4 +239,49 @@ public class DailylogController {
 		}
 
 	}
+	
+	/**
+	 * Devuelve todos los dailylogs de un trabajador concreto
+	 * 
+	 * @param idWorker ID del trabajador del que queremos obtener los dailylogs
+	 * @return Lista de los dailylogs que coincidan con dicho trabajador
+	 */
+	@ApiOperation(value = "Devuelve todos los dailylogs de un trabajador concreto.", notes = "", tags = "getDailylogsByWorker")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("/worker/{idWorker}")
+	public ResponseEntity<List<Dailylog>> getDailylogsByWorker(@PathVariable("idWorker") Long idWorker) {
+		try {
+			List<Dailylog> result = service.getDailylogsByWorker(idWorker);
+			return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	/**
+	 * Devuelve todos los dailylogs de una obra en concreto
+	 * @param idWork ID de la obra cuyos dailylogs queremos obtener
+	 * @return Lista de los dailylogs que coincidan con la obra
+	 */
+	@ApiOperation(value = "Devuelve todos los dailylogs de una obra concreta.", notes = "", tags = "getDailylogsByWork")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("/work/{idWork}")
+	public ResponseEntity<List<Dailylog>> getDailylogsByWork(@PathVariable("idWork") Long idWork) {
+		try {
+			List<Dailylog> result = service.getDailylogsByWork(idWork);
+			return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 }
