@@ -172,5 +172,27 @@ public class DailylogService {
 		
 		
 	}
+	
+	// Returns all dailylogs from a concrete worker
+		public List<Dailylog> getDailylogsByWorker(Long workerId) {
+			try{
+	                    logger.info("Consulta exitosa en getDailylogsByWorker");
+	                    return repository.findByWorker(workerId);
+	                }catch(Exception e){
+	                    logger.error("Error--> NullPointerException al traer los dailylog por worker, getDailylogsByWorker");
+	                    throw new NullPointerException("Error: Lista de dailylog vacia");
+	                }
+		}
+		
+		// Returns all dailylogs from a concrete worker
+		public List<Dailylog> getDailylogsByWork(Long workId) {
+			try{
+	                    logger.info("Consulta exitosa en getDailylogsByWork");
+	                    return repository.findByWork(workId);
+	                }catch(Exception e){
+	                    logger.error("Error--> NullPointerException al traer los dailylog por work, getDailylogsByWork");
+	                    throw new NullPointerException("Error: Lista de dailylog vacia");
+	                }
 
 }
+		}

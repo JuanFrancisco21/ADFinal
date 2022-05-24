@@ -14,7 +14,7 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
     /**
      * M�todo que devuelve una lista de dailylogs por una fecha.
      *
-     * @param fecha del dailylog.
+     * @param date: fecha del dailylog.
      * @return dailylogs con esa fecha.
      */
     @Query(value="SELECT d.* FROM dailylog d WHERE d.date LIKE ?1", nativeQuery = true)
@@ -23,9 +23,23 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
     
     /**
      * Método que devuelve la lista de dailylogs asociada a su WorkerWork
-     * @param workerWorkId id del workerwork
+     * @param workerWorkId: id del workerwork
      * @return la lista de dailylogs de ese workerwork
      */
     @Query(value="SELECT d.* FROM dailylog d WHERE d.id_workerwork= ?1", nativeQuery = true)
     List<Dailylog> findByWorkerwork(Long workerWorkId);
+    
+    /**
+     * Método que devuelve todos los dailylogs de un trabajador completo
+     * @param workerId: ID del trabajador
+     * @return Lista de los dailylogs de ese trabajador */
+    @Query(value="SELECT d.*, w.* FROM dailylog d, worker_work w WHERE d.id_workerwork=w.id AND w.id_worker=?1", nativeQuery = true)
+    List<Dailylog> findByWorker(Long workerId);
+    
+    /**
+     * Método que devuelve todos los dailylogs de una obra concreta
+     * @param workId: ID de la obra
+     * @return Lista de los dailylogs de esa obra */
+    @Query(value="SELECT d.*, w.* FROM dailylog d, worker_work w WHERE d.id_workerwork=w.id AND w.id_work=?1", nativeQuery = true)
+    List<Dailylog> findByWork(Long workId);
 }
