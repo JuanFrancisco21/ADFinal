@@ -299,11 +299,11 @@ public class DailylogController {
 			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@GetMapping("/month/{month}")
-	public ResponseEntity<List<Dailylog>> getDailylogsByWork(@PathVariable("month") int month) {
+	@GetMapping("/month/{year}/{month}")
+	public ResponseEntity<List<Dailylog>> getDailylogsByWork(@PathVariable("month") int month, @PathVariable("year") int year) {
 		if(month > 0 && month <= 12) {
 			try {
-				List<Dailylog> result = service.getDailylogsByMonth(month);
+				List<Dailylog> result = service.getDailylogsByMonth(month, year);
 				return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
