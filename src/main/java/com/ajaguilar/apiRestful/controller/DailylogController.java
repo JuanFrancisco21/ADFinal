@@ -29,7 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "*",methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT,
+		RequestMethod.DELETE })
 @RestController
 @RequestMapping("/dailylogs")
 public class DailylogController {
@@ -95,12 +96,13 @@ public class DailylogController {
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PostMapping("/add/{workerWorkid}")
-	public ResponseEntity<Dailylog> createDailylog(@Valid @RequestBody Dailylog log, @PathVariable("workerWorkid") Long wwid) {
+	public ResponseEntity<Dailylog> createDailylog(@Valid @RequestBody Dailylog log,
+			@PathVariable("workerWorkid") Long wwid) {
 		if (log != null && log.getId() == -1) {
 			try {
 				try {
 					log.setWorkerWork(wwservice.getWorkerWorkById(wwid));
-				}catch(Exception e) {
+				} catch (Exception e) {
 					System.err.println("Error al obtener workerWork");
 				}
 				Dailylog result = service.createDailylog(log);
@@ -239,7 +241,7 @@ public class DailylogController {
 		}
 
 	}
-	
+
 	/**
 	 * Devuelve todos los dailylogs de un trabajador concreto
 	 * 
@@ -262,9 +264,10 @@ public class DailylogController {
 		}
 
 	}
-	
+
 	/**
 	 * Devuelve todos los dailylogs de una obra en concreto
+	 * 
 	 * @param idWork ID de la obra cuyos dailylogs queremos obtener
 	 * @return Lista de los dailylogs que coincidan con la obra
 	 */
@@ -281,6 +284,33 @@ public class DailylogController {
 		} catch (Exception e) {
 			return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
 					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	/**
+	 * Devuelve todos los dailylogs de un mes en concreto
+	 * 
+	 * @param month: mes del cual cuyos dailylogs queremos obtener
+	 * @return Lista de los dailylogs de ese mes
+	 */
+	@ApiOperation(value = "Devuelve todos los dailylogs de un mes.", notes = "", tags = "getDailylogsByMonth")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("/month/{month}")
+	public ResponseEntity<List<Dailylog>> getDailylogsByWork(@PathVariable("month") int month) {
+		if(month > 0 && month <= 12) {
+			try {
+				List<Dailylog> result = service.getDailylogsByMonth(month);
+				return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}else {
+			return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 
 	}
