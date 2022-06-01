@@ -23,12 +23,12 @@ public class DailylogService {
 
 	/**
 	 * Metodo para obtener todos los dailylog.
+	 * 
 	 * @return Lista con todos los dailylog.
 	 */
 	public List<Dailylog> getAllDailylogs() {
-                List<Dailylog> result = repository.findAll();
-            
-		
+		List<Dailylog> result = repository.findAll();
+
 		if (!result.isEmpty()) {
 			logger.info("Consulta exitosa en getAllDailylogs");
 			return result;
@@ -40,6 +40,7 @@ public class DailylogService {
 
 	/**
 	 * Metodo para obtener un dailylog por su id.
+	 * 
 	 * @param id para buscar el dailylog.
 	 * @return Dailylog con el id introducido.
 	 */
@@ -63,7 +64,7 @@ public class DailylogService {
 			logger.error("Error--> NullPointerException al traer dailylog mediante id, getDailylogbyId");
 			throw new NullPointerException("Error: Id introducido con valor nulo");
 		}
-		
+
 	}
 
 	// Creates a new dailylog
@@ -103,18 +104,18 @@ public class DailylogService {
 				newLog.setId(log.getId());
 				newLog.setDate(log.getDate());
 				newLog.setHours(log.getHours());
-                                try{
-                                    logger.info("Consulta exitosa en updateDailylog");
-                                   newLog = repository.save(newLog); 
-                                }catch(Exception e){
-                                    logger.error("Error--> IlegalArgumentException en updateDailylog :" + e);
-                                    throw new IllegalArgumentException(e);
-                                }
-				
+				try {
+					logger.info("Consulta exitosa en updateDailylog");
+					newLog = repository.save(newLog);
+				} catch (Exception e) {
+					logger.error("Error--> IlegalArgumentException en updateDailylog :" + e);
+					throw new IllegalArgumentException(e);
+				}
+
 				result = newLog;
 			} else {
-                            logger.error("Error--> Log no encontrado en updateDailylog");
-                            throw new Exception("Log not found");
+				logger.error("Error--> Log no encontrado en updateDailylog");
+				throw new Exception("Log not found");
 			}
 		} else {
 			logger.error("Error--> NullPointerException al actualizar dailyLog, updateDailylog");
@@ -125,74 +126,89 @@ public class DailylogService {
 
 	// Deletes an existing dailylog by his id
 	public void deleteDailylog(Long id) throws Exception {
-		if(id != null && id > 0){
-                    Optional<Dailylog> log = repository.findById(id);
-		if (log.isPresent()) {
-                    try{
-                        logger.info("Consulta exitosa en deleteDailylog");
-                        repository.deleteById(id);
-                    }catch(Exception e){
-                        logger.error("Error--> IllegalArgumentException en deleteDailylog :" + e);
-                        throw new IllegalArgumentException(e);
-                    }
-			
+		if (id != null && id > 0) {
+			Optional<Dailylog> log = repository.findById(id);
+			if (log.isPresent()) {
+				try {
+					logger.info("Consulta exitosa en deleteDailylog");
+					repository.deleteById(id);
+				} catch (Exception e) {
+					logger.error("Error--> IllegalArgumentException en deleteDailylog :" + e);
+					throw new IllegalArgumentException(e);
+				}
+
+			} else {
+				logger.error("Error--> No se encontra el dailylog en deleteDailylog");
+				throw new Exception("Log not found");
+			}
 		} else {
-			logger.error("Error--> No se encontra el dailylog en deleteDailylog");
-                        throw new Exception("Log not found");
+			logger.error("Error--> NullPointerException al eliminar dailyLog, deleteDailylog");
+			throw new NullPointerException("Error: El dailylog introducido tiene valor nulo");
 		}
-                }else{
-                    logger.error("Error--> NullPointerException al eliminar dailyLog, deleteDailylog");
-                    throw new NullPointerException("Error: El dailylog introducido tiene valor nulo");
-                }
 	}
 
 	// Returns all dailylogs from a day
 	public List<Dailylog> getDailylogsByDay(Date day) {
 		List<Dailylog> result;
-                try{
-                    logger.info("Consulta exitosa en getDailylogsByDay");
-                   return repository.findByDate(day);
-                }catch(Exception e){
-                    logger.error("Error--> NullPointerException al traer los dailylog por fecha, getDailylogsByDate");
-                    throw new NullPointerException("Error: Lista de dailylog vacia");
-                }
-		
-		
+		try {
+			logger.info("Consulta exitosa en getDailylogsByDay");
+			return repository.findByDate(day);
+		} catch (Exception e) {
+			logger.error("Error--> NullPointerException al traer los dailylog por fecha, getDailylogsByDate");
+			throw new NullPointerException("Error: Lista de dailylog vacia");
+		}
+
 	}
 
 	// Returns all dailylogs from a concrete WorkerWork
 	public List<Dailylog> getDailylogsByWorkerwork(Long workerWorkId) {
-		try{
-                    logger.info("Consulta exitosa en getDailylogsByWorkerwork");
-                    return repository.findByWorkerwork(workerWorkId);
-                }catch(Exception e){
-                    logger.error("Error--> NullPointerException al traer los dailylog por workerWork, getDailylogsByWorkerwork");
-                    throw new NullPointerException("Error: Lista de dailylog vacia");
-                }
-		
-		
+		try {
+			logger.info("Consulta exitosa en getDailylogsByWorkerwork");
+			return repository.findByWorkerwork(workerWorkId);
+		} catch (Exception e) {
+			logger.error(
+					"Error--> NullPointerException al traer los dailylog por workerWork, getDailylogsByWorkerwork");
+			throw new NullPointerException("Error: Lista de dailylog vacia");
+		}
+
+	}
+
+	// Returns all dailylogs from a concrete worker
+	public List<Dailylog> getDailylogsByWorker(Long workerId) {
+		try {
+			logger.info("Consulta exitosa en getDailylogsByWorker");
+			return repository.findByWorker(workerId);
+		} catch (Exception e) {
+			logger.error("Error--> NullPointerException al traer los dailylog por worker, getDailylogsByWorker");
+			throw new NullPointerException("Error: Lista de dailylog vacia");
+		}
+	}
+
+	// Returns all dailylogs from a concrete worker
+	public List<Dailylog> getDailylogsByWork(Long workId) {
+		try {
+			logger.info("Consulta exitosa en getDailylogsByWork");
+			return repository.findByWork(workId);
+		} catch (Exception e) {
+			logger.error("Error--> NullPointerException al traer los dailylog por work, getDailylogsByWork");
+			throw new NullPointerException("Error: Lista de dailylog vacia");
+		}
+
 	}
 	
-	// Returns all dailylogs from a concrete worker
-		public List<Dailylog> getDailylogsByWorker(Long workerId) {
-			try{
-	                    logger.info("Consulta exitosa en getDailylogsByWorker");
-	                    return repository.findByWorker(workerId);
-	                }catch(Exception e){
-	                    logger.error("Error--> NullPointerException al traer los dailylog por worker, getDailylogsByWorker");
-	                    throw new NullPointerException("Error: Lista de dailylog vacia");
-	                }
+	// Returns logs from a month
+	public List<Dailylog> getDailylogsByMonth(int month) {
+		if (month > 12 || month <= 0) {
+			logger.info("Error--> el mes introducido no es válido, getDailylogsByMonth");
+			throw new NullPointerException("Error: Mes no válido");
+		} else {
+			try {
+				logger.info("Consulta exitosa en getDailylogsByMonth");
+				return repository.findByMonth(month);
+			} catch (Exception e) {
+				logger.error("Error --> NullPointerException al traer los dailylogs por mes, getDailylogsByMonth");
+				throw new NullPointerException("Error: lista de dailylog vacía");
+			}
 		}
-		
-		// Returns all dailylogs from a concrete worker
-		public List<Dailylog> getDailylogsByWork(Long workId) {
-			try{
-	                    logger.info("Consulta exitosa en getDailylogsByWork");
-	                    return repository.findByWork(workId);
-	                }catch(Exception e){
-	                    logger.error("Error--> NullPointerException al traer los dailylog por work, getDailylogsByWork");
-	                    throw new NullPointerException("Error: Lista de dailylog vacia");
-	                }
-
+	}
 }
-		}
