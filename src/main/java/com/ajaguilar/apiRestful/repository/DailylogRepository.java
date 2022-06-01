@@ -47,6 +47,6 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
 	 * Método que devuelve los dailyogs de un mes
 	 * @param month: el mes del que queremos obtener los registros
 	 * @return Lista de los registros de ese mes */
-	@Query(value="SELECT d.* FROM dailylog d WHERE EXTRACT(MONTH FROM date)=?1", nativeQuery = true)
-	List<Dailylog> findByMonth(int month);
+	@Query(value="SELECT d.* FROM dailylog d WHERE EXTRACT(MONTH FROM date)=?1 AND EXTRACT(YEAR FROM date)=?2", nativeQuery = true)
+	List<Dailylog> findByMonth(int month, int year);
 }

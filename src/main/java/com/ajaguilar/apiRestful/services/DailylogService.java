@@ -197,15 +197,16 @@ public class DailylogService {
 	}
 	
 	// Returns logs from a month
-	public List<Dailylog> getDailylogsByMonth(int month) {
-		if (month > 12 || month <= 0) {
-			logger.info("Error--> el mes introducido no es válido, getDailylogsByMonth");
-			throw new NullPointerException("Error: Mes no válido");
+	public List<Dailylog> getDailylogsByMonth(int month, int year) {
+		if (month > 12 || month <= 0 || year < 0) {
+			logger.info("Error--> el mes o año introducido no es válido, getDailylogsByMonth");
+			throw new NullPointerException("Error: Mes o año no válido");
 		} else {
 			try {
 				logger.info("Consulta exitosa en getDailylogsByMonth");
-				return repository.findByMonth(month);
+				return repository.findByMonth(month, year);
 			} catch (Exception e) {
+			    System.out.println(e);
 				logger.error("Error --> NullPointerException al traer los dailylogs por mes, getDailylogsByMonth");
 				throw new NullPointerException("Error: lista de dailylog vacía");
 			}
