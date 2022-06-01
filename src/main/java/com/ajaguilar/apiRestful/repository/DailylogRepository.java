@@ -46,7 +46,30 @@ public interface DailylogRepository extends JpaRepository<Dailylog, Long>{
     /**
 	 * Método que devuelve los dailyogs de un mes
 	 * @param month: el mes del que queremos obtener los registros
+	 * @param year: el año
 	 * @return Lista de los registros de ese mes */
 	@Query(value="SELECT d.* FROM dailylog d WHERE EXTRACT(MONTH FROM date)=?1 AND EXTRACT(YEAR FROM date)=?2", nativeQuery = true)
 	List<Dailylog> findByMonth(int month, int year);
+	
+	/**
+	 * Método que devuelve los dailyogs de un trabajador en un mes
+	 * @param month: el mes del que queremos obtener los registros
+	 * @param year: el año
+	 * @param idWorker: id del trabajador
+	 * @return Lista de los registros de ese trabajador en ese mes */
+	@Query(value="SELECT d.* FROM dailylog d, worker_work w, worker t WHERE EXTRACT(MONTH FROM date)=?1 AND EXTRACT(YEAR FROM date)=?2"
+			+ " AND w.id_worker=t.id AND d.id_workerwork=w.id AND t.id=?3", nativeQuery = true)
+	List<Dailylog> findByWorkerMonth(int month, int year, long idWorker);
+	
+	/**
+	 * Método que devuelve los dailyogs de una obra en un mes concreto
+	 * @param month: el mes del que queremos obtener los registros
+	 * @param year: el año
+	 * @param idWork: id de la obra
+	 * @return Lista de los registros de esa obra en ese mes */
+	@Query(value="SELECT d.* FROM dailylog d, worker_work w, work t WHERE EXTRACT(MONTH FROM date)=?1 AND EXTRACT(YEAR FROM date)=?2"
+			+ " AND w.id_work=t.id AND d.id_workerwork=w.id AND t.id=?3", nativeQuery = true)
+	List<Dailylog> findByWorkMonth(int month, int year, long idWork);
+	
+	
 }

@@ -206,10 +206,41 @@ public class DailylogService {
 				logger.info("Consulta exitosa en getDailylogsByMonth");
 				return repository.findByMonth(month, year);
 			} catch (Exception e) {
-			    System.out.println(e);
 				logger.error("Error --> NullPointerException al traer los dailylogs por mes, getDailylogsByMonth");
 				throw new NullPointerException("Error: lista de dailylog vacía");
 			}
 		}
 	}
+	
+	//Returns all logs from a worker in a month
+	public List<Dailylog> getDailylogsByWorkerMonth(int month, int year, long id) {
+		if(month <= 12 && month > 0 && year > 0 && id > 0) {
+			try {
+				logger.info("Consulta exitosa en getDailylogsByWorkerMonth");
+				return repository.findByWorkerMonth(month, year, id);
+			}catch(Exception e) {
+				logger.error("Error --> NullPointerException al traer los dailylogs por mes, getDailylogsByWorkerMonth");
+				throw new NullPointerException("Error: lista de dailylog vacía");
+			}
+		}else {
+			logger.error("Error --> Mes, año o id no válidos, getDailylogsByWorkerMonth");
+			throw new NullPointerException("Error: Mes, año o id no válido");
+		}
+	}
+	
+	//Returns all logs from a work in a month
+		public List<Dailylog> getDailylogsByWorkMonth(int month, int year, long id) {
+			if(month <= 12 && month > 0 && year > 0 && id > 0) {
+				try {
+					logger.info("Consulta exitosa en getDailylogsByWorkerMonth");
+					return repository.findByWorkMonth(month, year, id);
+				}catch(Exception e) {
+					logger.error("Error --> NullPointerException al traer los dailylogs por mes, getDailylogsByWorkerMonth");
+					throw new NullPointerException("Error: lista de dailylog vacía");
+				}
+			}else {
+				logger.error("Error --> Mes, año o id no válidos, getDailylogsByWorkerMonth");
+				throw new NullPointerException("Error: Mes, año o id no válido");
+			}
+		}
 }

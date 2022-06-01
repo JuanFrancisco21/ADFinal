@@ -7,6 +7,7 @@ import com.ajaguilar.apiRestful.services.WorkerWorkService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.minidev.json.JSONObject;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -300,7 +301,7 @@ public class DailylogController {
 			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
 			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping("/month/{year}/{month}")
-	public ResponseEntity<List<Dailylog>> getDailylogsByWork(@PathVariable("month") int month, @PathVariable("year") int year) {
+	public ResponseEntity<List<Dailylog>> getDailylogsByMonth(@PathVariable("month") int month, @PathVariable("year") int year) {
 		if(month > 0 && month <= 12) {
 			try {
 				List<Dailylog> result = service.getDailylogsByMonth(month, year);
@@ -314,4 +315,64 @@ public class DailylogController {
 		}
 
 	}
+	
+	/**
+	 * Devuelve todos los dailylogs de un trabajador en un mes en concreto
+	 * 
+	 * @param month, year: mes y año del cual cuyos dailylogs queremos obtener
+	 * @param idWorker: id del trabajador
+	 * @return Lista de los dailylogs de dicho trabajador de ese mes
+	 */
+	@ApiOperation(value = "Devuelve todos los dailylogs de un mes de un obrero.", notes = "", tags = "getDailylogsByWorkerMonth")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("/worker/{idWorker}/month/{year}/{month}")
+	public ResponseEntity<List<Dailylog>> getDailylogsByWorkerMonth(@PathVariable("month") int month,
+			@PathVariable("year") int year, @PathVariable("idWorker") long idWorker) {
+		if(month > 0 && month <= 12) {
+			try {
+				List<Dailylog> result = service.getDailylogsByWorkerMonth(month, year, idWorker);
+				return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}else {
+			return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+
+	}
+	
+	/**
+	 * Devuelve todos los dailylogs de una obra en un mes en concreto
+	 * 
+	 * @param month, year: mes y año del cual cuyos dailylogs queremos obtener
+	 * @param idWork: id del trabajo
+	 * @return Lista de los dailylogs de dicho trabajador de ese mes
+	 */
+	@ApiOperation(value = "Devuelve todos los dailylogs de un mes de una obra.", notes = "", tags = "getDailylogsByWorkMonth")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = Dailylog.class),
+			@ApiResponse(code = 400, message = "Bad Request.Esta vez cambiamos el tipo de dato de la respuesta (String)", response = String.class),
+			@ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	@GetMapping("/work/{idWork}/month/{year}/{month}")
+	public ResponseEntity<List<Dailylog>> getDailylogsByWorkMonth(@PathVariable("month") int month,
+			@PathVariable("year") int year, @PathVariable("idWork") long idWork) {
+		if(month > 0 && month <= 12) {
+			try {
+				List<Dailylog> result = service.getDailylogsByWorkMonth(month, year, idWork);
+				return new ResponseEntity<List<Dailylog>>(result, new HttpHeaders(), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(),
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}else {
+			return new ResponseEntity<List<Dailylog>>(new ArrayList<Dailylog>(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+
+	}
+	
+	
 }
